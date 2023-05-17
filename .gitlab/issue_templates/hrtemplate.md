@@ -15,17 +15,7 @@ So that I can customize my profile to get better
 ## Feature
 
 ```
-Given ...
-When ...
-Then ...
-And ...
-...
-
-"Given a correctly filled out sign up form
-When the visitor clicks the "Sign up" button
-Then the data is sent to the API
-And  the data is stored in the database
-And  a success message is returned"
+Ties to Feature # <<feature number>> - <<feature description>>
 
 ```
 
