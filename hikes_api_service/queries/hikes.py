@@ -69,7 +69,7 @@ class HikeRepository:
                             , organizer_id = %s
                             , hike_description = %s
                             , max_hikers = %s
-                        WHERE id %s
+                        WHERE hike_id = %s
                         """,
                         [
                             hike.trail_name,
@@ -83,9 +83,8 @@ class HikeRepository:
                     )
                     return self.hike_in_to_out(hike_id, hike)
 
-        except Exception as e:
-            print(e)
-            return False
+        except Exception:
+            return {"message": "update didn't work"}
 
     def delete(self, hike_id: int) -> bool:
         try:
