@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import users, rides
+from routers import users, rides, hikes
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
@@ -16,4 +16,5 @@ app.add_middleware(
 )
 
 app.include_router(users.router)
+app.include_router(hikes.router)
 app.include_router(rides.router)
