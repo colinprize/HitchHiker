@@ -83,8 +83,33 @@ class HikeRepository:
                     )
                     return self.hike_in_to_out(hike_id, hike)
 
-        except Exception:
+        except Exception as e:
+            print(e)
             return {"message": "update didn't work"}
+
+    def get_one(self, hike_id: int) -> Optional[HikeOut]:
+        try:
+            with pool.connection() as connection:
+                with connection.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT hike_id
+                            , trail_name
+                            , image_url
+                            , date_time
+                            , organizer_id
+                            , hike_description
+                            , max_hikers
+                        FROM hike
+                        WHERE hike_id =%s
+                        """,
+                        [hike_id]
+                    )
+                    record =result.fetchone()
+                    return self.record_to_hike_out(record)
+        except Exception:
+            return {"message": "could not get hike"}
+
 
     def delete(self, hike_id: int) -> bool:
         try:
@@ -105,3 +130,14 @@ class HikeRepository:
     def hike_in_to_out(self, id: int, hike: HikeIn):
         old_data = hike.dict()
         return HikeOut(hike_id=id, **old_data)
+
+    def record_to_hike_out(self, record):
+        return HikeOut(
+            hike_id=record[0],
+            trail_name=record[1],
+            image_url=record[2],
+            date_time=record[3],
+            organizer_id=record[4],
+            hike_description=record[5],
+            max_hikers=record[6]
+        )
