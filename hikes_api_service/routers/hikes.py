@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from queries.hikes import HikeIn, HikeOut, HikeRepository, Error
-from typing import Union
+from typing import Union, Optional
 
 
 router = APIRouter()
@@ -24,3 +24,10 @@ def delete_hike(
     repo: HikeRepository = Depends(),
 ) -> bool:
     return repo.delete(hike_id)
+
+@router.get("/hikes/{hike_id}")
+def get_one_hike(
+    hike_id: int,
+    repo: HikeRepository = Depends(),
+) -> bool:
+    return repo.get_one(hike_id)
