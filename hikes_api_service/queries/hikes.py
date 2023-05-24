@@ -25,7 +25,8 @@ class HikeOut(BaseModel):
 
 class HikeRepository:
     def create(self, hike: HikeIn) -> HikeOut:
-        try:            #connect the database
+        try:
+            #connect the database
             with pool.connection() as connection:
                 #here is where we create our pool of connections
                 #get a cursor (something to run SQL with)
@@ -51,7 +52,6 @@ class HikeRepository:
                     id = result.fetchone()[0]
                     old_data = hike.dict()
                     return HikeOut(hike_id=id, **old_data)
-                    # return self.hike_in_to_out(id, hike)
         except Exception as e:
             print(e)
             return False
