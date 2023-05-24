@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from queries.hikes import HikeIn, HikeOut, HikeRepository, Error
-from typing import Union, Optional
+from typing import Union, List
 
 
 router = APIRouter()
@@ -31,3 +31,9 @@ def get_one_hike(
     repo: HikeRepository = Depends(),
 ) -> HikeOut:
     return repo.get_one(hike_id)
+
+@router.get("/hikes", response_model=Union[List[HikeOut], Error])
+def get_all_hikes(
+    repo: HikeRepository = Depends()
+):
+    return repo.get_all()
