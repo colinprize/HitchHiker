@@ -6,7 +6,7 @@ steps = [
             user_id SERIAL PRIMARY KEY NOT NULL,
             full_name VARCHAR(50) NOT NULL,
             username VARCHAR(20) NOT NULL UNIQUE,
-            password VARCHAR(50) NOT NULL,
+            password VARCHAR(150) NOT NULL,
             picture_url VARCHAR(100000) NULL,
             email VARCHAR(100) NOT NULL,
             university_name VARCHAR(50) NOT NULL,
