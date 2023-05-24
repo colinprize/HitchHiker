@@ -4,7 +4,6 @@ volumes:
   pg-admin:
     external: true
 
-
 services:
   postgres:
     build:
@@ -27,6 +26,9 @@ services:
     volumes:
       - ./hikes_api_service:/app
     environment:
+      SIGNING_KEY: ewioj23j2io3j4e23joj54oij32i5j423oij4io32jojio32jiore2oi3jr4io432jorij3ornf45rgnoi456yg54
+      WAIT_BEFORE: 10
+      WAIT_TIMEOUT: 60
       DATABASE_URL: postgresql://hikes:password@postgres/hikes
       WAIT_HOSTS: postgres:5432
 
