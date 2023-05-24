@@ -29,5 +29,5 @@ def delete_hike(
 def get_one_hike(
     hike_id: int,
     repo: HikeRepository = Depends(),
-) -> bool:
+) -> HikeOut:
     return repo.get_one(hike_id)
