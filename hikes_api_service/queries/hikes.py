@@ -49,9 +49,23 @@ class HikeRepository:
                             hike.max_hikers
                         ]
                     )
-                    id = result.fetchone()[0]
+                    hike_id = result.fetchone()[0]
+                    result = db.execute(
+                        """
+                        INSERT INTO hikes_users
+                            (user_id, hike_id)
+                        VALUES
+                            (%s, %s);
+
+                        """,
+                        [
+                            hike.organizer_id,
+                            hike_id,
+                        ]
+                    )
                     old_data = hike.dict()
-                    return HikeOut(hike_id=id, **old_data)
+                    return HikeOut(hike_id=hike_id, **old_data)
+
         except Exception as e:
             print(e)
             return False
