@@ -1,6 +1,6 @@
 from queries.pool import pool
 from pydantic import BaseModel
-from typing import Optional, Union
+from typing import Optional, Union, List
 from datetime import datetime
 
 class Error(BaseModel):
@@ -24,6 +24,34 @@ class HikeOut(BaseModel):
     max_hikers: int
 
 class HikeRepository:
+
+    def get_all(self) -> Union[Error, List[HikeOut]]:
+        try:
+            with pool.connection() as connection:
+                with connection.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT hike_id, trail_name, image_url, date_time, organizer_id, hike_description, max_hikers
+                        FROM hike
+                        ORDER BY hike_id;
+                        """
+                    )
+                    return [
+                        HikeOut(
+                            hike_id=record[0],
+                            trail_name=record[1],
+                            image_url=record[2],
+                            date_time=record[3],
+                            organizer_id=record[4],
+                            hike_description=record[5],
+                            max_hikers=record[6],
+                        )
+                        for record in db
+                    ]
+        except Exception as e:
+            print(e)
+            return {"message": "get didn't work"}
+
     def create(self, hike: HikeIn) -> HikeOut:
         try:
             #connect the database
