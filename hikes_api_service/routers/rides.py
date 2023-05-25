@@ -5,6 +5,8 @@ from queries.rides import(
     RideIn,
     RideRepository,
     RideOut,
+    RiderIn,
+    RiderOut,
 )
 
 router = APIRouter()
@@ -13,10 +15,8 @@ router = APIRouter()
 def create_ride(
     hike_id: int,
     ride: RideIn,
-    response: Response,
     repo: RideRepository = Depends(),
 ):
-    # response.status_code = 400
     return repo.create(hike_id, ride)
 
 @router.get("/hikes/{hike_id}/rides", response_model=Union[List[RideOut], Error])
@@ -42,3 +42,12 @@ def delete_ride(
     repo: RideRepository = Depends(),
 ) -> bool:
     return repo.cancel_ride(hike_id, ride_id)
+
+@router.post("/hikes/{hike_id}/rides/{ride_id}/riders", response_model=Union[RiderOut, Error])
+def create_rider(
+    hike_id: int,
+    ride_id: int,
+    rider: RiderIn,
+    repo: RideRepository = Depends(),
+):
+    return repo.create_rider(hike_id, ride_id, rider)

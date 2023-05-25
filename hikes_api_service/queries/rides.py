@@ -7,6 +7,7 @@ from queries.pool import pool
 class Error(BaseModel):
     message: str
 
+
 class RideIn(BaseModel):
     driver_id: int
     max_riders: int
@@ -21,6 +22,15 @@ class RideOut(BaseModel):
     meetup_time: datetime
     meetup_location: Optional[str]
     hike_event: int
+
+
+class RiderIn(BaseModel): #PLACEHOLDER UNTIL VALUE FROM USER AUTH IS CALLED
+    rider_id: int
+# CHANGE ALL INSTANCES OF RIDER IN
+
+class RiderOut(BaseModel):
+    rider_id: int
+    trip_id: int
 
 
 class RideRepository:
@@ -170,8 +180,78 @@ class RideRepository:
                     try:
                         (_, _) = result.fetchone()
                     except TypeError:
-                        return {"message": "Ride not associated with specified hike"}
+                        print("Ride not associated with specified hike")
+                        return False
                     # Run our DELETE statement
-                    result = db.execute()
-        except:
-            pass
+                    result = db.execute(
+                        """
+                        DELETE FROM ride
+                        WHERE hike_event = %s AND ride_id = %s;
+                        """,
+                        [
+                            hike_id,
+                            ride_id
+                        ]
+                    )
+        except Exception as e:
+            print(e)
+            return False
+
+    def create_rider(self, hike_id: int, ride_id: int, rider: RiderIn) -> RiderOut:
+        try:
+            # Connect the database
+            with pool.connection() as conn:
+                # Get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT ride_id
+                            , hike_event
+                        FROM ride
+                        WHERE ride_id = %s AND hike_event = %s;
+                        """,
+                        [
+                            ride_id,
+                            hike_id
+                        ]
+                    )
+                    try:
+                        (_, _) = result.fetchone()
+                    except TypeError:
+                        return {"message": "Specified ride does not exist for hike"}
+                    result = db.execute(
+                        """
+                        SELECT user_id
+                            , hike_id
+                        FROM hikes_users
+                        WHERE user_id = %s AND hike_id = %s;
+                        """,
+                        [
+                            rider.rider_id,
+                            hike_id
+                        ]
+                    )
+                    try:
+                        (_, _) = result.fetchone()
+                    except TypeError:
+                        return {"message": "User does not belong to hike"}
+                    # Run our INSERT statement
+                    result = db.execute(
+                        """
+                        INSERT INTO ride_users
+                            (rider_id, trip_id)
+                        VALUES
+                            (%s, %s);
+                        """,
+                        [
+                            rider.rider_id,
+                            ride_id
+                        ]
+                    )
+                    rider_id = result.fetchone()[0]
+                    # Return new data
+                    old_data = rider.dict()
+                    return RiderOut(rider_id=rider_id, trip_id=ride_id, **old_data)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not join ride"}
