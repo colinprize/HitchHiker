@@ -71,13 +71,12 @@ class HikeRepository:
                             hike.trail_name,
                             hike.image_url,
                             hike.date_time,
-                            # hike.organizer_id,
                             organizer_id,
                             hike.hike_description,
                             hike.max_hikers
                         ]
                     )
-                    hike_id = result.fetchone()[0]
+                    id = result.fetchone()[0]
                     result = db.execute(
                         """
                         INSERT INTO hikes_users
@@ -87,8 +86,8 @@ class HikeRepository:
 
                         """,
                         [
-                            hike.organizer_id,
-                            hike_id,
+                            organizer_id,
+                            id,
                         ]
                     )
                     old_data = hike.dict()
