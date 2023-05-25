@@ -1,41 +1,46 @@
-In the journals, every day that you work on the project, you must make an entry in your journal after you've finished that day. At a minimum, you will need to include the following information:
+##
+journal may 25
+I finished feature 6 post endpoint to sign up for a hike
+I finished delete endpoint to unjoin a hike
 
-The date of the entry
-A list of features/issues that you worked on and who you worked with, if applicable
-A reflection on any design conversations that you had
-At least one ah-ha! moment that you had during your coding, however small
-
-Keep your journal in reverse chronological order. Always put new entries at the top.
+The data was making its way to the database. I was getting a 500 error because i wasnt returning anything in my queries repo function and fastapi didnt like it.
 
 
-## July 9, 2021
 
-Today, I worked on:
+##
+journal may 24
 
-* Getting a customer's data for the account page
-  with Asa
+i finished and merged feature 4 endpoint
+i started working on feature 6 endpoints
 
-Asa and I wrote some SQL. We tested it out with
-Insomnia and the UI. We had to coordinate with
-Petra who was working on the GHI with Azami.
+we had good discussions on auth
 
-Today, I found the F2/Rename symbol functionality
-in Visual Studio Code! It allows me to rename a
-variable without causing bugs. I am going to be
-using this a lot!
+i tested a merge request
 
-## July 7, 2021
+##
+journal may 23
 
-Today, I worked on:
+i finished endpoints for feature 5
+##
+journal may 24
 
-* Signing up a customer with Petra
+i finished and merged feature 4 endpoint
+i started working on feature 6 endpoints
 
-Petra and I had a hard time figuring out the logic
-for what happens when a customer signs up. We
-finally came to the conclusion that not only did we
-have to create the `User` record, but we also needed
-to create associated preference records **and** had
-to log them in.
+we had good discussions on auth
+
+
+##
+journal may 23
+
+i finished endpoints for feature 5
+
+PUT allowing us to edit hikes
+
+GET hikes at id to get a single hike at hike_id
+I started working on feature 4 endpoint
+
+
 ##
 journal may 22
 I finished my POST endpoint hikes
