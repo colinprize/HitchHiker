@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from queries.hikes import HikeIn, HikeOut, HikeRepository, Error
+from queries.hikes import HikeIn, HikeOut, HikeRepository, Error, UserHikesRepository, HikeUser
 from authenticator import authenticator
 from typing import Union, List
 
@@ -26,7 +26,6 @@ def update_hike(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: HikeRepository = Depends(),
 ) -> Union[Error, HikeOut]:
-    # return repo.update(hike_id, hike)
     user = account_data["user_id"]
     hike_info = repo.get_one(hike_id)
     if  user == hike_info.organizer_id:
@@ -70,3 +69,17 @@ def get_all_hikes(
     repo: HikeRepository = Depends()
 ):
     return repo.get_all()
+
+@router.post("/userhikes/")
+def sign_up_for_hike(
+    HikeUser: HikeUser,
+    repo: UserHikesRepository = Depends()) -> Union[HikeUser, Error]:
+    return repo.sign_up(HikeUser)
+
+@router.delete("/userhikes/{user_id}/{hike_id}", response_model=bool)
+def unjoin_hike(
+    hike_id: int,
+    user_id: int,
+    repo: UserHikesRepository = Depends(),
+) -> bool:
+    return repo.delete(hike_id, user_id)
