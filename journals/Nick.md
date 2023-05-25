@@ -1,3 +1,12 @@
+## May 24, 2023
+
+Today I worked on:
+
+* Updating foreign key constraints of junction table CREATE statements
+* Additional Ride endpoints
+
+I realized before getting started on CREATE and DELETE endpoints that we would want to make sure that instances of ride or hike participants are removed when the respective ride or hike is deleted.  I accomplished this by adding the ON DELETE CASCADE constraint to the foreign key columns in hikes_users and ride_user tables which reference the unique id integer field of the parent event.  Testing this meant deleting and re-creating the volume a few times.  I also tried doing the same thing for the user_id foreign key property so that the participant instance is deleted when a user is.  This naturally caused all other participant instances to be deleted for any event that shared the same hike or ride id.  I removed this ON DELETE CASCADE constraint for the user field.  We currently do not have the need to delete user instances, but if we choose to implement that then it may be possible to include separate DELETE statements for any participant instances where the user id matches.
+
 ## May 23, 2023
 
 Today I worked on:
