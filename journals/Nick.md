@@ -1,3 +1,11 @@
+## May 23, 2023
+
+Today I worked on:
+
+* Writing endpoints for the Ride model
+
+Our group struggled with figuring out how to create endpoints for dependent resources.  Specifically this included instances of the Ride object, each of which has a foreign key relationship with instances of the Hike object.  We received help on this issue.  The solution we were shown was to run an database execute method that included a SELECT statement which validates that our driver_id in our INSERT statement was the same as the user_id for the hike instance called by the path argument.
+
 ## May 22, 2023
 
 Today I worked on:
