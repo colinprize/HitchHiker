@@ -10,7 +10,6 @@ class HikeIn(BaseModel):
     trail_name: str
     image_url: str
     date_time: datetime
-    organizer_id: int
     hike_description: Optional[str]
     max_hikers: int
 
@@ -52,7 +51,7 @@ class HikeRepository:
             print(e)
             return {"message": "get didn't work"}
 
-    def create(self, hike: HikeIn) -> HikeOut:
+    def create(self, hike: HikeIn, organizer_id:int) -> HikeOut:
         try:
             #connect the database
             with pool.connection() as connection:
@@ -72,19 +71,20 @@ class HikeRepository:
                             hike.trail_name,
                             hike.image_url,
                             hike.date_time,
-                            hike.organizer_id,
+                            # hike.organizer_id,
+                            organizer_id,
                             hike.hike_description,
                             hike.max_hikers
                         ]
                     )
                     id = result.fetchone()[0]
                     old_data = hike.dict()
-                    return HikeOut(hike_id=id, **old_data)
+                    return HikeOut(hike_id=id, organizer_id=organizer_id, **old_data)
         except Exception as e:
             print(e)
             return False
 
-    def update(self, hike_id: int, hike: HikeIn) -> Union[HikeOut, Error]:
+    def update(self, hike_id: int, hike: HikeIn, user:int) -> Union[HikeOut, Error]:
         try:
             with pool.connection() as connection:
                 with connection.cursor() as db:
@@ -103,13 +103,13 @@ class HikeRepository:
                             hike.trail_name,
                             hike.image_url,
                             hike.date_time,
-                            hike.organizer_id,
+                            user,
                             hike.hike_description,
                             hike.max_hikers,
                             hike_id
                         ]
                     )
-                    return self.hike_in_to_out(hike_id, hike)
+                    return self.hike_in_to_out(hike_id, hike, user)
 
         except Exception as e:
             print(e)
@@ -155,9 +155,9 @@ class HikeRepository:
             print(e)
             return False
 
-    def hike_in_to_out(self, id: int, hike: HikeIn):
+    def hike_in_to_out(self, id: int, hike: HikeIn, user:int):
         old_data = hike.dict()
-        return HikeOut(hike_id=id, **old_data)
+        return HikeOut(hike_id=id, organizer_id=user, **old_data)
 
     def record_to_hike_out(self, record):
         return HikeOut(

@@ -54,6 +54,7 @@ async def create_user(
 
 @router.get("/users", response_model=Union[Error, List[UserOut]])
 def get_all(
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: UserRepository = Depends()
 ):
     return repo.get_all()
@@ -109,6 +110,7 @@ def update_user(
 def get_one_user(
     username: str,
     response: Response,
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: UserRepository = Depends(),
 ) -> UserOut:
     user = repo.get_user(username)
