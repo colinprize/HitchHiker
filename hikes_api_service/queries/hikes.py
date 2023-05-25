@@ -22,6 +22,7 @@ class HikeOut(BaseModel):
     hike_description: Optional[str]
     max_hikers: int
 
+
 class HikeRepository:
 
     def get_all(self) -> Union[Error, List[HikeOut]]:
@@ -71,7 +72,6 @@ class HikeRepository:
                             hike.trail_name,
                             hike.image_url,
                             hike.date_time,
-                            # hike.organizer_id,
                             organizer_id,
                             hike.hike_description,
                             hike.max_hikers
@@ -169,3 +169,50 @@ class HikeRepository:
             hike_description=record[5],
             max_hikers=record[6]
         )
+
+class HikeUser(BaseModel):
+    user_id: int
+    hike_id: int
+
+class UserHikesRepository:
+    def sign_up(self, HikeUser: HikeUser) -> HikeUser:
+        try:
+            with pool.connection() as connection:
+                with connection.cursor() as db:
+                    db.execute(
+                        """
+                        INSERT INTO hikes_users
+                            (user_id, hike_id)
+                        VALUES
+                            (%s,%s)
+                        """,
+                        [
+                            HikeUser.user_id,
+                            HikeUser.hike_id
+                        ]
+                    )
+                    return HikeUser
+        except Exception as e:
+            print(e)
+            return {"message": "could not sign up for hike"}
+
+    def delete(self, hike_id: int, user_id: int) -> bool:
+        try:
+            with pool.connection() as connection:
+                with connection.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE from hikes_users
+                        WHERE hike_id = %s
+                        AND user_id = %s
+                        """,
+
+                        [
+                        hike_id,
+                        user_id
+                        ]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
