@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from typing import Union, List
 from authenticator import authenticator
-from queries.rides import(
+from queries.rides import (
     Error,
     RideIn,
     RideRepository,
@@ -11,6 +11,7 @@ from queries.rides import(
 )
 
 router = APIRouter()
+
 
 @router.post("/hikes/{hike_id}/rides", response_model=Union[RideOut, Error])
 def create_ride(
@@ -22,7 +23,10 @@ def create_ride(
     driver_id = account_data["user_id"]
     return repo.create(hike_id, ride, driver_id)
 
-@router.get("/hikes/{hike_id}/rides", response_model=Union[List[RideOut], Error])
+
+@router.get(
+    "/hikes/{hike_id}/rides", response_model=Union[List[RideOut], Error]
+)
 def get_all(
     hike_id: int,
     account_data: dict = Depends(authenticator.get_current_account_data),
@@ -30,7 +34,10 @@ def get_all(
 ):
     return repo.get_all(hike_id)
 
-@router.put("/hikes/{hike_id}/rides/{ride_id}", response_model=Union[RideOut, Error])
+
+@router.put(
+    "/hikes/{hike_id}/rides/{ride_id}", response_model=Union[RideOut, Error]
+)
 def update_ride(
     hike_id: int,
     ride_id: int,
@@ -40,6 +47,7 @@ def update_ride(
 ) -> Union[Error, RideOut]:
     user_id = account_data["user_id"]
     return repo.update(hike_id, ride_id, ride, user_id)
+
 
 @router.delete("/hikes/{hike_id}/rides/{ride_id}", response_model=bool)
 def delete_ride(
@@ -51,7 +59,11 @@ def delete_ride(
     user_id = account_data["user_id"]
     return repo.cancel_ride(hike_id, ride_id, user_id)
 
-@router.post("/hikes/{hike_id}/rides/{ride_id}/riders", response_model=Union[RiderOut, Error])
+
+@router.post(
+    "/hikes/{hike_id}/rides/{ride_id}/riders",
+    response_model=Union[RiderOut, Error],
+)
 def create_rider(
     hike_id: int,
     ride_id: int,
@@ -62,6 +74,7 @@ def create_rider(
     rider_id = account_data["user_id"]
     # return repo.create_rider(hike_id, ride_id, rider, rider_id) # DELETE THIS LINE!!!
     return repo.create_rider(hike_id, ride_id, rider_id)
+
 
 @router.delete("/hikes/{hike_id}/rides/{ride_id}/riders", response_model=bool)
 def delete_rider(

@@ -23,10 +23,12 @@ class RideOut(BaseModel):
     meetup_location: Optional[str]
     hike_event: int
 
+
 # class RiderIn(BaseModel): #PLACEHOLDER UNTIL VALUE FROM USER AUTH IS CALLED
 #     rider_id: int
 
 # CHANGE ALL INSTANCES OF RIDER IN
+
 
 class RiderOut(BaseModel):
     rider_id: int
@@ -34,9 +36,11 @@ class RiderOut(BaseModel):
 
 
 class RideRepository:
-    def update(self, hike_id: int, ride_id: int, ride: RideIn, user_id: int) -> Union[RideOut, Error]:
+    def update(
+        self, hike_id: int, ride_id: int, ride: RideIn, user_id: int
+    ) -> Union[RideOut, Error]:
         try:
-        # Connect the database
+            # Connect the database
             with pool.connection() as conn:
                 # Get a cursor (something to run SQL with)
                 with conn.cursor() as db:
@@ -47,15 +51,14 @@ class RideRepository:
                         FROM ride
                         WHERE hike_event = %s AND ride_id = %s;
                         """,
-                        [
-                            hike_id,
-                            ride_id
-                        ]
+                        [hike_id, ride_id],
                     )
                     try:
                         (_, _) = result.fetchone()
                     except TypeError:
-                        return {"message": "Ride not associated with specified hike"}
+                        return {
+                            "message": "Ride not associated with specified hike"
+                        }
                     # Run our SELECT statement
                     result = db.execute(
                         """
@@ -71,18 +74,23 @@ class RideRepository:
                             ride.meetup_location,
                             hike_id,
                             ride_id,
-                            user_id
-                        ]
+                            user_id,
+                        ],
                     )
                     old_data = ride.dict()
-                    return RideOut(ride_id=ride_id, hike_event=hike_id, driver_id=user_id, **old_data)
+                    return RideOut(
+                        ride_id=ride_id,
+                        hike_event=hike_id,
+                        driver_id=user_id,
+                        **old_data
+                    )
         except Exception as e:
             print(e)
             return {"message": "Could not update ride"}
 
     def get_all(self, hike_id: int) -> Union[Error, List[RideOut]]:
         try:
-        # Connect the database
+            # Connect the database
             with pool.connection() as conn:
                 # Get a cursor (something to run SQL with)
                 with conn.cursor() as db:
@@ -96,7 +104,7 @@ class RideRepository:
                         """,
                         [
                             hike_id,
-                        ]
+                        ],
                     )
                     return [
                         RideOut(
@@ -126,10 +134,7 @@ class RideRepository:
                         FROM hikes_users
                         WHERE user_id = %s AND hike_id = %s;
                         """,
-                        [
-                            driver_id,
-                            hike_id
-                        ]
+                        [driver_id, hike_id],
                     )
                     try:
                         (_, _) = result.fetchone()
@@ -150,19 +155,24 @@ class RideRepository:
                             ride.meetup_time,
                             ride.meetup_location,
                             hike_id,
-                        ]
+                        ],
                     )
                     ride_id = result.fetchone()[0]
                     # Return new data
                     old_data = ride.dict()
-                    return RideOut(ride_id=ride_id, driver_id=driver_id, hike_event=hike_id, **old_data)
+                    return RideOut(
+                        ride_id=ride_id,
+                        driver_id=driver_id,
+                        hike_event=hike_id,
+                        **old_data
+                    )
         except Exception as e:
             print(e)
             return {"message": "Could not create ride"}
 
     def cancel_ride(self, hike_id: int, ride_id: int, user_id: int) -> bool:
         try:
-        # Connect the database
+            # Connect the database
             with pool.connection() as conn:
                 # Get a cursor (something to run SQL with)
                 with conn.cursor() as db:
@@ -173,10 +183,7 @@ class RideRepository:
                         FROM ride
                         WHERE hike_event = %s AND ride_id = %s;
                         """,
-                        [
-                            hike_id,
-                            ride_id
-                        ]
+                        [hike_id, ride_id],
                     )
                     try:
                         (_, _) = result.fetchone()
@@ -193,15 +200,17 @@ class RideRepository:
                             hike_id,
                             ride_id,
                             user_id,
-                        ]
+                        ],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-    def create_rider(self, hike_id: int, ride_id: int, rider_id: int) -> RiderOut:
-    # def create_rider(self, hike_id: int, ride_id: int, rider: RiderIn, rider_id: int) -> RiderOut: # DELETE THIS LINE!!!
+    def create_rider(
+        self, hike_id: int, ride_id: int, rider_id: int
+    ) -> RiderOut:
+        # def create_rider(self, hike_id: int, ride_id: int, rider: RiderIn, rider_id: int) -> RiderOut: # DELETE THIS LINE!!!
         try:
             # Connect the database
             with pool.connection() as conn:
@@ -214,15 +223,14 @@ class RideRepository:
                         FROM ride
                         WHERE ride_id = %s AND hike_event = %s;
                         """,
-                        [
-                            ride_id,
-                            hike_id
-                        ]
+                        [ride_id, hike_id],
                     )
                     try:
                         (_, _) = result.fetchone()
                     except TypeError:
-                        return {"message": "Specified ride does not exist for hike"}
+                        return {
+                            "message": "Specified ride does not exist for hike"
+                        }
                     result = db.execute(
                         """
                         SELECT user_id
@@ -230,10 +238,7 @@ class RideRepository:
                         FROM hikes_users
                         WHERE user_id = %s AND hike_id = %s;
                         """,
-                        [
-                            rider_id,
-                            hike_id
-                        ]
+                        [rider_id, hike_id],
                     )
                     try:
                         (_, _) = result.fetchone()
@@ -248,10 +253,7 @@ class RideRepository:
                             (%s, %s)
                         RETURNING rider_id, trip_id;
                         """,
-                        [
-                            rider_id,
-                            ride_id
-                        ]
+                        [rider_id, ride_id],
                     )
                     rider_id = result.fetchone()[0]
                     return RiderOut(rider_id=rider_id, trip_id=ride_id)
@@ -261,7 +263,7 @@ class RideRepository:
 
     def unjoin_ride(self, hike_id: int, ride_id: int, rider_id: int) -> bool:
         try:
-        # Connect the database
+            # Connect the database
             with pool.connection() as conn:
                 # Get a cursor (something to run SQL with)
                 with conn.cursor() as db:
@@ -272,10 +274,7 @@ class RideRepository:
                         FROM ride
                         WHERE hike_event = %s AND ride_id = %s;
                         """,
-                        [
-                            hike_id,
-                            ride_id
-                        ]
+                        [hike_id, ride_id],
                     )
                     try:
                         (_, _) = result.fetchone()
@@ -289,10 +288,7 @@ class RideRepository:
                         FROM ride
                         WHERE ride_id = %s AND hike_event = %s;
                         """,
-                        [
-                            ride_id,
-                            hike_id
-                        ]
+                        [ride_id, hike_id],
                     )
                     try:
                         (_, _) = result.fetchone()
@@ -306,10 +302,7 @@ class RideRepository:
                         FROM ride_users
                         WHERE rider_id = %s AND trip_id = %s;
                         """,
-                        [
-                            rider_id,
-                            ride_id
-                        ]
+                        [rider_id, ride_id],
                     )
                     try:
                         (_, _) = result.fetchone()
@@ -322,10 +315,7 @@ class RideRepository:
                         DELETE FROM ride_users
                         WHERE rider_id = %s AND trip_id = %s;
                         """,
-                        [
-                            rider_id,
-                            ride_id
-                        ]
+                        [rider_id, ride_id],
                     )
                     return True
         except Exception as e:
