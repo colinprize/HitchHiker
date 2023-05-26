@@ -51,3 +51,12 @@ def create_rider(
     repo: RideRepository = Depends(),
 ):
     return repo.create_rider(hike_id, ride_id, rider)
+
+@router.delete("/hikes/{hike_id}/rides/{ride_id}/riders/{rider_id}", response_model=bool)
+def delete_rider(
+    hike_id: int,
+    ride_id: int,
+    rider_id: int,
+    repo: RideRepository = Depends(),
+) -> bool:
+    return repo.unjoin_ride(hike_id, ride_id, rider_id)

@@ -211,6 +211,7 @@ class RideRepository:
                             ride_id
                         ]
                     )
+                    return True
         except Exception as e:
             print(e)
             return False
@@ -272,3 +273,76 @@ class RideRepository:
         except Exception as e:
             print(e)
             return {"message": "Could not join ride"}
+
+    def unjoin_ride(self, hike_id: int, ride_id: int, rider_id: int) -> bool:
+        try:
+        # Connect the database
+            with pool.connection() as conn:
+                # Get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT hike_event
+                            , ride_id
+                        FROM ride
+                        WHERE hike_event = %s AND ride_id = %s;
+                        """,
+                        [
+                            hike_id,
+                            ride_id
+                        ]
+                    )
+                    try:
+                        (_, _) = result.fetchone()
+                    except TypeError:
+                        print("Ride not associated with specified hike")
+                        return False
+                    result = db.execute(
+                        """
+                        SELECT ride_id
+                            , hike_event
+                        FROM ride
+                        WHERE ride_id = %s AND hike_event = %s;
+                        """,
+                        [
+                            ride_id,
+                            hike_id
+                        ]
+                    )
+                    try:
+                        (_, _) = result.fetchone()
+                    except TypeError:
+                        print("Specified ride does not exist for hike")
+                        return False
+                    result = db.execute(
+                        """
+                        SELECT rider_id
+                            , trip_id
+                        FROM ride_users
+                        WHERE rider_id = %s AND trip_id = %s;
+                        """,
+                        [
+                            rider_id,
+                            ride_id
+                        ]
+                    )
+                    try:
+                        (_, _) = result.fetchone()
+                    except TypeError:
+                        print("User does not belong to ride")
+                        return False
+                    # Run our DELETE statement
+                    result = db.execute(
+                        """
+                        DELETE FROM ride_users
+                        WHERE rider_id = %s AND trip_id = %s;
+                        """,
+                        [
+                            rider_id,
+                            ride_id
+                        ]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
