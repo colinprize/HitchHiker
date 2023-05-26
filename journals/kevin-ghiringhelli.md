@@ -8,39 +8,30 @@ At least one ah-ha! moment that you had during your coding, however small
 Keep your journal in reverse chronological order. Always put new entries at the top.
 
 
-## July 9, 2021
+## 5/23
+Pair programmed with Jonathan and helped him figure out an issue we were seeing with the "update user" function in backend auth.  Also started on Emergency Contact endpoint
 
-Today, I worked on:
+Aha moment- figuring out how to pass the hashed password through to our update user function
 
-* Getting a customer's data for the account page
-  with Asa
+## 5/22
+Pair programmed with Jonathan and made good progress on backend Auth
 
-Asa and I wrote some SQL. We tested it out with
-Insomnia and the UI. We had to coordinate with
-Petra who was working on the GHI with Azami.
+## 5/20
+Managed to complete delete user and get one user functions that Jonathan and I struggled with during the week
 
-Today, I found the F2/Rename symbol functionality
-in Visual Studio Code! It allows me to rename a
-variable without causing bugs. I am going to be
-using this a lot!
+## 5/18
+We finished building our tables and finished delgating tasks, and got all of our issues upload to gitlab
 
-## July 7, 2021
 
-Today, I worked on:
+## 5/17
+We got our database connected and continued building our tables
+Began working on user endpoints with Jonathan
 
-* Signing up a customer with Petra
+Aha moment- was really cool to see the database get connected and see data get posted to our database
 
-Petra and I had a hard time figuring out the logic
-for what happens when a customer signs up. We
-finally came to the conclusion that not only did we
-have to create the `User` record, but we also needed
-to create associated preference records **and** had
-to log them in.
+## 5/16
+We built our docker compose file, and began to break our project into tasks and discuss how things would be delegated
+Jonathan and I began building a table
 
-Today, database transactions finally clicked. It
-happened while we were trying to insert the
-preferences for the customer. We had a bug in the
-code, so the `User` record got created, but none
-of the preferences. All of the inserts should
-succeed or fail together. So, we used a transaction
-to do that.
+## 5/15
+As a group, we finished deciding how our tables should look and decided on a db to use (postgres)
