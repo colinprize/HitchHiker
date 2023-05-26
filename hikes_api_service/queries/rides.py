@@ -26,12 +26,30 @@ class RideOut(BaseModel):
 
 class RiderIn(BaseModel): #PLACEHOLDER UNTIL VALUE FROM USER AUTH IS CALLED
     rider_id: int
+
+
 # CHANGE ALL INSTANCES OF RIDER IN
 
 class RiderOut(BaseModel):
     rider_id: int
     trip_id: int
 
+class TruckOut(BaseModel):
+#     id: int
+#     name: str
+#     website: str
+#     category: Literal[
+#         "American",
+#         "Asian",
+#         "French",
+#         "Mediterranean",
+#         "Indian",
+#         "Italian",
+#         "Latin",
+#     ]
+#     vegetarian_friendly: bool
+#     owner: UserOut
+    pass
 
 class RideRepository:
     def update(self, hike_id: int, ride_id: int, ride: RideIn) -> Union[RideOut, Error]:
@@ -241,7 +259,8 @@ class RideRepository:
                         INSERT INTO ride_users
                             (rider_id, trip_id)
                         VALUES
-                            (%s, %s);
+                            (%s, %s)
+                        RETURNING rider_id, trip_id;
                         """,
                         [
                             rider.rider_id,
@@ -249,9 +268,7 @@ class RideRepository:
                         ]
                     )
                     rider_id = result.fetchone()[0]
-                    # Return new data
-                    old_data = rider.dict()
-                    return RiderOut(rider_id=rider_id, trip_id=ride_id, **old_data)
+                    return RiderOut(rider_id=rider_id, trip_id=ride_id)
         except Exception as e:
             print(e)
             return {"message": "Could not join ride"}
