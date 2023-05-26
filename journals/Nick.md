@@ -1,3 +1,12 @@
+## May 25, 2023
+
+Today I worked on:
+
+* Completing create and delete endpoints for each rider instance of a given ride
+
+I had to make some changes to my create_rider function which allows a user to join a ride for a given hike.  My Pydantic models were not working the way they should, but I made some changes to the db.execute methods and the RiderOut call so now it is working.  I wrote an unjoin_ride function for the RideRepository which deletes a given instance of the rider object when a user no longer going on the ride.
+
+
 ## May 24, 2023
 
 Today I worked on:

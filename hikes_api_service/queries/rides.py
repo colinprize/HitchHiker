@@ -9,7 +9,7 @@ class Error(BaseModel):
 
 
 class RideIn(BaseModel):
-    driver_id: int
+    # driver_id: int  # REMOVE LATER
     max_riders: int
     meetup_time: datetime
     meetup_location: Optional[str]
@@ -23,10 +23,8 @@ class RideOut(BaseModel):
     meetup_location: Optional[str]
     hike_event: int
 
-
-class RiderIn(BaseModel): #PLACEHOLDER UNTIL VALUE FROM USER AUTH IS CALLED
-    rider_id: int
-
+# class RiderIn(BaseModel): #PLACEHOLDER UNTIL VALUE FROM USER AUTH IS CALLED
+#     rider_id: int
 
 # CHANGE ALL INSTANCES OF RIDER IN
 
@@ -34,25 +32,9 @@ class RiderOut(BaseModel):
     rider_id: int
     trip_id: int
 
-class TruckOut(BaseModel):
-#     id: int
-#     name: str
-#     website: str
-#     category: Literal[
-#         "American",
-#         "Asian",
-#         "French",
-#         "Mediterranean",
-#         "Indian",
-#         "Italian",
-#         "Latin",
-#     ]
-#     vegetarian_friendly: bool
-#     owner: UserOut
-    pass
 
 class RideRepository:
-    def update(self, hike_id: int, ride_id: int, ride: RideIn) -> Union[RideOut, Error]:
+    def update(self, hike_id: int, ride_id: int, ride: RideIn, user_id: int) -> Union[RideOut, Error]:
         try:
         # Connect the database
             with pool.connection() as conn:
@@ -81,18 +63,19 @@ class RideRepository:
                         SET max_riders = %s
                             , meetup_time = %s
                             , meetup_location = %s
-                        WHERE hike_event = %s AND ride_id = %s;
+                        WHERE hike_event = %s AND ride_id = %s AND driver_id = %s;
                         """,
                         [
                             ride.max_riders,
                             ride.meetup_time,
                             ride.meetup_location,
                             hike_id,
-                            ride_id
+                            ride_id,
+                            user_id
                         ]
                     )
                     old_data = ride.dict()
-                    return RideOut(ride_id=ride_id, hike_event=hike_id, **old_data)
+                    return RideOut(ride_id=ride_id, hike_event=hike_id, driver_id=user_id, **old_data)
         except Exception as e:
             print(e)
             return {"message": "Could not update ride"}
@@ -130,7 +113,7 @@ class RideRepository:
             print(e)
             return {"message": "Could not get all rides"}
 
-    def create(self, hike_id: int, ride: RideIn) -> RideOut:
+    def create(self, hike_id: int, ride: RideIn, driver_id: int) -> RideOut:
         try:
             # Connect the database
             with pool.connection() as conn:
@@ -144,7 +127,7 @@ class RideRepository:
                         WHERE user_id = %s AND hike_id = %s;
                         """,
                         [
-                            ride.driver_id,
+                            driver_id,
                             hike_id
                         ]
                     )
@@ -162,7 +145,7 @@ class RideRepository:
                         RETURNING ride_id;
                         """,
                         [
-                            ride.driver_id,
+                            driver_id,
                             ride.max_riders,
                             ride.meetup_time,
                             ride.meetup_location,
@@ -172,12 +155,12 @@ class RideRepository:
                     ride_id = result.fetchone()[0]
                     # Return new data
                     old_data = ride.dict()
-                    return RideOut(ride_id=ride_id, hike_event=hike_id, **old_data)
+                    return RideOut(ride_id=ride_id, driver_id=driver_id, hike_event=hike_id, **old_data)
         except Exception as e:
             print(e)
             return {"message": "Could not create ride"}
 
-    def cancel_ride(self, hike_id: int, ride_id: int) -> bool:
+    def cancel_ride(self, hike_id: int, ride_id: int, user_id: int) -> bool:
         try:
         # Connect the database
             with pool.connection() as conn:
@@ -204,11 +187,12 @@ class RideRepository:
                     result = db.execute(
                         """
                         DELETE FROM ride
-                        WHERE hike_event = %s AND ride_id = %s;
+                        WHERE hike_event = %s AND ride_id = %s  AND driver_id = %s;
                         """,
                         [
                             hike_id,
-                            ride_id
+                            ride_id,
+                            user_id,
                         ]
                     )
                     return True
@@ -216,7 +200,8 @@ class RideRepository:
             print(e)
             return False
 
-    def create_rider(self, hike_id: int, ride_id: int, rider: RiderIn) -> RiderOut:
+    def create_rider(self, hike_id: int, ride_id: int, rider_id: int) -> RiderOut:
+    # def create_rider(self, hike_id: int, ride_id: int, rider: RiderIn, rider_id: int) -> RiderOut: # DELETE THIS LINE!!!
         try:
             # Connect the database
             with pool.connection() as conn:
@@ -246,7 +231,7 @@ class RideRepository:
                         WHERE user_id = %s AND hike_id = %s;
                         """,
                         [
-                            rider.rider_id,
+                            rider_id,
                             hike_id
                         ]
                     )
@@ -264,7 +249,7 @@ class RideRepository:
                         RETURNING rider_id, trip_id;
                         """,
                         [
-                            rider.rider_id,
+                            rider_id,
                             ride_id
                         ]
                     )
