@@ -1,6 +1,7 @@
 import os
 from fastapi import Depends
 from jwtdown_fastapi.authentication import Authenticator
+from datetime import timedelta
 from queries.users import UserRepository, UserOut, UserOutWithPassword
 
 
@@ -32,4 +33,6 @@ class UserAuthenicator(Authenticator):
         return user.username, UserOut(**user.dict())
 
 
-authenticator = UserAuthenicator(os.environ["SIGNING_KEY"])
+exp_override = timedelta(hours=12)
+
+authenticator = UserAuthenicator(os.environ["SIGNING_KEY"], exp=exp_override)
