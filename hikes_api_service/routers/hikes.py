@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Response
 from queries.hikes import HikeIn, HikeOut, HikeRepository, Error, UserHikesRepository, HikeUser
 from authenticator import authenticator
 from typing import Union, List
-
+from pydantic import ValidationError
 
 router = APIRouter()
 
@@ -83,3 +83,15 @@ def unjoin_hike(
     repo: UserHikesRepository = Depends(),
 ) -> bool:
     return repo.delete(hike_id, user_id)
+
+@router.get("/users/{user_id}/hikes", response_model=Union[List[HikeOut], Error])
+def get_user_hikes(
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    repo: HikeRepository = Depends()
+):
+    try:
+        user_id = account_data["user_id"]
+        return repo.get_user_hikes(user_id)
+    except ValidationError as e:
+        print(e)
+        raise

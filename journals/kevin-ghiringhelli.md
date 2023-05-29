@@ -8,6 +8,15 @@ At least one ah-ha! moment that you had during your coding, however small
 Keep your journal in reverse chronological order. Always put new entries at the top.
 
 
+
+## 5/25
+Finally finished emergency contact features.   Had to create a new function to return a specific emergency contact, and then pass along the user_id from that contact and check if it matches the user id of the logged in user.  It took a while but once it finally worked was my "aha moment"
+
+Also began working on implementing the ability for a user to get a list of every hike they've signed up for
+
+## 5/24
+Continued working on Emergency Contact endpoints.  Got 98% of the way done, just need to properly protect the edit emergency contact feature so that users can only edit their own
+
 ## 5/23
 Pair programmed with Jonathan and helped him figure out an issue we were seeing with the "update user" function in backend auth.  Also started on Emergency Contact endpoint
 
