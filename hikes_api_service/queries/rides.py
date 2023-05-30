@@ -36,6 +36,38 @@ class RiderOut(BaseModel):
 
 
 class RideRepository:
+    def get_one(self, ride_id:int) -> Optional[RideOut]:
+        try:
+            with pool.connection() as connection:
+                with connection.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT ride_id
+                            , driver_id
+                            , max_riders
+                            , meetup_time
+                            , meetup_location
+                            , hike_event
+                        FROM ride
+                        WHERE ride_id = %s
+                        """,
+                        [ride_id]
+                    )
+                    print(result)
+                    record = result.fetchone()
+                    return self.record_to_ride_out(record)
+        except Exception: 
+            return {"message": "cannot retrieve ride"}  
+    def record_to_ride_out(self, record):
+        return RideOut(
+            ride_id=record[0],
+            driver_id=record[1],
+            max_riders=record[2],
+            meetup_time=record[3],
+            meetup_location=record[4],
+            hike_event=record[5]
+        )
+    
     def update(
         self, hike_id: int, ride_id: int, ride: RideIn, user_id: int
     ) -> Union[RideOut, Error]:
@@ -283,20 +315,6 @@ class RideRepository:
                         return False
                     result = db.execute(
                         """
-                        SELECT ride_id
-                            , hike_event
-                        FROM ride
-                        WHERE ride_id = %s AND hike_event = %s;
-                        """,
-                        [ride_id, hike_id],
-                    )
-                    try:
-                        (_, _) = result.fetchone()
-                    except TypeError:
-                        print("Specified ride does not exist for hike")
-                        return False
-                    result = db.execute(
-                        """
                         SELECT rider_id
                             , trip_id
                         FROM ride_users
@@ -321,3 +339,23 @@ class RideRepository:
         except Exception as e:
             print(e)
             return False
+    
+    def get_riders(self, trip_id:int) -> Union[List[int], Error]:
+        try:
+            # Connect the database
+            with pool.connection() as conn:
+                # Get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT rider_id
+                        FROM ride_users
+                        WHERE trip_id = %s
+                        """,
+                        [trip_id]
+                    )
+                    rider_ids = [record[0] for record in db.fetchall()]
+                    return rider_ids
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get rider"}

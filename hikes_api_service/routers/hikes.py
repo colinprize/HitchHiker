@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Response
 from queries.hikes import HikeIn, HikeOut, HikeRepository, Error, UserHikesRepository, HikeUser
 from authenticator import authenticator
 from typing import Union, List
-
+from pydantic import ValidationError
 
 router = APIRouter()
 
@@ -73,13 +73,33 @@ def get_all_hikes(
 @router.post("/userhikes/")
 def sign_up_for_hike(
     HikeUser: HikeUser,
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: UserHikesRepository = Depends()) -> Union[HikeUser, Error]:
     return repo.sign_up(HikeUser)
 
-@router.delete("/userhikes/{user_id}/{hike_id}", response_model=bool)
+@router.delete("/userhikes/{user_id}/{hike_id}", response_model=Union[bool, dict])
 def unjoin_hike(
     hike_id: int,
     user_id: int,
+    response: Response,
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: UserHikesRepository = Depends(),
 ) -> bool:
-    return repo.delete(hike_id, user_id)
+    account_id = account_data["user_id"]
+    if account_id == user_id:
+        return repo.delete(hike_id, user_id)
+    else:
+        response.status = 401
+        return {"message": "Unauthorized: ID doesn't match current user"}
+
+@router.get("/users/{user_id}/hikes", response_model=Union[List[HikeOut], Error])
+def get_user_hikes(
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    repo: HikeRepository = Depends()
+):
+    try:
+        user_id = account_data["user_id"]
+        return repo.get_user_hikes(user_id)
+    except ValidationError as e:
+        print(e)
+        raise
