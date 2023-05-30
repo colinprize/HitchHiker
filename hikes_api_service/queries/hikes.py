@@ -248,14 +248,13 @@ class UserHikesRepository:
                 with connection.cursor() as db:
                     db.execute(
                         """
-                        DELETE from hikes_users
-                        WHERE hike_id = %s
-                        AND user_id = %s
+                        DELETE FROM hikes_users
+                        WHERE  user_id = %s AND hike_id = %s
                         """,
 
                         [
-                        hike_id,
-                        user_id
+                        user_id,
+                        hike_id
                         ]
                     )
                     return True
