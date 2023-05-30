@@ -52,6 +52,39 @@ class HikeRepository:
             print(e)
             return {"message": "get didn't work"}
 
+    def get_user_hikes(self, user_id: int) -> Union[List[HikeOut], Error]:
+        try:
+            with pool.connection() as connection:
+                with connection.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT hike.*
+                        FROM hikes_users
+                        JOIN hike on hikes_users.hike_id = hike.hike_id
+                        WHERE hikes_users.user_id = %s;
+                        """,
+                        [user_id]
+                    )
+                    result = db.fetchall()
+                    if not result:
+                        return Error(message="User is not signed up for any hikes")
+                    return [
+                            HikeOut(
+                                hike_id=record[0],
+                                trail_name=record[1],
+                                image_url=record[2],
+                                date_time=record[3],
+                                organizer_id=record[4],
+                                hike_description=record[5],
+                                max_hikers=record[6],
+                            )
+                            for record in result
+                        ]
+
+        except Exception as e:
+            print(e)
+            return {"Message": "Unable to return your hikes"}
+
     def create(self, hike: HikeIn, organizer_id:int) -> HikeOut:
         try:
             #connect the database
@@ -215,14 +248,13 @@ class UserHikesRepository:
                 with connection.cursor() as db:
                     db.execute(
                         """
-                        DELETE from hikes_users
-                        WHERE hike_id = %s
-                        AND user_id = %s
+                        DELETE FROM hikes_users
+                        WHERE  user_id = %s AND hike_id = %s
                         """,
 
                         [
-                        hike_id,
-                        user_id
+                        user_id,
+                        hike_id
                         ]
                     )
                     return True
