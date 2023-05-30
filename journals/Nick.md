@@ -1,6 +1,6 @@
 ## May 26, 2023
 
-Today I worked in:
+Today I worked on:
 
 * Added authenticator account data to all ride router and query functions
 * Overrode token expiration time in authenticator.py
