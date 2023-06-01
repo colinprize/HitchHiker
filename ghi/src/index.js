@@ -9,12 +9,11 @@ import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
-    {/* <BrowserRouter basename="/">
-      <AuthProvider baseUrl={ProcessingInstruction.env.REACT_APP_HIKES_API_SERVICE_API_HOST}>
+    <BrowserRouter basename="/">
+      <AuthProvider baseUrl={process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}>
         <App />
-      </AuthProvider>  
-    </BrowserRouter> */}
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
