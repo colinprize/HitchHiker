@@ -12,7 +12,7 @@ root.render(
     <BrowserRouter basename="/">
       <AuthProvider baseUrl={process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}>
         <App />
-      </AuthProvider>  
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
