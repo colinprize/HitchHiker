@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-
 function TailwindInput(props) {
-
 
   return (
     <div className={props.colSpan}>
@@ -40,8 +38,11 @@ function CreateRideForm() {
   const [region, setRegion] = useState("");
   const [postalCode, setPostalCode] = useState("");
 
-
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {};
+    data.
+  }
   return (
     <>
       <div className="flex items-center justify-center">
