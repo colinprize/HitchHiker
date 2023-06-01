@@ -1,33 +1,15 @@
 import { useState } from 'react';
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function CreateHikeForm() {
     const [trail_name, setTrailName] = useState("");
     const [image_url, setURL] = useState("");
     const [date_time, setDateTime] = useState("");
-    const [organizer_id, setOrganizerID] = useState("")
+    // const [organizer_id, setOrganizerID] = useState("")
     const [hike_description, setHikeDescription] = useState("");
     const [max_hikers, setMaxHikers] = useState("");
+    const { token } = useToken();
 
-
-    const handleTrailChange = (event) => {
-        const value = event.target.value;
-        setTrailName(value);
-    }
-
-    const handleUrlChange = (event) => {
-        const value = event.target.value;
-        setURL(value);
-    }
-
-    const DateTimeChange = (event) => {
-        const value = event.target.value;
-        setDateTime(value);
-    }
-
-    const HikeDescriptionChange = (event) => {
-        const value = event.target.value;
-        setHikeDescription(value);
-    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -35,7 +17,7 @@ function CreateHikeForm() {
         data.trail_name = trail_name;
         data.image_url = image_url;
         data.date_time = date_time;
-        data.organizer_id = organizer_id;
+        // data.organizer_id = organizer_id;
         data.hike_description = hike_description;
         data.max_hikers = max_hikers;
 
@@ -46,6 +28,7 @@ function CreateHikeForm() {
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
             },
         };
 
@@ -55,7 +38,7 @@ function CreateHikeForm() {
             setTrailName("");
             setURL("");
             setDateTime("");
-            setOrganizerID("");
+            // setOrganizerID("");
             setHikeDescription("");
             setMaxHikers("");
         }
@@ -79,7 +62,7 @@ function CreateHikeForm() {
                                     <div className="mt-2">
                                         <input
                                             required
-                                            value={""}
+                                            value={trail_name}
                                             onChange={e => setTrailName(e.target.value)}
                                             type="text"
                                             name="trail_name"
@@ -97,7 +80,7 @@ function CreateHikeForm() {
                                     <div className="mt-2">
                                         <input
                                             required
-                                            value={""}
+                                            value={image_url}
                                             onChange={e => setURL(e.target.value)}
                                             type="text"
                                             name="image_url"
@@ -123,7 +106,7 @@ function CreateHikeForm() {
                                         />
                                     </div>
                                 </div>
-                                <div className="sm:col-span-2">
+                                {/* <div className="sm:col-span-2">
                                     <label htmlFor="organizer_id" className="block text-sm font-medium leading-6 text-gray-900">Organizer ID</label>
                                     <div className="mt-2">
                                         <input
@@ -137,7 +120,7 @@ function CreateHikeForm() {
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="sm:col-span-2">
                                     <label htmlFor="hike_description" className="block text-sm font-medium leading-6 text-gray-900">
                                         Hike Description
@@ -145,7 +128,7 @@ function CreateHikeForm() {
                                     <div className="mt-2">
                                         <input
                                             required
-                                            value={""}
+                                            value={hike_description}
                                             onChange={e => setHikeDescription(e.target.value)}
                                             type="text"
                                             name="hike_description"
