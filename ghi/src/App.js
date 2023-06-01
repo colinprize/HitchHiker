@@ -18,14 +18,12 @@ export default function App() {
           {/* <Route path="/" element={<LoginForm />} /> */}
           <Route path="/" element={<CreateRideForm />} />
           {/* <Route path="/" element={<UserFormExample />} /> */}
-          {/* <Nav />
-        <div className="container">
-
-
-        </div> */}
+          {/* <Nav /> */}
         </Routes>
+
       </div>
     </BrowserRouter >
+
     // <AuthProvider>
     //   <BrowserRouter>
     //     <Nav />
