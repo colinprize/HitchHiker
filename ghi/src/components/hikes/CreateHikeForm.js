@@ -21,7 +21,7 @@ function CreateHikeForm() {
         data.max_hikers = max_hikers;
 
 
-        const url = 'http://localhost:8000/hikes';
+        const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes`;
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
