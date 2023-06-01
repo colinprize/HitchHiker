@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function TailwindInput(props) {
 
@@ -37,16 +38,73 @@ function CreateRideForm() {
   const [city, setCity] = useState("");
   const [region, setRegion] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  const [hikeDetails, setHikeDetails] = useState("");
+  const { token } = useToken();
+
+
+  useEffect(() => {
+    const loadHike = async () => {
+      const fetchOptions = {
+        credentials: "include",
+        method: "get",
+        headers: {
+
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await fetch(`${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/1`, fetchOptions);
+      if (response.ok) {
+        const data = await response.json();
+        setHikeDetails(data);
+      };
+
+    };
+    loadHike();
+  }, [setHikeDetails]);
+
+  console.log(hikeDetails);
+
+  const resetStateVals = () => {
+    setUserId("");
+    setHikeId("");
+    setMaxRiders("");
+    setMeetupTime("");
+    setMeetupLocation("");
+    setCity("");
+    setRegion("");
+    setPostalCode("");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {};
-    data.
-  }
+    data.max_riders = maxRiders;
+    data.meetup_time = meetupTime;
+    data.meetup_location = meetupLocation;
+
+    const fetchOptions = {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hikeId}/rides`;
+    const response = await fetch(url, fetchOptions);
+
+    if (response.ok) {
+      const newRide = await response.json();
+      console.log(newRide);
+      resetStateVals();
+    };
+  };
+
   return (
     <>
       <div className="flex items-center justify-center">
-        <form className="bg-pine-glade shadow-md rounded px-20 pt-6 pb-8 m-4">
+        <form onSubmit={handleSubmit} className="bg-pine-glade shadow-md rounded px-20 pt-6 pb-8 m-4">
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-2xl font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Ride Details</h2>
