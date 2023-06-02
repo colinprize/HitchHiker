@@ -1,9 +1,28 @@
+## June 1, 2023
+
+Today I worked on:
+
+* Completed MVP of CreateRideForm.js
+
+I incorporated the jwtdown-for-react `useToken` hook to get the user token and add it to the headers of any fetch request to our API.  I completed the CreateRideForm.js component.  There are some changes I will want to make depending on the overall architecture of our front-end application.  Specifically this includes removing the hike_id form field.  That value should instead be passed either as a Route param or a prop if the Rides components all become children of Hikes.  I had to manipulate the datetime value for the hike object associated with a given id to create a value for the meetup time of a given ride.  This is very convoluted code.  I will either change the datatype in the SQL table to just time or get the needed year, month, and day values as props from whichever Hike component calls anything related to Rides.
+
+## May 31, 2023
+
+Today I worked on:
+
+* Styling the CreateRideForm component.
+* Installation of the tailwindcss/forms plugin
+
+It became apparent that unlike Bootstrap, Tailwind CSS does not have out-of-the-box form input styling classes.  In our ghi Docker container, I ran `npm install -D @tailwindcss/forms` and added the form plugin to the plugins section of our tailwind.config.js file.  I utilized some styling classes from the Tailwind UI form for my form that creates a new ride instance.
+
 ## May 30, 2023
 
 Today I worked on:
 
 * Tailwinds CSS documentation
 * Start of form component
+
+I went through the Tailwinds CSS documentation.  I read through the Getting Started Section and the Core Concepts section.
 
 ## May 26, 2023
 
