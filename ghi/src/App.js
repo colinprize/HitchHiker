@@ -8,9 +8,10 @@ import CreateHikeForm from "./components/hikes/CreateHikeForm";
 import ListHikes from "./screen_view/Hikes";
 import CreateRideForm from "./CreateRideForm";
 import UserFormExample from "./UserFormExample";
-import image from "./images/FE0zrlrXsAcFgjl.jpg"import CreateRideForm from "./CreateRideForm";
-import UserFormExample from "./UserFormExample";
-import image from "./images/FE0zrlrXsAcFgjl.jpg"
+import image from "./images/FE0zrlrXsAcFgjl.jpg";
+// import UserFormExample from "./UserFormExample";
+
+import RidePopupStart from "./ridePopUp/startPageTest";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
       <Route path="/createhike" element={<CreateHikeForm />} />
       <Route path="/listhikes" element={<ListHikes />} />
       <Route path="/create_ride" element={<CreateRideForm />} />
+      <Route path="/popup_test" element={<RidePopupStart />} />
     </Routes>
   )
 }
