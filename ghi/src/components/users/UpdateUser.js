@@ -1,36 +1,57 @@
 import React from 'react';
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 
-function CreateUser() {
+function UpdateUser() {
     const [fullName, setFullName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [pictureUrl, setPictureUrl] = useState("");
     const [email, setEmail] = useState("");
     const [uniName, setUniName] = useState("");
     const [uniYear, setUniYear] = useState("");
-    const {token, register} = useToken();
-    
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (token) {
-            navigate("/main_page")
-        }
-    }, [token]);
+    const { token, fetchWithCookie } = useToken();
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {}
         data.full_name = fullName;
         data.username = username;
         data.password = password;
+        data.picture_url = pictureUrl;
         data.email = email;
         data.university_name = uniName;
         data.university_year = uniYear;
-        register(data, `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/signup`);
+        console.log(data)
+        const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
+        const response1 = await fetchWithCookie(tokenUrl);
+        const user_id = parseInt(response1.account.user_id);
+
+        const updateUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/users/${user_id}`;
+        const fetchConfig = {
+            credentials: "include",
+            method: "put",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+                headers: { Authorization: `Bearer ${token}` },
+            }
+        }
+        const response = await fetch(updateUrl, fetchConfig)
+        if (response.ok) {
+            console.log(response)
+            setFullName("");
+            setUsername("");
+            setPassword("");
+            setPictureUrl("");
+            setEmail("");
+            setUniName("");
+            setUniYear("");
+        }
     }
+
 
     return (
         <>
@@ -56,6 +77,12 @@ function CreateUser() {
 
                     </div>
                     <div className="items-center mb-4">
+                        <label className="block text-olivine text-md font-bold mb-2" htmlFor="pictureUrl">
+                            Picture Url
+                        </label>
+                        <input value={pictureUrl} onChange={(e) => setPictureUrl(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="pictureUrl" type="text" placeholder="Picture Url" />
+                    </div>
+                    <div className="items-center mb-4">
                         <label className="block text-olivine text-md font-bold mb-2" htmlFor="email">
                             Email
                         </label>
@@ -75,13 +102,13 @@ function CreateUser() {
                     </div>
                     <div className="flex justify-center items-center">
                         <button onClick={handleSubmit} className="bg-olivine hover:bg-beryl-green font-bold py-2 px-20 rounded" type="button">
-                            Sign up
+                            Update Profile
                         </button>
                     </div>
                 </form>
             </div>
         </>
     )
-}
+};
 
-export default CreateUser;
+export default UpdateUser;

@@ -23,6 +23,7 @@ function CreateHikeForm() {
 
         const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes`;
         const fetchConfig = {
+            credentials: "include",
             method: "post",
             body: JSON.stringify(data),
             headers: {
