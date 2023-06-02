@@ -29,8 +29,7 @@ function TailwindInput(props) {
 }
 
 function CreateRideForm() {
-
-  const [userId, setUserId] = useState("");
+  const { token } = useToken();
   const [hikeId, setHikeId] = useState("");
   const [maxRiders, setMaxRiders] = useState("");
   const [meetupTime, setMeetupTime] = useState("");
@@ -38,34 +37,8 @@ function CreateRideForm() {
   const [city, setCity] = useState("");
   const [region, setRegion] = useState("");
   const [postalCode, setPostalCode] = useState("");
-  const [hikeDetails, setHikeDetails] = useState("");
-  const { token } = useToken();
-
-
-  useEffect(() => {
-    const loadHike = async () => {
-      const fetchOptions = {
-        credentials: "include",
-        method: "get",
-        headers: {
-
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await fetch(`${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/1`, fetchOptions);
-      if (response.ok) {
-        const data = await response.json();
-        setHikeDetails(data);
-      };
-
-    };
-    loadHike();
-  }, [setHikeDetails]);
-
-  console.log(hikeDetails);
 
   const resetStateVals = () => {
-    setUserId("");
     setHikeId("");
     setMaxRiders("");
     setMeetupTime("");
@@ -77,28 +50,49 @@ function CreateRideForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {};
-    data.max_riders = maxRiders;
-    data.meetup_time = meetupTime;
-    data.meetup_location = meetupLocation;
-
-    const fetchOptions = {
-      method: "post",
-      body: JSON.stringify(data),
+    let fetchOptions = {
+      credentials: "include",
+      method: "get",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
     };
-
-    const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hikeId}/rides`;
-    const response = await fetch(url, fetchOptions);
-
-    if (response.ok) {
-      const newRide = await response.json();
-      console.log(newRide);
-      resetStateVals();
-    };
+    try {
+      const hikeUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hikeId}`;
+      const getResponse = await fetch(hikeUrl, fetchOptions);
+      if (getResponse.ok) {
+        const data = await getResponse.json();
+        let [meetHours, meetMinutes] = meetupTime.split(":");
+        meetHours = parseInt(meetHours);
+        meetMinutes = parseInt(meetMinutes);
+        let hikeData = data;
+        let hikeDate = new Date(hikeData.date_time);
+        hikeDate.setHours(meetHours);
+        hikeDate.setMinutes(meetMinutes);
+        const postData = {};
+        postData.max_riders = maxRiders;
+        postData.meetup_time = hikeDate;
+        postData.meetup_location = meetupLocation;
+        fetchOptions = {
+          method: "post",
+          body: JSON.stringify(postData),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const ridesUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hikeId}/rides`;
+        const postResponse = await fetch(ridesUrl, fetchOptions);
+        if (postResponse.ok) {
+          const newRide = await postResponse.json();
+          resetStateVals();
+        };
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -111,7 +105,7 @@ function CreateRideForm() {
               <p className="mt-3 text-m leading-8 text-gray-600">Thanks for offering to drive other hikers.  Please enter the details of your ride here.</p>
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
 
-                <TailwindInput
+                {/* <TailwindInput
                   colSpan="sm:col-span-2"
                   htmlFor="userId"
                   labelValue="User ID"
@@ -122,7 +116,7 @@ function CreateRideForm() {
                   id="userId"
                   autoComplete="off"
                   placeholder="userId"
-                />
+                /> */}
 
                 <TailwindInput
                   colSpan="sm:col-span-2"
@@ -219,7 +213,7 @@ function CreateRideForm() {
             </div>
           </div>
           <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button type="reset" className="text-sm font-semibold leading-6 text-gray-900">
+            <button onClick={resetStateVals} type="reset" className="text-sm font-semibold leading-6 text-gray-900">
               Reset
             </button>
             <button
