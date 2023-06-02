@@ -1,3 +1,22 @@
+## May 30, 2023
+
+Today I worked on:
+
+* Tailwinds CSS documentation
+* Start of form component
+
+## May 26, 2023
+
+Today I worked on:
+
+* Added authenticator account data to all ride router and query functions
+* Overrode token expiration time in authenticator.py
+
+I noticed that when testing our API endpoints, the user would get logged out and it was not immediately obvious until there was an error response where there shouldn't be.  I found in the JWTdown for FastAPI documentation that the default expiration can be changed by passing a timedelta object as the value for the `exp` parameter in the authenticator instantiation..
+
+I passed the value for the `user_id` property of `authenticator.get_current_account_data` to each RideRepository method where the Pydantic model had a field for an associated user.  I tested each of the ride API endpoints a submitted a merge request to our main branch on GitLab.
+
+
 ## May 25, 2023
 
 Today I worked on:

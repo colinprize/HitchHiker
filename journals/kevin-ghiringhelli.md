@@ -7,7 +7,14 @@ At least one ah-ha! moment that you had during your coding, however small
 
 Keep your journal in reverse chronological order. Always put new entries at the top.
 
+## 5/31
+Successfully connected to modal to send data to the database.  Aha moment was when I realized I had to use the Authorization: Bearer token header to give my user authorization.  Took a while to figure that out but once I added that one line of code it worked instantly
 
+## 5/30
+Began working on some front end components.  Was able to create a modal for users to enter their emergency contact information.  Still working on implementing the ability to submit data to the database
+
+## 5/26
+Implemented the ability for users to get a list of only hikes that they've signed up for.  Aha moment was struggling with the SQL statement before realizing it was the perfect opportunity for an outer join
 
 ## 5/25
 Finally finished emergency contact features.   Had to create a new function to return a specific emergency contact, and then pass along the user_id from that contact and check if it matches the user id of the logged in user.  It took a while but once it finally worked was my "aha moment"
