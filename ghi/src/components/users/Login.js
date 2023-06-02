@@ -1,6 +1,8 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import CreateUserButton from './CreateUserButton'
 
 const LoginForm = () => {
   const { token, login } = useToken();
@@ -13,10 +15,6 @@ const LoginForm = () => {
       navigate("/main_page")
     }
   }, [token]);
-
-
-  const location = useLocation();
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +29,7 @@ const LoginForm = () => {
             <label className="block text-olivine text-md font-bold mb-2" htmlFor="username">
               Username
             </label>
-            <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="TinaBelcher" />
+            <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="TinaBelcher01" />
           </div>
           <div className="mb-6">
             <label className="block text-olivine text-md font-bold mb-2" htmlFor="password">
@@ -45,16 +43,12 @@ const LoginForm = () => {
               Log in
             </button>
             <a className="inline-block align-baseline font-bold hover:text-olivine px-5" href="#">
-            Forgot Password?
+            Reset Password
             </a>
           </div>
-          {/* <div className="flex items-center justify-between pt-6">
-            <button className=" items-center bg-olivine hover:bg-beryl-green font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-              Create Account
-            </button>
-          </div> */}
         </form>
       </div>
+      <CreateUserButton />
     </>
   );
 };

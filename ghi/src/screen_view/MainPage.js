@@ -1,4 +1,4 @@
-import AddEmergencyContact from "../components/CreateEmergencyContact";
+import AddEmergencyContact from "../components/users/CreateEmergencyContact";
 import ListHikes from "./Hikes";
 import { useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";

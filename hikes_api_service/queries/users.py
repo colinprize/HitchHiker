@@ -14,6 +14,14 @@ class UserIn(BaseModel):
     university_name: str
     university_year: int
 
+# class UpdateUserIn(BaseModel):
+#     full_name: str
+#     username: str
+#     # password: str
+#     picture_url: Optional[str]
+#     email: str
+#     university_name: str
+#     university_year: int
 
 class UserOut(BaseModel):
     user_id: int
