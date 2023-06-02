@@ -4,6 +4,27 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 
 
 function HikesColumn(props) {
+    const { token, fetchWithCookie } = useToken()
+    const joinhike = async (hike_id) => {
+        const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
+        const response1 = await fetchWithCookie(tokenUrl);
+        let user_id = parseInt(response1.account.user_id)
+        const data = {}
+        data.hike_id = hike_id
+        data.user_id = user_id
+        const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/userhikes`;
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+        };
+        const response = await fetch(url, fetchConfig);
+        console.log(response)
+
+    };
     return (
         <div className="flex flex-wrap justify-between">
             {props.list.map(hike => {
@@ -17,9 +38,10 @@ function HikesColumn(props) {
                             <div className='p-5'>
                                 <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>{hike.trail_name}</h5>
                                 <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>{hike.hike_description}</p>
-                                <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    onClick={() => joinhike(hike.hike_id)}>
                                     Join Hike
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
