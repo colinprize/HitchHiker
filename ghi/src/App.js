@@ -21,14 +21,14 @@ export default function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/main_page" element={<MainPage />} />
-            <Route path="/create_user" element={<CreateUser />} /> 
+            <Route path="/create_user" element={<CreateUser />} />
             <Route path="/main_page/update_user" element={<UpdateUser />} />
             <Route path="/createhike" element={<CreateHikeForm />} />
             <Route path="/listhikes" element={<ListHikes />} />
             <Route path="/create_ride" element={<CreateRideForm />} />
           </Routes>
-        </AuthProvider> 
-        <Footer />   
+        </AuthProvider>
+        <Footer />
       </BrowserRouter>
     </>
   )
