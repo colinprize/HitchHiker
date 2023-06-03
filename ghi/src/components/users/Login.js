@@ -35,14 +35,14 @@ const LoginForm = () => {
             <label className="block text-olivine text-md font-bold mb-2" htmlFor="password">
               Password
             </label>
-            <input value={password} onChange={(e) => setPassword(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="*************" />
+            <input value={password} style={{ "position": "relative", "z-index": "10" }} onChange={(e) => setPassword(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="*************" />
 
           </div>
           <div className="flex justify-center items-center">
-            <button onClick={handleSubmit} className="bg-olivine hover:bg-beryl-green font-bold py-2 px-20 rounded" type="button">
+            <button onClick={handleSubmit} style={{ "position": "relative", "z-index": "10" }} className="bg-olivine hover:bg-beryl-green font-bold py-2 px-20 rounded" type="button">
               Log in
             </button>
-            <a className="inline-block align-baseline font-bold hover:text-olivine px-5" href="#">
+            <a style={{ "position": "relative", "z-index": "1" }} className="inline-block align-baseline font-bold hover:text-olivine px-5" href="#">
             Reset Password
             </a>
           </div>

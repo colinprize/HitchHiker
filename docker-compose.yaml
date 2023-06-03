@@ -22,7 +22,7 @@ services:
       context: hikes_api_service
       dockerfile: Dockerfile.dev
     ports:
-      - "8000:8000"
+      - "8000:80"
     volumes:
       - ./hikes_api_service:/app
     environment:

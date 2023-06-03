@@ -1,10 +1,11 @@
 import image from "../images/Footer-HitchHiker.png"
+// import "../footer.css";
 
 export default function Footer() {
-    return (
-        <>
-            <footer className="fixed bottom-0 h-40 right-0 left-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${image})`, }}>
-            </footer>
-        </>
+   return (
+   <>
+    <div className="mountain-footer">
+    </div>
+    </>
     )
 }
