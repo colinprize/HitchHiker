@@ -11,7 +11,7 @@ function CreateHikeForm() {
   const [max_hikers, setMaxHikers] = useState("");
   const { token } = useToken();
   // Boolean state variable that calls CreateRide dialog when true
-  const [formSubmitted, setFormSubmitted] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
   // Object state variable that is passed as prop to RideDialogModal
   const [hikeIdForRide, setHikeIdForRide] = useState("");
   const [hikeDateForRide, setHikeDateForRide] = useState("");
@@ -187,7 +187,7 @@ function CreateHikeForm() {
           </div>
         </form>
       </div>
-      <RideDialogModal trigger={formSubmitted} setTrigger={setFormSubmitted}> hikeId={hikeIdForRide} hikeDate={hikeDateForRide}
+      <RideDialogModal trigger={formSubmitted} setTrigger={setFormSubmitted} hikeId={hikeIdForRide} hikeDate={hikeDateForRide}>
         <h3>My Button PopUp</h3>
         <p>This is my button triggered popup</p>
       </RideDialogModal>
