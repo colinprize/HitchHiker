@@ -1,3 +1,9 @@
+## June 2, 2023
+
+Today I worked on:
+
+* Created a modal dialog component that is called on CreateHikeForm submission
+
 ## June 1, 2023
 
 Today I worked on:

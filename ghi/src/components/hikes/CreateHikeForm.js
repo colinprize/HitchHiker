@@ -13,11 +13,10 @@ function CreateHikeForm() {
   // Boolean state variable that calls CreateRide dialog when true
   const [formSubmitted, setFormSubmitted] = useState(false);
   // Object state variable that is passed as prop to RideDialogModal
-  const [hikeIdForRide, setHikeIdForRide] = useState("");
-  const [hikeDateForRide, setHikeDateForRide] = useState("");
+  const [hikeDataForRide, setHikeDataForRide] = useState("");
 
   // Sets state variables to initial values on successful response or form reset
-  const resetStateVals = () => {
+  const resetFormVals = () => {
     setTrailName("");
     setURL("");
     setDate("");
@@ -51,14 +50,11 @@ function CreateHikeForm() {
     console.log(response)
     if (response.ok) {
       const newHike = await response.json();
-      setHikeIdForRide(newHike.hike_id)
-      setHikeDateForRide(date);
+      setHikeDataForRide(newHike)
       setFormSubmitted(true);
-      resetStateVals();
+      resetFormVals();
     }
   }
-
-
 
   return (
     <>
@@ -177,7 +173,7 @@ function CreateHikeForm() {
             </div>
           </div>
           <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button onClick={resetStateVals} type="reset" className="text-sm font-semibold leading-6 text-gray-900">
+            <button onClick={resetFormVals} type="reset" className="text-sm font-semibold leading-6 text-gray-900">
               Reset
             </button>
             <button type="submit"
@@ -187,7 +183,7 @@ function CreateHikeForm() {
           </div>
         </form>
       </div>
-      <RideDialogModal trigger={formSubmitted} setTrigger={setFormSubmitted} hikeId={hikeIdForRide} hikeDate={hikeDateForRide}>
+      <RideDialogModal trigger={formSubmitted} setTrigger={setFormSubmitted} hikeData={hikeDataForRide} resetHikeData={setHikeDataForRide}>
         <h3>My Button PopUp</h3>
         <p>This is my button triggered popup</p>
       </RideDialogModal>

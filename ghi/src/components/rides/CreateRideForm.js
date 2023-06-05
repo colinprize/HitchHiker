@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function TailwindInput(props) {
@@ -29,8 +30,10 @@ function TailwindInput(props) {
 }
 
 function CreateRideForm() {
+
+  const location = useLocation();
+  const navigate = useNavigate();
   const { token } = useToken();
-  const [hikeId, setHikeId] = useState("");
   const [maxRiders, setMaxRiders] = useState("");
   const [meetupTime, setMeetupTime] = useState("");
   const [meetupLocation, setMeetupLocation] = useState("");
@@ -39,7 +42,6 @@ function CreateRideForm() {
   const [postalCode, setPostalCode] = useState("");
 
   const resetStateVals = () => {
-    setHikeId("");
     setMaxRiders("");
     setMeetupTime("");
     setMeetupLocation("");
@@ -48,48 +50,31 @@ function CreateRideForm() {
     setPostalCode("");
   }
 
+  console.log(`location.state.hikeData.hike_id: ${location.state.hikeData.hike_id}`);
+  console.log(`location.state.hikeData.date_time: ${location.state.hikeData.date_time}`);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let fetchOptions = {
-      credentials: "include",
-      method: "get",
-      headers: {
+    try {
+      const postData = {};
+      postData.max_riders = maxRiders;
+      postData.meetup_time = location.state.hikeData.date_time.slice(0, 11) + meetupTime;
+      postData.meetup_location = `${meetupLocation}\n${city}, ${region}  ${postalCode}`;
+      const fetchOptions = {
+        method: "post",
+        body: JSON.stringify(postData),
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      },
-    };
-    try {
-      const hikeUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hikeId}`;
-      const getResponse = await fetch(hikeUrl, fetchOptions);
-      if (getResponse.ok) {
-        const data = await getResponse.json();
-        let [meetHours, meetMinutes] = meetupTime.split(":");
-        meetHours = parseInt(meetHours);
-        meetMinutes = parseInt(meetMinutes);
-        let hikeData = data;
-        let hikeDate = new Date(hikeData.date_time);
-        hikeDate.setHours(meetHours);
-        hikeDate.setMinutes(meetMinutes);
-        const postData = {};
-        postData.max_riders = maxRiders;
-        postData.meetup_time = hikeDate;
-        postData.meetup_location = meetupLocation;
-        fetchOptions = {
-          method: "post",
-          body: JSON.stringify(postData),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const ridesUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hikeId}/rides`;
-        const postResponse = await fetch(ridesUrl, fetchOptions);
-        if (postResponse.ok) {
-          const newRide = await postResponse.json();
-          resetStateVals();
-        };
-      }
+      };
+      const ridesUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${location.state.hikeData.hike_id}/rides`;
+      const postResponse = await fetch(ridesUrl, fetchOptions);
+      if (postResponse.ok) {
+        const newRide = await postResponse.json();
+        resetStateVals();
+        navigate("/");
+      };
     } catch (error) {
       console.error(error);
     }
@@ -102,34 +87,22 @@ function CreateRideForm() {
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-2xl font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Ride Details</h2>
-              <p className="mt-3 text-m leading-8 text-gray-600">Thanks for offering to drive other hikers.  Please enter the details of your ride here.</p>
+              <p className="my-4 text-m leading-8 text-gray-600">Thanks for offering to drive other hikers.  Please enter the details of your ride here.</p>
+              <div className="grid grid-cols-1 border-y border-gray-900/10 py-4 sm:grid-cols-4">
+                <div className="col-span-2">
+                  <h3 className="mt-3 text-lg font-medium leading-7 text-gray-900 sm:truncate sm:text-xl sm:tracking-tight">Hike</h3>
+                </div>
+                <div className="col-span-2">
+                  <p className="mt-3 text-lg italic leading-7 font-normal text-gray-800">{location.state.hikeData.trail_name}</p>
+                </div>
+                <div className="col-span-2">
+                  <h3 className="mt-3 text-lg font-medium leading-7 text-gray-900 sm:truncate sm:text-xl sm:tracking-tight">Date</h3>
+                </div>
+                <div className="col-span-2">
+                  <p className="mt-3 text-lg italic leading-7 font-normal text-gray-800">{new Date(location.state.hikeData.date_time).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })}</p>
+                </div>
+              </div>
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
-
-                {/* <TailwindInput
-                  colSpan="sm:col-span-2"
-                  htmlFor="userId"
-                  labelValue="User ID"
-                  inputValue={userId}
-                  onChange={e => setUserId(e.target.value)}
-                  type="number"
-                  name="userId"
-                  id="userId"
-                  autoComplete="off"
-                  placeholder="userId"
-                /> */}
-
-                <TailwindInput
-                  colSpan="sm:col-span-2"
-                  htmlFor="hikeId"
-                  labelValue="Hike ID"
-                  inputValue={hikeId}
-                  onChange={e => setHikeId(e.target.value)}
-                  type="number"
-                  name="hikeId"
-                  id="hikeId"
-                  autoComplete="off"
-                  placeholder="hikeId"
-                />
 
                 <TailwindInput
                   colSpan="sm:col-span-2"
@@ -212,6 +185,13 @@ function CreateRideForm() {
               </div>
             </div>
           </div>
+
+          {/* BUTTON ALIGNMENT IS OFF!!!! */}
+          <div className="mt-6 flex items-center justify-start gap-x-6">
+            <button onClick={() => { navigate("/") }} type="reset" className="text-sm font-semibold leading-6 text-gray-900">
+              Reset
+            </button>
+          </div>
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button onClick={resetStateVals} type="reset" className="text-sm font-semibold leading-6 text-gray-900">
               Reset
@@ -223,8 +203,8 @@ function CreateRideForm() {
               Save
             </button>
           </div>
-        </form>
-      </div>
+        </form >
+      </div >
     </>
   )
 

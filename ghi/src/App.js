@@ -21,7 +21,7 @@ export default function App() {
     <>
       <BrowserRouter basename="/">
         <AuthProvider baseUrl={process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}>
-          <Routes>
+          <Routes style={{ "position": "relative", "zIndex": "1" }}>
             <Route path="/" element={<LandingPage />} />
             <Route path="/main_page" element={<MainPage />} />
             <Route path="/create_user" element={<CreateUser />} />
@@ -32,7 +32,7 @@ export default function App() {
             <Route path="/popup_test" element={<RidePopupStart />} />
           </Routes>
         </AuthProvider>
-        <Footer />
+        <Footer style={{ "position": "relative", "zIndex": "-1" }} />
       </BrowserRouter>
     </>
   )
