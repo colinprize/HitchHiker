@@ -72,32 +72,36 @@ function AddEmergencyContact(props) {
     return (props.trigger) ? (
         <>
             <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-                <div className="border px-4 py-2">
-                    <h1>{contactId ? 'Update your emergency contact' : 'Please fill out the following emergency contact information!'}</h1>
-                    <br />
-                    <div>
-                        <form onSubmit={handleSubmit} id="emergency-contact-form">
-                            <div>
-                                <input onChange={(e) => setFullName(e.target.value)} value={fullName} placeholder="Full Name" required type="text" name="fullName" id="fullName" />
-                                <label htmlFor="fullName">Full Name</label>
+                <div className="bg-pine-glade shadow-md rounded px-20 pt-6 pb-8 m-4">
+                    <h1
+                        className="text-2xl font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"
+                    >{contactId ? 'Update your emergency contact' : 'Please fill out the following emergency contact information!'}</h1>
+                    <div className="flex items-center justify-center">
+                        <form className="bg-pine-glade shadow-md rounded px-24 pt-6 pb-8 m-10" onSubmit={handleSubmit} id="emergency-contact-form">
+                            <div className="mt-2">
+                                <input onChange={(e) => setFullName(e.target.value)} value={fullName} placeholder="Full Name" required type="text" name="fullName" id="fullName"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                <label htmlFor="fullName" className="block text-sm font-medium leading-6 text-gray-900">Full Name</label>
                             </div>
-                            <div>
-                                <input onChange={(e) => setRelation(e.target.value)} value={relation} placeholder="Relation" required type="text" name="relation" id="relation" />
-                                <label htmlFor="relation">Relation to you</label>
+                            <div className="mt-2">
+                                <input onChange={(e) => setRelation(e.target.value)} value={relation} placeholder="Relation" required type="text" name="relation" id="relation"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                <label htmlFor="relation" className="block text-sm font-medium leading-6 text-gray-900">Relation to you</label>
                             </div>
-                            <div>
-                                <input onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} placeholder="Phone Number" required type="tel" name="phoneNumber" id="phoneNumber" />
-                                <label htmlFor="phoneNumber">Phone Number</label>
+                            <div className="mt-2">
+                                <input onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} placeholder="Phone Number" required type="tel" name="phoneNumber" id="phoneNumber"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                <label htmlFor="phoneNumber" className="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
                             </div>
-                            <div>
-                                <input onChange={(e) => setEmail(e.target.value)} value={email} placeholder="Email" required type="email" name="email" id="email" />
-                                <label htmlFor="email">Email Address</label>
+                            <div className="mt-2">
+                                <input onChange={(e) => setEmail(e.target.value)} value={email} placeholder="Email" required type="email" name="email" id="email"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email Address</label>
                             </div>
-                            <br />
-                            <button className=''> {contactId ? 'Update' : 'Add'} Contact </button>
+                            <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-md hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"> {contactId ? 'Update' : 'Add'} Contact </button>
                         </form>
-                        <div className='flex justify-end'>
-                            <button className='top-0 right-0 px-3 py-2 rounded hover:scale-95 transition text-xl' onClick={() => props.setTrigger(false)}>Close</button>
+                        <div className="mt-6 flex items-center justify-end gap-x-6">
+                            <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-md hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => props.setTrigger(false)}>Close</button>
                         </div>
                         {props.children}
                     </div>

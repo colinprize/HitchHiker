@@ -11,8 +11,8 @@ function CreateUser() {
     const [email, setEmail] = useState("");
     const [uniName, setUniName] = useState("");
     const [uniYear, setUniYear] = useState("");
-    const {token, register} = useToken();
-    
+    const { token, register } = useToken();
+
     const navigate = useNavigate();
     useEffect(() => {
         if (token) {
