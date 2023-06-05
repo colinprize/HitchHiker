@@ -1,17 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import Nav from './components/Nav';
+// // import Nav from './components/Nav';
 import MainPage from "./screen_view/MainPage.js";
-// import ErrorNotification from "./ErrorNotification";
+// // import ErrorNotification from "./ErrorNotification";
 import LandingPage from "./screen_view/LandingPage"
 import CreateUser from "./components/users/CreateUser";
 import Footer from './components/footer';
+import Header from './components/header.js';
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import UpdateUser from './components/users/UpdateUser';
 import CreateHikeForm from "./components/hikes/CreateHikeForm";
 import ListHikes from "./screen_view/Hikes";
 import CreateRideForm from "./components/rides/CreateRideForm.js";
 import UserFormExample from "./UserFormExample";
+import ListUserHikes from './screen_view/UserHikes.js';
 import image from "./images/FE0zrlrXsAcFgjl.jpg";
+import "./footer.css";;
 // import UserFormExample from "./UserFormExample";
 
 import RidePopupStart from "./ridePopUp/startPageTest";
@@ -20,6 +23,7 @@ export default function App() {
   return (
     <>
       <BrowserRouter basename="/">
+        <Header />
         <AuthProvider baseUrl={process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}>
           <Routes style={{ "position": "relative", "zIndex": "1" }}>
             <Route path="/" element={<LandingPage />} />
@@ -28,11 +32,12 @@ export default function App() {
             <Route path="/main_page/update_user" element={<UpdateUser />} />
             <Route path="/createhike" element={<CreateHikeForm />} />
             <Route path="/listhikes" element={<ListHikes />} />
+            <Route path="/userhikes" element={<ListUserHikes />} />
             <Route path="/create_ride" element={<CreateRideForm />} />
             <Route path="/popup_test" element={<RidePopupStart />} />
           </Routes>
         </AuthProvider>
-        <Footer style={{ "position": "relative", "zIndex": "-1" }} />
+        <Footer />
       </BrowserRouter>
     </>
   )

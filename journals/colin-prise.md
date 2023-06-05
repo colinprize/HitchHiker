@@ -1,4 +1,40 @@
 ##
+journal jun 5
+tested a merge request
+merged some css tailwind styling.
+
+
+##
+journal jun 2
+tested and approved several merges
+wrote sign up for hikes function. that took way too long. learned a little more about React , but react and css are a mystery to me as far as rules go. Im glad that React is pretty decent at logging errors it makes things easy to track.
+
+
+##
+journal jun  1
+i finished my form getting user_id/organizer_id in their was tripping me up, but that was just part of auth
+i merged my file
+time to start on the next adventure.
+
+##
+journal may 31
+still working on my create a hike form
+tailwind is tricky
+
+##
+journal may 30
+discussed front end
+designated tasks
+I am working on Create a hike form.
+
+
+##
+journal may 26
+explored some tailwind
+test a few merge requests
+
+
+##
 journal may 25
 I finished feature 6 post endpoint to sign up for a hike
 I finished delete endpoint to unjoin a hike

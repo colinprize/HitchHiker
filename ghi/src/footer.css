@@ -1,0 +1,12 @@
+.mountain-footer {
+    background-image: url(./images/Footer-HitchHiker.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 10rem;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    position: fixed;
+    z-index: 0;
+}

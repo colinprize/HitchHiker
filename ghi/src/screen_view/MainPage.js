@@ -15,6 +15,7 @@ const HomePage = () => {
                 <h1>
                     Home Page
                 </h1>
+
                 <br />
                 <button onClick={() => setContactPopup(true)}>Add an emergency contact</button>
                 <AddEmergencyContact trigger={contactPopup} setTrigger={setContactPopup}>
