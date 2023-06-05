@@ -12,6 +12,7 @@ import CreateHikeForm from "./components/hikes/CreateHikeForm";
 import ListHikes from "./screen_view/Hikes";
 import CreateRideForm from "./components/rides/CreateRideForm.js";
 import UserFormExample from "./UserFormExample";
+import ListUserHikes from './screen_view/UserHikes.js';
 import image from "./images/FE0zrlrXsAcFgjl.jpg";
 import "./footer.css";
 
@@ -24,10 +25,11 @@ export default function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/main_page" element={<MainPage />} />
-            <Route path="/create_user" element={<CreateUser />} /> 
+            <Route path="/create_user" element={<CreateUser />} />
             <Route path="/main_page/update_user" element={<UpdateUser />} />
             <Route path="/createhike" element={<CreateHikeForm />} />
             <Route path="/listhikes" element={<ListHikes />} />
+            <Route path="/userhikes" element={<ListUserHikes />} />
             <Route path="/create_ride" element={<CreateRideForm />} />
           </Routes>
         </AuthProvider>
