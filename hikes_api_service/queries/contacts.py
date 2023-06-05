@@ -23,10 +23,20 @@ class EmergencyContactOut(BaseModel):
     users_id: int
 
 class ContactRepository:
-    def update(self, contact_id: int, contact: EmergencyContactIn, users_id: int) -> Union[EmergencyContactOut, Error]:
+    def update(self, contact: EmergencyContactIn, users_id: int) -> Union[EmergencyContactOut, Error]:
         try:
             with pool.connection() as connection:
                 with connection.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT contact_id
+                        FROM emergency_contact
+                        WHERE users_id = %s
+                        """,
+                        [users_id]
+                    )
+                    record = result.fetchone()
+                    contact_id = record[0]
                     db.execute(
                         """
                         UPDATE emergency_contact
@@ -34,14 +44,14 @@ class ContactRepository:
                             , relation = %s
                             , phone_number = %s
                             , email = %s
-                        WHERE contact_id = %s
+                        WHERE users_id = %s
                         """,
                         [
                             contact.full_name,
                             contact.relation,
                             contact.phone_number,
                             contact.email,
-                            contact_id,
+                            users_id,
                         ]
                     )
                     old_data = contact.dict()
@@ -76,7 +86,7 @@ class ContactRepository:
         except Exception as e:
             print(e)
             return {"message": "Couldn't create emergency contact"}
-    def get_one(self, contact_id: int) -> Optional[EmergencyContactOut]:
+    def get_one(self, users_id: int) -> Optional[EmergencyContactOut]:
         try:
             with pool.connection() as connection:
                 with connection.cursor() as db:
@@ -89,9 +99,9 @@ class ContactRepository:
                             , email
                             , users_id
                         FROM emergency_contact
-                        WHERE contact_id = %s
+                        WHERE users_id = %s
                         """,
-                        [contact_id]
+                        [users_id]
                     )
                     record = result.fetchone()
                     return self.record_to_contact_out(record)
