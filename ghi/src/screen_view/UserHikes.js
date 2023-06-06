@@ -50,7 +50,7 @@ function HikesColumn(props) {
     )
 }
 
-const ListUserHikes = (props) => {
+const ListUserHikes = () => {
     const [hikeColumns, setHikeColumns] = useState([[], [], [], []]);
     const [loading, setLoading] = useState(true);
     const { token, fetchWithCookie } = useToken();
@@ -71,28 +71,31 @@ const ListUserHikes = (props) => {
             const response = await fetch(url, config);
             if (response.ok) {
                 const data = await response.json();
-                const hikes = Object.values(data)
-                const requests = [];
-                for (let hike of hikes) {
-                    const detailUrl = `http://localhost:8000/hikes/${hike.hike_id}`;
-                    requests.push(fetch(detailUrl, config));
-                }
-                const responses = await Promise.all(requests);
-                const columns = [[], [], [], []];
-                let i = 0
-                for (const hikeResponse of responses) {
-                    if (hikeResponse.ok) {
-                        const details = await hikeResponse.json();
-                        columns[i].push(details);
-                        i = i + 1;
-                        if (i > 3) {
-                            i = 0;
-                        }
-                    } else {
-                        console.error(hikeResponse)
+                if (data.message === 'User is not signed up for any hikes') {
+                    setHikeColumns([])
+                } else {
+                    const requests = [];
+                    for (let hike of data) {
+                        const detailUrl = `http://localhost:8000/hikes/${hike.hike_id}`;
+                        requests.push(fetch(detailUrl, config));
                     }
+                    const responses = await Promise.all(requests);
+                    const columns = [[], [], [], []];
+                    let i = 0
+                    for (const hikeResponse of responses) {
+                        if (hikeResponse.ok) {
+                            const details = await hikeResponse.json();
+                            columns[i].push(details);
+                            i = i + 1;
+                            if (i > 3) {
+                                i = 0;
+                            }
+                        } else {
+                            console.error(hikeResponse)
+                        }
+                    }
+                    setHikeColumns(columns)
                 }
-                setHikeColumns(columns)
             }
             setLoading(false)
         } catch (e) {
@@ -103,10 +106,6 @@ const ListUserHikes = (props) => {
     useEffect(() => {
         fetchData();
     }, []);
-
-    useEffect(() => {
-        console.log('hikeColumns:', hikeColumns);
-    }, [hikeColumns]);
 
     if (loading) {
         return <div>Loading...</div>;

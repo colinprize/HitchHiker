@@ -108,10 +108,6 @@ const ListHikes = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        console.log('hikeColumns:', hikeColumns);
-    }, [hikeColumns]);
-
     if (loading) {
         return <div>Loading...</div>;
     }
