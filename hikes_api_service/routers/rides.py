@@ -35,6 +35,7 @@ def get_all(
 ):
     return repo.get_all(hike_id)
 
+
 @router.get("/rides/{ride_id}")
 def get_one_ride(
     ride_id: int,
@@ -43,7 +44,9 @@ def get_one_ride(
 ) -> RideOut:
     return repo.get_one(ride_id)
 
-@router.put("/hikes/{hike_id}/rides/{ride_id}", response_model=Union[RideOut, Error])
+
+@router.put("/hikes/{hike_id}/rides/{ride_id}",
+            response_model=Union[RideOut, Error])
 def update_ride(
     hike_id: int,
     ride_id: int,
@@ -75,6 +78,7 @@ def delete_ride(
     else:
         return False
 
+
 @router.post(
     "/hikes/{hike_id}/rides/{ride_id}/riders",
     response_model=Union[RiderOut, Error],
@@ -87,7 +91,6 @@ def create_rider(
     repo: RideRepository = Depends(),
 ):
     rider_id = account_data["user_id"]
-    # return repo.create_rider(hike_id, ride_id, rider, rider_id) # DELETE THIS LINE!!!
     return repo.create_rider(hike_id, ride_id, rider_id)
 
 
@@ -102,9 +105,10 @@ def delete_rider(
     rider_id = account_data["user_id"]
     return repo.unjoin_ride(hike_id, ride_id, rider_id)
 
+
 @router.get("/rides/{trip_id}/riders", response_model=Union[List[int], Error])
 def get_trip_riders(
-    trip_id:int,
+    trip_id: int,
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: RideRepository = Depends(),
 ):

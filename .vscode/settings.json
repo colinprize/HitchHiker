@@ -11,5 +11,7 @@
   ],
   "[css]": {
     "editor.defaultFormatter": "vscode.css-language-features"
-  }
+  },
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true
 }

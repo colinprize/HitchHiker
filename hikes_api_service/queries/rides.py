@@ -36,7 +36,7 @@ class RiderOut(BaseModel):
 
 
 class RideRepository:
-    def get_one(self, ride_id:int) -> Optional[RideOut]:
+    def get_one(self, ride_id: int) -> Optional[RideOut]:
         try:
             with pool.connection() as connection:
                 with connection.cursor() as db:
@@ -56,8 +56,9 @@ class RideRepository:
                     print(result)
                     record = result.fetchone()
                     return self.record_to_ride_out(record)
-        except Exception: 
-            return {"message": "cannot retrieve ride"}  
+        except Exception:
+            return {"message": "cannot retrieve ride"}
+
     def record_to_ride_out(self, record):
         return RideOut(
             ride_id=record[0],
@@ -67,7 +68,7 @@ class RideRepository:
             meetup_location=record[4],
             hike_event=record[5]
         )
-    
+
     def update(
         self, hike_id: int, ride_id: int, ride: RideIn, user_id: int
     ) -> Union[RideOut, Error]:
@@ -89,7 +90,7 @@ class RideRepository:
                         (_, _) = result.fetchone()
                     except TypeError:
                         return {
-                            "message": "Ride not associated with specified hike"
+                            "message": "Ride not associated with this hike"
                         }
                     # Run our SELECT statement
                     result = db.execute(
@@ -98,7 +99,8 @@ class RideRepository:
                         SET max_riders = %s
                             , meetup_time = %s
                             , meetup_location = %s
-                        WHERE hike_event = %s AND ride_id = %s AND driver_id = %s;
+                        WHERE hike_event = %s
+                        AND ride_id = %s AND driver_id = %s;
                         """,
                         [
                             ride.max_riders,
@@ -127,9 +129,10 @@ class RideRepository:
                 # Get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our SELECT statement
-                    result = db.execute(
+                    db.execute(
                         """
-                        SELECT ride_id, driver_id, max_riders, meetup_time, meetup_location, hike_event
+                        SELECT ride_id, driver_id, max_riders, meetup_time,
+                        meetup_location, hike_event
                         FROM ride
                         WHERE hike_event = %s
                         ORDER BY ride_id;
@@ -176,7 +179,8 @@ class RideRepository:
                     result = db.execute(
                         """
                         INSERT INTO ride
-                            (driver_id, max_riders, meetup_time, meetup_location, hike_event)
+                            (driver_id, max_riders, meetup_time,
+                            meetup_location, hike_event)
                         VALUES
                             (%s, %s, %s, %s, %s)
                         RETURNING ride_id;
@@ -226,7 +230,8 @@ class RideRepository:
                     result = db.execute(
                         """
                         DELETE FROM ride
-                        WHERE hike_event = %s AND ride_id = %s  AND driver_id = %s;
+                        WHERE hike_event = %s AND ride_id = %s
+                        AND driver_id = %s;
                         """,
                         [
                             hike_id,
@@ -242,7 +247,6 @@ class RideRepository:
     def create_rider(
         self, hike_id: int, ride_id: int, rider_id: int
     ) -> RiderOut:
-        # def create_rider(self, hike_id: int, ride_id: int, rider: RiderIn, rider_id: int) -> RiderOut: # DELETE THIS LINE!!!
         try:
             # Connect the database
             with pool.connection() as conn:
@@ -339,8 +343,8 @@ class RideRepository:
         except Exception as e:
             print(e)
             return False
-    
-    def get_riders(self, trip_id:int) -> Union[List[int], Error]:
+
+    def get_riders(self, trip_id: int) -> Union[List[int], Error]:
         try:
             # Connect the database
             with pool.connection() as conn:
