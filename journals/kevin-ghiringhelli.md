@@ -7,6 +7,12 @@ At least one ah-ha! moment that you had during your coding, however small
 
 Keep your journal in reverse chronological order. Always put new entries at the top.
 
+## 6/2 + weekend
+I created list views for all hikes and also just the hikes a user is signed up for.  I also created a detail view where hikers can see the details of all the hikes
+
+## 6/1
+Altered the modal I made so that it can both create an emergency contact, or edit one if you already have the database.  I used a bunch of ternary operators to do this, which was fun because I remember when I first started learning coding I was teaching myself JS and ternary operators were the first thing where I thought to myself "wow, this is really cool".  But in this class we hadn't used them much
+
 ## 5/31
 Successfully connected to modal to send data to the database.  Aha moment was when I realized I had to use the Authorization: Bearer token header to give my user authorization.  Took a while to figure that out but once I added that one line of code it worked instantly
 
