@@ -7,7 +7,8 @@ steps = [
             trail_name VARCHAR(50) NOT NULL,
             image_url VARCHAR(2000) NOT NULL,
             date_time TIMESTAMP NOT NULL,
-            organizer_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+            organizer_id INT NOT NULL
+            REFERENCES users(user_id) ON DELETE CASCADE,
             hike_description TEXT NULL,
             max_hikers INTEGER NOT NULL CHECK(max_hikers BETWEEN 0 AND 100)
         );
@@ -24,7 +25,8 @@ steps = [
             user_id INT NOT NULL REFERENCES users(user_id),
             hike_id INT NOT NULL REFERENCES hike(hike_id) ON DELETE CASCADE,
             CONSTRAINT hikes_users_pk PRIMARY KEY (user_id, hike_id),
-            CONSTRAINT FK_users FOREIGN KEY (user_id) REFERENCES users (user_id),
+            CONSTRAINT FK_users FOREIGN KEY (user_id)
+            REFERENCES users (user_id),
             CONSTRAINT FK_hikes FOREIGN KEY (hike_id) REFERENCES hike (hike_id)
         );
         """,

@@ -74,7 +74,7 @@ function CreateUser() {
                         <input value={uniYear} onChange={(e) => setUniYear(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="uniYear" type="integer" placeholder="2023" />
                     </div>
                     <div className="flex justify-center items-center">
-                        <button onClick={handleSubmit} style={{"position": "relative","z-index":"1"}} className="bg-olivine hover:bg-beryl-green font-bold py-2 px-20 rounded" type="button">
+                        <button onClick={handleSubmit} style={{ "position": "relative", "zIndex": "1" }} className="bg-olivine hover:bg-beryl-green font-bold py-2 px-20 rounded" type="button">
                             Sign up
                         </button>
                     </div>

@@ -23,7 +23,8 @@ steps = [
             rider_id INT NOT NULL REFERENCES users(user_id),
             trip_id INT NOT NULL REFERENCES ride(ride_id) ON DELETE CASCADE,
             CONSTRAINT ride_users_pk PRIMARY KEY (rider_id, trip_id),
-            CONSTRAINT FK_users FOREIGN KEY (rider_id) REFERENCES users (user_id),
+            CONSTRAINT FK_users FOREIGN KEY (rider_id)
+            REFERENCES users (user_id),
             CONSTRAINT FK_rides FOREIGN KEY (trip_id) REFERENCES ride (ride_id)
         );
         """,

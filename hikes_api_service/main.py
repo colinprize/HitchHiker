@@ -6,9 +6,11 @@ import os
 
 app = FastAPI()
 
+
 @app.get("/")
 def root():
     return {"message": "Hitch Hiker is the balls"}
+
 
 app.add_middleware(
     CORSMiddleware,

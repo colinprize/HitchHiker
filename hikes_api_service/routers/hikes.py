@@ -1,12 +1,15 @@
 from fastapi import APIRouter, Depends, Response
-from queries.hikes import HikeIn, HikeOut, HikeRepository, Error, UserHikesRepository, HikeUser
+from queries.hikes import (HikeIn, HikeOut, HikeRepository, Error,
+                           UserHikesRepository, HikeUser)
 from authenticator import authenticator
 from typing import Union, List
 from pydantic import ValidationError
 
 router = APIRouter()
 
-@router.post("/hikes", response_model=Union[HikeOut,Error])
+
+@router.post("/hikes",
+             response_model=Union[HikeOut, Error])
 def create_hike(
     hike: HikeIn,
     account_data: dict = Depends(authenticator.get_current_account_data),
@@ -18,6 +21,7 @@ def create_hike(
     print("hike", hike)
     return repo.create(hike, organizer_id)
 
+
 @router.put("/hikes/{hike_id}", response_model=Union[HikeOut, Error])
 def update_hike(
     hike_id: int,
@@ -28,7 +32,7 @@ def update_hike(
 ) -> Union[Error, HikeOut]:
     user = account_data["user_id"]
     hike_info = repo.get_one(hike_id)
-    if  user == hike_info.organizer_id:
+    if user == hike_info.organizer_id:
         updated_hike = repo.update(hike_id, hike, user)
         if updated_hike:
             response.status = 200
@@ -49,6 +53,7 @@ def get_one_hike(
 ) -> HikeOut:
     return repo.get_one(hike_id)
 
+
 @router.delete("/hikes/{hike_id}", response_model=bool)
 def delete_hike(
     hike_id: int,
@@ -63,6 +68,7 @@ def delete_hike(
     else:
         return False
 
+
 @router.get("/hikes", response_model=Union[List[HikeOut], Error])
 def get_all_hikes(
     account_data: dict = Depends(authenticator.get_current_account_data),
@@ -70,14 +76,18 @@ def get_all_hikes(
 ):
     return repo.get_all()
 
+
 @router.post("/userhikes/")
 def sign_up_for_hike(
     HikeUser: HikeUser,
     account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: UserHikesRepository = Depends()) -> Union[HikeUser, Error]:
+    repo: UserHikesRepository = Depends()
+) -> Union[HikeUser, Error]:
     return repo.sign_up(HikeUser)
 
-@router.delete("/userhikes/{user_id}/{hike_id}", response_model=Union[bool, dict])
+
+@router.delete("/userhikes/{user_id}/{hike_id}",
+               response_model=Union[bool, dict])
 def unjoin_hike(
     hike_id: int,
     user_id: int,
@@ -92,7 +102,9 @@ def unjoin_hike(
         response.status = 401
         return {"message": "Unauthorized: ID doesn't match current user"}
 
-@router.get("/users/{user_id}/hikes", response_model=Union[List[HikeOut], Error])
+
+@router.get("/users/{user_id}/hikes",
+            response_model=Union[List[HikeOut], Error])
 def get_user_hikes(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: HikeRepository = Depends()

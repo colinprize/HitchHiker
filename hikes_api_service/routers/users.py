@@ -1,21 +1,27 @@
-from fastapi import APIRouter, Depends, Response, Request, status, HTTPException
+from fastapi import (APIRouter, Depends, Response,
+                     Request, status, HTTPException)
 from typing import List, Union
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 from pydantic import BaseModel
-from queries.users import UserIn, UserRepository, UserOut, UserOutWithPassword, Error, Optional
+from queries.users import UserIn, UserRepository, UserOut, Error, Optional
+
 
 class UserForm(BaseModel):
     username: str
     password: str
 
+
 class UserToken(Token):
     account: UserOut
+
 
 class HttpError(BaseModel):
     detail: str
 
+
 router = APIRouter()
+
 
 @router.get("/token", response_model=UserToken | None)
 async def get_token(
@@ -28,6 +34,7 @@ async def get_token(
             "type": "Bearer",
             "account": account,
         }
+
 
 @router.post("/signup", response_model=UserToken | HttpError)
 async def create_user(
@@ -83,28 +90,7 @@ def update_user(
     else:
         response.status = 404
         return {"message": "Id doesn't match current user"}
-        
 
-# async def update_user(
-#     info: UserIn,
-#     request: Request,
-#     response: Response,
-#     repo: UserRepository = Depends(),
-# ):
-#     hashed_password = authenticator.hash_password(info.password)
-#     print(hashed_password)
-#     try:
-#         user = repo.update(info, hashed_password)
-#         print(user)
-#     except Error:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="Cannot update an account with those credentials",
-#         )
-#     form = UserForm(username=info.username, password=info.password)
-#     token = await authenticator.login(response, request, form, repo)
-#     print(user)
-#     return UserToken(account=user, **token.dict())
 
 @router.get("/users/{username}", response_model=Optional[UserOut])
 def get_one_user(
@@ -117,7 +103,6 @@ def get_one_user(
     if user is None:
         response.status_code = 404
     return user
-    
 
 
 @router.delete("/users/{user_id}", response_model=bool)
