@@ -15,9 +15,6 @@ import UserFormExample from "./UserFormExample";
 import ListUserHikes from './screen_view/UserHikes.js';
 import image from "./images/FE0zrlrXsAcFgjl.jpg";
 import "./footer.css";
-import RidePopupStart from "./ridePopUp/startPageTest";
-// import UserFormExample from "./UserFormExample";
-
 
 
 export default function App() {
@@ -35,7 +32,6 @@ export default function App() {
             <Route path="/listhikes" element={<ListHikes />} />
             <Route path="/userhikes" element={<ListUserHikes />} />
             <Route path="/create_ride" element={<CreateRideForm />} />
-            <Route path="/popup_test" element={<RidePopupStart />} />
           </Routes>
         </AuthProvider>
         <Footer />
