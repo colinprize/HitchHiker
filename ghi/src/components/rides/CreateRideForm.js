@@ -57,6 +57,11 @@ function CreateRideForm() {
   console.log(`location.state.hikeData.hike_id: ${location.state.hikeData.hike_id}`);
   console.log(`location.state.hikeData.date_time: ${location.state.hikeData.date_time}`);
 
+  const onCancelClick = () => {
+    resetStateVals();
+    navigate("/");
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -191,7 +196,7 @@ function CreateRideForm() {
           </div>
 
           <div className="mt-6 flex gap-x-6 grid grid-cols-1 py-4 sm:grid-cols-4">
-            <button onClick={() => { navigate("/") }} type="reset" className="col-end-1 col-span-1 text-sm font-semibold leading-6 text-gray-900">
+            <button onClick={onCancelClick} type="reset" className="col-end-1 col-span-1 text-sm font-semibold leading-6 text-gray-900">
               Cancel
             </button>
             <button onClick={resetStateVals} type="reset" className="col-start-3 col-span-1 text-sm font-semibold leading-6 text-gray-900">
