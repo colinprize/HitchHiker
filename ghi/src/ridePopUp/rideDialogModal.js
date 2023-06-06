@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function RideDialogModal(props) {
 
   console.log(`hikeId: ${props.hikeData.hike_id}`);
-  console.log(`hikeId: ${props.hikeData.trail_name}`);
+  console.log(`hikeTrailName: ${props.hikeData.trail_name}`);
   console.log(`hikeDate: ${props.hikeData.date_time}`);
   const navigate = useNavigate();
 

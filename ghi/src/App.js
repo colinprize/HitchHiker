@@ -14,10 +14,11 @@ import CreateRideForm from "./components/rides/CreateRideForm.js";
 import UserFormExample from "./UserFormExample";
 import ListUserHikes from './screen_view/UserHikes.js';
 import image from "./images/FE0zrlrXsAcFgjl.jpg";
-import "./footer.css";;
+import "./footer.css";
+import RidePopupStart from "./ridePopUp/startPageTest";
 // import UserFormExample from "./UserFormExample";
 
-import RidePopupStart from "./ridePopUp/startPageTest";
+
 
 export default function App() {
   return (
@@ -25,7 +26,7 @@ export default function App() {
       <BrowserRouter basename="/">
         <Header />
         <AuthProvider baseUrl={process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}>
-          <Routes style={{ "position": "relative", "zIndex": "1" }}>
+          <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/main_page" element={<MainPage />} />
             <Route path="/create_user" element={<CreateUser />} />

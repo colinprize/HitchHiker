@@ -50,6 +50,10 @@ function CreateRideForm() {
     setPostalCode("");
   }
 
+  if (location.state === null) {
+    return null;
+  }
+
   console.log(`location.state.hikeData.hike_id: ${location.state.hikeData.hike_id}`);
   console.log(`location.state.hikeData.date_time: ${location.state.hikeData.date_time}`);
 
@@ -59,7 +63,7 @@ function CreateRideForm() {
       const postData = {};
       postData.max_riders = maxRiders;
       postData.meetup_time = location.state.hikeData.date_time.slice(0, 11) + meetupTime;
-      postData.meetup_location = `${meetupLocation}\n${city}, ${region}  ${postalCode}`;
+      postData.meetup_location = `${meetupLocation} ${city}, ${region}  ${postalCode}`;
       const fetchOptions = {
         method: "post",
         body: JSON.stringify(postData),
@@ -186,22 +190,22 @@ function CreateRideForm() {
             </div>
           </div>
 
-          {/* BUTTON ALIGNMENT IS OFF!!!! */}
-          <div className="mt-6 flex items-center justify-start gap-x-6">
-            <button onClick={() => { navigate("/") }} type="reset" className="text-sm font-semibold leading-6 text-gray-900">
-              Reset
+          <div className="mt-6 flex gap-x-6 grid grid-cols-1 py-4 sm:grid-cols-4">
+            <button onClick={() => { navigate("/") }} type="reset" className="col-end-1 col-span-1 text-sm font-semibold leading-6 text-gray-900">
+              Cancel
             </button>
-          </div>
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button onClick={resetStateVals} type="reset" className="text-sm font-semibold leading-6 text-gray-900">
+            <button onClick={resetStateVals} type="reset" className="col-start-3 col-span-1 text-sm font-semibold leading-6 text-gray-900">
               Reset
             </button>
             <button
               type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="col-start-4 col-span-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Save
             </button>
+          </div>
+          <div className="mt-6 flex items-center justify-end gap-x-6">
+
           </div>
         </form >
       </div >
