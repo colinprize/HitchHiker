@@ -16,6 +16,7 @@ import ListUserHikes from './screen_view/UserHikes.js';
 import image from "./images/FE0zrlrXsAcFgjl.jpg";
 import "./footer.css";
 
+
 export default function App() {
   return (
     <>
