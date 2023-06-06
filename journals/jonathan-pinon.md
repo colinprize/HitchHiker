@@ -85,3 +85,55 @@ doing auth for the front end so I made sure to get a grasp
 on as much as I can hopefully by tuesday I can have
 everything dont and out of the way so I can create
 my forms and start styling the webpages.
+
+## May 30
+Worked on styling the login and signup pages. Also worked 
+on background and reading up on how css pages will react 
+with tailwind classes. Managed to create a custom footer 
+spent most of the day just making things look nicer. I was
+having difficulty with buttons overlapping with the footer
+when zooming in to a certain point and couldn't get it to 
+work, eventually gave up and continued styling. Overall the 
+day was spent getting a better understanding of how to work 
+with the css and making the endpoints unreachable from 
+people who werent logged in.
+
+## May 31
+Today was spent finalizing auth for hikes and rides because 
+there were discrepancies. All auth endpoints are completely 
+protected on the backend, started looking into deployment. 
+Volunteered to take it over, handled a merge request from 
+kevin and continued to debug issues with my front end. I 
+wanted to auto fill some information that wouldn't be
+displayed on the front end, decided to move on once I 
+realized it wouldjust be a stretch goal of mine. Once I was 
+able to get all my forms completely working and I was able 
+to navigate between them I moved on to the update user form 
+as my second to last componen. I will finish update user 
+today and move on to deployment tomorrow.
+
+## June 1-2
+Getting started on deployment and was able to finish update 
+user, since update user is all set I am able to change the 
+user information. My main concern is that I have to enter in 
+password before I move on to editing user information which 
+I would like to remove to avoid the user having to enter in 
+their password whenever changing their user information.
+Perhaps I can make it so that they have to enter it in order 
+to change their information, like a verification thing? 
+Anyway, started the deployment, was running into a ton of 
+issues but luckily help me understand was able to clear up
+almost every issue I came across. Finished the day with 
+not being able to see my database container in our 
+container repository, but everything else went somewhat 
+smoothly.
+
+## June 5
+The major issue with my deployment of the database container
+was that my team wasnt verified, myself included. So first
+thing I did was make sure everyone was all set to go, once I
+was able to verify everyone the pipline/jobs started showing
+up but still no container in the registry so I am working 
+through the flake8 issues that are currently blocking me 
+from moving forward with that. I really want to get 
+deployment done today so I can focus on my final component. 

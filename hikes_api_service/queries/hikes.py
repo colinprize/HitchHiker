@@ -3,8 +3,10 @@ from pydantic import BaseModel
 from typing import Optional, Union, List
 from datetime import datetime
 
+
 class Error(BaseModel):
     message: str
+
 
 class HikeIn(BaseModel):
     trail_name: str
@@ -12,6 +14,7 @@ class HikeIn(BaseModel):
     date_time: datetime
     hike_description: Optional[str]
     max_hikers: int
+
 
 class HikeOut(BaseModel):
     hike_id: int
@@ -31,7 +34,8 @@ class HikeRepository:
                 with connection.cursor() as db:
                     db.execute(
                         """
-                        SELECT hike_id, trail_name, image_url, date_time, organizer_id, hike_description, max_hikers
+                        SELECT hike_id, trail_name, image_url, date_time,
+                        organizer_id, hike_description, max_hikers
                         FROM hike
                         ORDER BY hike_id;
                         """
@@ -67,7 +71,9 @@ class HikeRepository:
                     )
                     result = db.fetchall()
                     if not result:
-                        return Error(message="User is not signed up for any hikes")
+                        return Error(
+                            message="User is not signed up for any hikes"
+                            )
                     return [
                             HikeOut(
                                 hike_id=record[0],
@@ -85,18 +91,23 @@ class HikeRepository:
             print(e)
             return {"Message": "Unable to return your hikes"}
 
-    def create(self, hike: HikeIn, organizer_id:int) -> HikeOut:
+    def create(self, hike: HikeIn, organizer_id: int) -> HikeOut:
         try:
-            #connect the database
+            # connect the database
             with pool.connection() as connection:
-                #here is where we create our pool of connections
-                #get a cursor (something to run SQL with)
+                # here is where we create our pool of connections
+                # get a cursor (something to run SQL with)
                 with connection.cursor() as db:
-                    #Run our insert statement
+                    # Run our insert statement
                     result = db.execute(
                         """
                         INSERT INTO hike
-                            (trail_name, image_url, date_time, organizer_id, hike_description, max_hikers)
+                            (trail_name,
+                            image_url,
+                            date_time,
+                            organizer_id,
+                            hike_description,
+                            max_hikers)
                         VALUES
                             (%s, %s, %s, %s, %s, %s)
                         RETURNING hike_id;
@@ -125,12 +136,15 @@ class HikeRepository:
                         ]
                     )
                     old_data = hike.dict()
-                    return HikeOut(hike_id=id, organizer_id=organizer_id, **old_data)
+                    return HikeOut(
+                        hike_id=id, organizer_id=organizer_id, **old_data
+                        )
         except Exception as e:
             print(e)
             return False
 
-    def update(self, hike_id: int, hike: HikeIn, user:int) -> Union[HikeOut, Error]:
+    def update(self, hike_id: int, hike: HikeIn,
+               user: int) -> Union[HikeOut, Error]:
         try:
             with pool.connection() as connection:
                 with connection.cursor() as db:
@@ -179,11 +193,10 @@ class HikeRepository:
                         """,
                         [hike_id]
                     )
-                    record =result.fetchone()
+                    record = result.fetchone()
                     return self.record_to_hike_out(record)
         except Exception:
             return {"message": "could not get hike"}
-
 
     def delete(self, hike_id: int) -> bool:
         try:
@@ -201,7 +214,7 @@ class HikeRepository:
             print(e)
             return False
 
-    def hike_in_to_out(self, id: int, hike: HikeIn, user:int):
+    def hike_in_to_out(self, id: int, hike: HikeIn, user: int):
         old_data = hike.dict()
         return HikeOut(hike_id=id, organizer_id=user, **old_data)
 
@@ -216,9 +229,11 @@ class HikeRepository:
             max_hikers=record[6]
         )
 
+
 class HikeUser(BaseModel):
     user_id: int
     hike_id: int
+
 
 class UserHikesRepository:
     def sign_up(self, HikeUser: HikeUser) -> HikeUser:
@@ -253,8 +268,8 @@ class UserHikesRepository:
                         """,
 
                         [
-                        user_id,
-                        hike_id
+                            user_id,
+                            hike_id
                         ]
                     )
                     return True

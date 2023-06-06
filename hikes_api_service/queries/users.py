@@ -2,8 +2,10 @@ from pydantic import BaseModel
 from typing import Optional, List, Union
 from queries.pool import pool
 
+
 class Error(BaseModel):
     message: str
+
 
 class UserIn(BaseModel):
     full_name: str
@@ -23,6 +25,7 @@ class UserIn(BaseModel):
 #     university_name: str
 #     university_year: int
 
+
 class UserOut(BaseModel):
     user_id: int
     full_name: str
@@ -33,19 +36,21 @@ class UserOut(BaseModel):
     university_name: str
     university_year: int
 
+
 class UserOutWithPassword(UserOut):
     hashed_password: str
 
+
 class UserRepository:
-    def update(self, user_id:int, user:UserIn, hashed_password:str) -> UserOutWithPassword:
+    def update(self, user_id: int, user: UserIn,
+               hashed_password: str) -> UserOutWithPassword:
         try:
-        #connect the database
+            # connect the database
             with pool.connection() as connection:
-            #here is where we create our pool of connections
-                #get a cursor (something to run SQL with)
+                # here is where we create our pool of connections
+                # get a cursor (something to run SQL with)
                 with connection.cursor() as db:
-                    #Run our SELECT statement
-                    result = db.execute(
+                    db.execute(
                         """
                         UPDATE users
                         Set full_name = %s
@@ -75,19 +80,19 @@ class UserRepository:
 
     def get_all(self) -> Union[Error, List[UserOut]]:
         try:
-        #connect the database
+            # connect the database
             with pool.connection() as connection:
-            #here is where we create our pool of connections
-                #get a cursor (something to run SQL with)
+                # here is where we create our pool of connections
+                # get a cursor (something to run SQL with)
                 with connection.cursor() as db:
-                    #Run our SELECT statement
+                    # Run our SELECT statement
                     result = db.execute(
                         """
                         Select * FROM users
                         ORDER BY user_id
                         """
                     )
-                    return [ 
+                    return [
                         self.record_to_user_out(record)
                         for record in result
                     ]
@@ -95,18 +100,25 @@ class UserRepository:
             print(e)
             return {"message": "Couldn't get all users"}
 
-    def create(self, info: UserIn, hashed_password: str) -> UserOutWithPassword:
+    def create(self, info: UserIn,
+               hashed_password: str) -> UserOutWithPassword:
         try:
-        #connect the database
+            # connect the database
             with pool.connection() as connection:
-            #here is where we create our pool of connections
-                #get a cursor (something to run SQL with)
+                # here is where we create our pool of connections
+                # get a cursor (something to run SQL with)
                 with connection.cursor() as db:
-                    #Run our insert statement
+                    # Run our insert statement
                     result = db.execute(
                         """
                         INSERT INTO users
-                            (full_name, username, password, picture_url, email, university_name, university_year)
+                            (full_name,
+                            username,
+                            password,
+                            picture_url,
+                            email,
+                            university_name,
+                            university_year)
                         VALUES
                             (%s, %s, %s, %s, %s, %s, %s)
                         RETURNING user_id;
@@ -140,10 +152,10 @@ class UserRepository:
 
     def get_user(self, username: str) -> UserOutWithPassword:
         try:
-        #connect the database
+            # connect the database
             with pool.connection() as connection:
-            #here is where we create our pool of connections
-                #get a cursor (something to run SQL with)
+                # here is where we create our pool of connections
+                # get a cursor (something to run SQL with)
                 with connection.cursor() as db:
                     result = db.execute(
                         """
@@ -171,10 +183,10 @@ class UserRepository:
 
     def delete(self, user_id: int) -> bool:
         try:
-        #connect the database
+            # connect the database
             with pool.connection() as connection:
-            #here is where we create our pool of connections
-                #get a cursor (something to run SQL with)
+                # here is where we create our pool of connections
+                # get a cursor (something to run SQL with)
                 with connection.cursor() as db:
                     db.execute(
                         """
@@ -188,11 +200,12 @@ class UserRepository:
             print(e)
             return False
 
-    def user_in_to_out(self, id:int, user:UserIn, hashed_password:str):
+    def user_in_to_out(self, id: int, user: UserIn, hashed_password: str):
         old_data = user.dict()
         del old_data["password"]
-        return UserOutWithPassword(user_id=id, hashed_password=hashed_password, **old_data)
-    
+        return UserOutWithPassword(
+            user_id=id, hashed_password=hashed_password, **old_data)
+
     def record_to_user_out(self, record):
         return UserOutWithPassword(
             user_id=record[0],
