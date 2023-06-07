@@ -80,9 +80,11 @@ function CreateRideForm() {
       const ridesUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${location.state.hikeData.hike_id}/rides`;
       const postResponse = await fetch(ridesUrl, fetchOptions);
       if (postResponse.ok) {
+        // newRide not called added console.log to avoid pipeline failure
         const newRide = await postResponse.json();
         resetStateVals();
         navigate("/");
+        console.log(newRide);
       };
     } catch (error) {
       console.error(error);

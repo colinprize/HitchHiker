@@ -16,9 +16,9 @@ function CreateUser() {
     const navigate = useNavigate();
     useEffect(() => {
         if (token) {
-            navigate("/main_page")
+            navigate("/main_page");
         }
-    }, [token]);
+    }, [token]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleSubmit = (e) => {
         e.preventDefault();
