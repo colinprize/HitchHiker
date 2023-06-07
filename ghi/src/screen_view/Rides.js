@@ -5,14 +5,10 @@ import carImage from "../images/Car-benz.png"
 
 function RideColumn(props) {
   const navigate = useNavigate();
-  const { token, fetchWithCookie } = useToken();
+  const { token } = useToken();
   const handleJoin = async (ride) => {
     try {
-      const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
-      const userResponse = await fetchWithCookie(tokenUrl);
-      const userId = parseInt(userResponse.account.user_id);
       const rideUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${props.hikeId}/rides/${ride.ride_id}/riders`;
-      console.log(`rideUrl: ${rideUrl}`);
       const fetchOptions = {
         method: "post",
         headers: {
@@ -22,9 +18,6 @@ function RideColumn(props) {
       };
       const postResponse = await fetch(rideUrl, fetchOptions);
       if (postResponse.ok) {
-        const riderResponse = await postResponse.json();
-        console.log("JOINED RIDE!");
-        console.log(riderResponse);
         navigate("/");
       };
     } catch (e) {
@@ -39,7 +32,7 @@ function RideColumn(props) {
           < div key={ride.ride_id} >
             <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
               <div className="relative">
-                <img src={carImage} className='w-full h-48 object-cover rounded-t-lg' alt="Picture of car" />
+                <img src={carImage} className='w-full h-48 object-cover rounded-t-lg' alt="Mercedes Benz cartoon" />
                 <div className="absolute inset-0 bg-black opacity-40 hover:opacity-0 rounded-t-lg"></div>
               </div>
               <div className='p-5'>
@@ -64,13 +57,12 @@ function RidesList() {
   const { token } = useToken();
 
   const [ridesData, setRidesData] = useState([]);
-  // const [driverData, setDriverData] = useState([]);
 
   useEffect(() => {
     if (location.state !== null) {
       loadRides();
     };
-  }, [setRidesData]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (location.state === null) {
     return null;

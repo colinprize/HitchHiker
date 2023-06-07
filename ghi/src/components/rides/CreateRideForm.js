@@ -54,9 +54,6 @@ function CreateRideForm() {
     return null;
   }
 
-  console.log(`location.state.hikeData.hike_id: ${location.state.hikeData.hike_id}`);
-  console.log(`location.state.hikeData.date_time: ${location.state.hikeData.date_time}`);
-
   const onCancelClick = () => {
     resetStateVals();
     navigate("/");
@@ -81,10 +78,8 @@ function CreateRideForm() {
       const postResponse = await fetch(ridesUrl, fetchOptions);
       if (postResponse.ok) {
         // newRide not called added console.log to avoid pipeline failure
-        const newRide = await postResponse.json();
         resetStateVals();
         navigate("/");
-        console.log(newRide);
       };
     } catch (error) {
       console.error(error);

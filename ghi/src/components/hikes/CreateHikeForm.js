@@ -47,7 +47,6 @@ function CreateHikeForm() {
     };
 
     const response = await fetch(url, fetchConfig);
-    console.log(response)
     if (response.ok) {
       const newHike = await response.json();
       setHikeDataForRide(newHike)

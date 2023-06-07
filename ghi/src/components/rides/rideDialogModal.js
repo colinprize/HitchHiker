@@ -4,10 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 function RideDialogModal(props) {
 
-  console.log(`hikeId: ${props.hikeData.hike_id}`);
-  console.log(`hikeTrailName: ${props.hikeData.trail_name}`);
-  console.log(`hikeDate: ${props.hikeData.date_time}`);
-
   const [firstAsk, setFirstAsk] = useState(true)
   const navigate = useNavigate();
 
@@ -27,7 +23,6 @@ function RideDialogModal(props) {
       });
     }
     props.resetHikeData("");
-    console.log(`hikeData: ${JSON.stringify(props.hikeData)}`);
   }
 
   const onNoClick = () => {
@@ -38,8 +33,6 @@ function RideDialogModal(props) {
       navigate("/userhikes");
       props.resetHikeData("");
     }
-
-    console.log(`hikeData: ${JSON.stringify(props.hikeData)}`);
   }
 
   return (props.trigger) ? (

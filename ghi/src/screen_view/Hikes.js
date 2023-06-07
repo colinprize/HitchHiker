@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import HikeDetails from '../components/hikes/HikeDetails';
-import { useNavigate } from 'react-router-dom';
 import RideDialogModal from '../components/rides/rideDialogModal';
 
 
-
 function HikesColumn(props) {
-  const navigate = useNavigate();
   const { token, fetchWithCookie } = useToken();
   const joinhike = async (hike) => {
     const hike_id = hike.hike_id;
@@ -29,12 +26,9 @@ function HikesColumn(props) {
     const response = await fetch(url, fetchConfig);
     // prop boolean state value and hike data setter called here so parent component can pass to RideDialogModal
     if (response.ok) {
-      const joinedHike = await response.json();
       props.setHikeData(hike);
       props.setTrigger(true);
-      console.log(response);
     }
-
   };
 
   return (
@@ -50,15 +44,12 @@ function HikesColumn(props) {
               <div className='p-5'>
                 <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>{hike.trail_name}</h5>
                 <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>{new Date(hike.date_time).toLocaleDateString()} at {new Date(hike.date_time).toLocaleTimeString()}</p>
-
                 <HikeDetails hike_id={hike.hike_id} ></HikeDetails>
                 <button className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:scale-95 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  // onClick={() => { joinhike(hike.hike_id); navigate('/userhikes') }}>
                   // HAD TO CHANGE ARG PASSED TO ONCLICK LISTENER TO HIKE SO ENTIRE OBJECT CAN BE PASSED TO SETHIKEDATA
                   onClick={() => { joinhike(hike); }}>
                   Join Hike
                 </button>
-
               </div>
             </div>
           </div>
