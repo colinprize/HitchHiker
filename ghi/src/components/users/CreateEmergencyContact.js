@@ -9,11 +9,11 @@ function AddEmergencyContact(props) {
     const [email, setEmail] = useState('');
     const [contactId, setContactId] = useState('');
     const { token, fetchWithCookie } = useToken();
-    // const [existingContact, setExistingContact] = useState(null)
+    const [existingContact, setExistingContact] = useState(null)
 
     useEffect(() => {
         fetchEmergencyContact();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
 
     const fetchEmergencyContact = async () => {
         const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
@@ -66,8 +66,6 @@ function AddEmergencyContact(props) {
             const newContact = await response.json();
             fetchEmergencyContact();
             props.setTrigger(false);
-            // newContact not called, pipeline failure so I added console.log
-            console.log(newContact)
         }
     };
 

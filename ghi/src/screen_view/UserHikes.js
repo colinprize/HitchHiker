@@ -105,7 +105,7 @@ const ListUserHikes = () => {
     }
     useEffect(() => {
         fetchData();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
 
     if (loading) {
         return <div>Loading...</div>;

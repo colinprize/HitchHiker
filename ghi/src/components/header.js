@@ -1,4 +1,4 @@
-// import LogoutButton from './users/Logout'
+import LogoutButton from './users/Logout'
 
 export default function Header() {
     return (

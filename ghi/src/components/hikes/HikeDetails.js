@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 
 function HikeDetails(props) {
     const [details, setDetails] = useState(null);
     const { hike_id } = props;
-    const { token } = useToken();
-    // removed fetchwithCookie ^^^
+    const { token, fetchWithCookie } = useToken();
+
 
     const fetchHikeDetails = async () => {
         const url = `http://localhost:8000/hikes/${hike_id}`;

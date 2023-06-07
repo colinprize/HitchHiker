@@ -11,18 +11,17 @@ import UpdateUser from './components/users/UpdateUser';
 import CreateHikeForm from "./components/hikes/CreateHikeForm";
 import ListHikes from "./screen_view/Hikes";
 import CreateRideForm from "./components/rides/CreateRideForm.js";
+import UserFormExample from "./UserFormExample";
 import ListUserHikes from './screen_view/UserHikes.js';
 import RidesList from './screen_view/Rides.js';
+import image from "./images/FE0zrlrXsAcFgjl.jpg";
 import "./footer.css";
 
 
 export default function App() {
-  const domain = /https:\/\/[^/]+/;
-  const basename = process.env.PUBLIC_URL.replace(domain, '');
-
   return (
     <>
-      <BrowserRouter basename={basename}>
+      <BrowserRouter basename="/">
         <Header />
         <AuthProvider baseUrl={process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}>
           <Routes>
