@@ -12,7 +12,7 @@ used the time to practice and understand how my endpoints
 were created and how they interacted with my database. 
 
 
-It was a tough week, somethings clicked more but overall,
+It was a tough week, some things clicked more but overall
 I felt pretty confident in my understanding on how Fast 
 API is working. Some minor confusion in the update user 
 but at the end of the day it was just a missplaced comma.
@@ -137,3 +137,17 @@ up but still no container in the registry so I am working
 through the flake8 issues that are currently blocking me 
 from moving forward with that. I really want to get 
 deployment done today so I can focus on my final component. 
+
+## June 6
+Major blocker with deployment and honestly spent too much time 
+stressing about seeing the fatsapi page after deployment. We 
+had the backend deployed but were getting the white page of 
+death, after triple checking that it wasnt an error with how
+I deployed and having Rosheen confirm that I should move on 
+I was able to get the front end deployed, and no white page
+for the deployed frontend. Finished the day starting the unit
+test and will plan on getting it done tomorrow so that I can 
+add the final unit test section to the ci.yml. I think 
+tomorrows goals will be to finish header, get unit test
+deployed, and finalize everything I was responsible for in the
+back and frontend. 
