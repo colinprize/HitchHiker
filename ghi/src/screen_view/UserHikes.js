@@ -28,17 +28,17 @@ function HikesColumn(props) {
             {props.list.map(hike => {
                 return (
                     <div key={hike.hike_id} >
-                        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <div className="max-w-sm rounded-lg shadow bg-gray-800 border-gray-700">
                             <div className="relative">
                                 <img src={hike.image_url} className='w-full h-48 object-cover rounded-t-lg' alt="Hike" />
                                 <div className="absolute inset-0 bg-black opacity-40 rounded-t-lg"></div>
                             </div>
                             <div className='p-5'>
-                                <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>{hike.trail_name}</h5>
-                                <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>{new Date(hike.date_time).toLocaleDateString()} at {new Date(hike.date_time).toLocaleTimeString()}</p>
+                                <h5 className='mb-2 text-2xl font-bold tracking-tight text-white'>{hike.trail_name}</h5>
+                                <p className='mb-3 font-normal text-gray-400'>{new Date(hike.date_time).toLocaleDateString()} at {new Date(hike.date_time).toLocaleTimeString()}</p>
                                 <HikeDetails hike_id={hike.hike_id} ></HikeDetails>
                             </div>
-                            <button className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:scale-95 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            <button className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:scale-95 focus:ring-4 focus:outline-none focus:ring-blue-300"
                                 onClick={() => { leaveHike(hike.hike_id); navigate('/main_page') }}>
                                 Leave Hike
                             </button>

@@ -8,7 +8,7 @@ export default function Header() {
                     <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                         <a href="http://localhost:3000/main_page" className="flex items-center">
                             <img src={require('../images/navlogohitchhiker.png')} className="mr-1 h-16 sm:h-20" alt="Hitch Hiker Logo" />
-                            <span className="px-4 self-center text-xl font-semibold whitespace-nowrap dark:text-white">Hitch Hiker</span>
+                            <span className="px-4 self-center text-xl font-semibold whitespace-nowrap text-white">Hitch Hiker</span>
                         </a>
                         <div className="flex items-center lg:order-2">
                             <a href="http://localhost:3000/listhikes" className="block py-4 pr-4 pl-3 text-white rounded" >All Hikes</a>
