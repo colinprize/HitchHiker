@@ -14,7 +14,7 @@ const LoginForm = () => {
     if (token) {
       navigate("/main_page")
     }
-  }, [token]);
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,9 +42,9 @@ const LoginForm = () => {
             <button onClick={handleSubmit} style={{ "position": "relative", "zIndex": "10" }} className="bg-olivine hover:bg-beryl-green font-bold py-2 px-20 rounded" type="button">
               Log in
             </button>
-            <a style={{ "position": "relative", "zIndex": "1" }} className="inline-block align-baseline font-bold hover:text-olivine px-5" href="#">
+            {/* <a style={{ "position": "relative", "zIndex": "1" }} className="inline-block align-baseline font-bold hover:text-olivine px-5" href="#">
             Reset Password
-            </a>
+            </a> */}
           </div>
         </form>
       </div>

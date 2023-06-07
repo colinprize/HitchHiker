@@ -1,7 +1,7 @@
-import ListHikes from "./Hikes";
-import { useState } from 'react';
-import useToken from "@galvanize-inc/jwtdown-for-react";
-import LogoutButton from '../components/users/Logout.js'
+// import ListHikes from "./Hikes";
+// import { useState } from 'react';
+// import useToken from "@galvanize-inc/jwtdown-for-react";
+// import LogoutButton from '../components/users/Logout.js'
 
 const HomePage = () => {
 
