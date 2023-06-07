@@ -12,6 +12,7 @@ import CreateHikeForm from "./components/hikes/CreateHikeForm";
 import ListHikes from "./screen_view/Hikes";
 import CreateRideForm from "./components/rides/CreateRideForm.js";
 import ListUserHikes from './screen_view/UserHikes.js';
+import RidesList from './screen_view/Rides.js';
 import "./footer.css";
 
 
@@ -33,6 +34,8 @@ export default function App() {
             <Route path="/listhikes" element={<ListHikes />} />
             <Route path="/userhikes" element={<ListUserHikes />} />
             <Route path="/create_ride" element={<CreateRideForm />} />
+
+            <Route path="rides" element={<RidesList />} />
           </Routes>
         </AuthProvider>
         <Footer />
