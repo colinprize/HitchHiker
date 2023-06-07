@@ -31,7 +31,7 @@ function HikeDetails(props) {
             {details && (
                 <div>
                     <br />
-                    <p className='text-white'>Details: {details.hike_description}</p>
+                    <p className='text-white'>Description: {details.hike_description}</p>
                     <br />
                     <p className='text-white'>Maximum alloted hikers: {details.max_hikers}</p>
                 </div>

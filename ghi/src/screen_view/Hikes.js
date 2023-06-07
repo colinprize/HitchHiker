@@ -114,19 +114,19 @@ const ListHikes = () => {
 
     return (
         <>
-            <div className="text-center">
-                <h1>Hitch Hiker</h1>
-                <div>
-                    <p>
-                        Take your education to new heights!
-                    </p>
-                </div>
-                <br />
-                <br />
-            </div>
             <div className='mx-auto max-w-screen-lg'>
-                <h2 className='text-center'>Upcoming Hikes</h2>
                 <br />
+                <h2 className='text-3xl font-bold text-center'>Upcoming Hikes</h2>
+                <br />
+                <div className="text-center">
+                    <div>
+                        <p>
+                            Take your education to new heights!
+                        </p>
+                    </div>
+                    <br />
+                    <br />
+                </div>
                 <div className='grid grid-cols-4 gap-4'>
                     {hikeColumns.map((hikeList, index) => {
                         return (
