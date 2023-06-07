@@ -7,7 +7,6 @@ import RideDialogModal from '../components/rides/rideDialogModal';
 
 
 function HikesColumn(props) {
-  const navigate = useNavigate();
   const { token, fetchWithCookie } = useToken();
   const joinhike = async (hike) => {
     const hike_id = hike.hike_id;
