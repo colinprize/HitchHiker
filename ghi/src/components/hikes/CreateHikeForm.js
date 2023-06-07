@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import RideDialogModal from '../../ridePopUp/rideDialogModal';
+import RideDialogModal from '../rides/rideDialogModal';
 
 function CreateHikeForm() {
   const [trail_name, setTrailName] = useState("");
@@ -183,10 +183,7 @@ function CreateHikeForm() {
           </div>
         </form>
       </div>
-      <RideDialogModal trigger={formSubmitted} setTrigger={setFormSubmitted} hikeData={hikeDataForRide} resetHikeData={setHikeDataForRide}>
-        <h3>My Button PopUp</h3>
-        <p>This is my button triggered popup</p>
-      </RideDialogModal>
+      <RideDialogModal trigger={formSubmitted} setTrigger={setFormSubmitted} hikeData={hikeDataForRide} resetHikeData={setHikeDataForRide} />
     </>
   );
 
