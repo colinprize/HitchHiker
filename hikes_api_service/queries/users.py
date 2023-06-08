@@ -33,8 +33,9 @@ class UserOutWithPassword(UserOut):
 
 
 class UserRepository:
-    def update(self, user_id: int, user: UserIn,
-               hashed_password: str) -> UserOutWithPassword:
+    def update(
+        self, user_id: int, user: UserIn, hashed_password: str
+    ) -> UserOutWithPassword:
         try:
             # connect the database
             with pool.connection() as connection:
@@ -61,8 +62,8 @@ class UserRepository:
                             user.email,
                             user.university_name,
                             user.university_year,
-                            user_id
-                        ]
+                            user_id,
+                        ],
                     )
                     return self.user_in_to_out(user_id, user, hashed_password)
         except Exception as e:
@@ -84,15 +85,15 @@ class UserRepository:
                         """
                     )
                     return [
-                        self.record_to_user_out(record)
-                        for record in result
+                        self.record_to_user_out(record) for record in result
                     ]
         except Exception as e:
             print(e)
             return {"message": "Couldn't get all users"}
 
-    def create(self, info: UserIn,
-               hashed_password: str) -> UserOutWithPassword:
+    def create(
+        self, info: UserIn, hashed_password: str
+    ) -> UserOutWithPassword:
         try:
             # connect the database
             with pool.connection() as connection:
@@ -121,8 +122,8 @@ class UserRepository:
                             info.picture_url,
                             info.email,
                             info.university_name,
-                            info.university_year
-                        ]
+                            info.university_year,
+                        ],
                     )
                     print(result)
                     id = result.fetchone()[0]
@@ -161,7 +162,7 @@ class UserRepository:
                         FROM users
                         WHERE username = %s
                         """,
-                        [username]
+                        [username],
                     )
                     record = result.fetchone()
                     print(record)
@@ -184,7 +185,7 @@ class UserRepository:
                         DELETE FROM users
                         WHERE user_id = %s
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     return True
         except Exception as e:
@@ -195,7 +196,8 @@ class UserRepository:
         old_data = user.dict()
         del old_data["password"]
         return UserOutWithPassword(
-            user_id=id, hashed_password=hashed_password, **old_data)
+            user_id=id, hashed_password=hashed_password, **old_data
+        )
 
     def record_to_user_out(self, record):
         return UserOutWithPassword(
@@ -206,5 +208,5 @@ class UserRepository:
             picture_url=record[4],
             email=record[5],
             university_name=record[6],
-            university_year=record[7]
+            university_year=record[7],
         )

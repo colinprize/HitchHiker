@@ -9,7 +9,6 @@ class Error(BaseModel):
 
 
 class RideIn(BaseModel):
-    # driver_id: int  # REMOVE LATER
     max_riders: int
     meetup_time: datetime
     meetup_location: Optional[str]
@@ -22,12 +21,6 @@ class RideOut(BaseModel):
     meetup_time: datetime
     meetup_location: Optional[str]
     hike_event: int
-
-
-# class RiderIn(BaseModel): #PLACEHOLDER UNTIL VALUE FROM USER AUTH IS CALLED
-#     rider_id: int
-
-# CHANGE ALL INSTANCES OF RIDER IN
 
 
 class RiderOut(BaseModel):
@@ -51,7 +44,7 @@ class RideRepository:
                         FROM ride
                         WHERE ride_id = %s
                         """,
-                        [ride_id]
+                        [ride_id],
                     )
                     print(result)
                     record = result.fetchone()
@@ -66,7 +59,7 @@ class RideRepository:
             max_riders=record[2],
             meetup_time=record[3],
             meetup_location=record[4],
-            hike_event=record[5]
+            hike_event=record[5],
         )
 
     def update(
@@ -356,7 +349,7 @@ class RideRepository:
                         FROM ride_users
                         WHERE trip_id = %s
                         """,
-                        [trip_id]
+                        [trip_id],
                     )
                     rider_ids = [record[0] for record in db.fetchall()]
                     return rider_ids

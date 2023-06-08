@@ -1,6 +1,12 @@
 from fastapi import APIRouter, Depends, Response
-from queries.hikes import (HikeIn, HikeOut, HikeRepository, Error,
-                           UserHikesRepository, HikeUser)
+from queries.hikes import (
+    HikeIn,
+    HikeOut,
+    HikeRepository,
+    Error,
+    UserHikesRepository,
+    HikeUser,
+)
 from authenticator import authenticator
 from typing import Union, List
 from pydantic import ValidationError
@@ -8,12 +14,11 @@ from pydantic import ValidationError
 router = APIRouter()
 
 
-@router.post("/hikes",
-             response_model=Union[HikeOut, Error])
+@router.post("/hikes", response_model=Union[HikeOut, Error])
 def create_hike(
     hike: HikeIn,
     account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: HikeRepository = Depends()
+    repo: HikeRepository = Depends(),
 ):
     print(account_data)
     organizer_id = account_data["user_id"]
@@ -72,7 +77,7 @@ def delete_hike(
 @router.get("/hikes", response_model=Union[List[HikeOut], Error])
 def get_all_hikes(
     account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: HikeRepository = Depends()
+    repo: HikeRepository = Depends(),
 ):
     return repo.get_all()
 
@@ -81,13 +86,14 @@ def get_all_hikes(
 def sign_up_for_hike(
     HikeUser: HikeUser,
     account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: UserHikesRepository = Depends()
+    repo: UserHikesRepository = Depends(),
 ) -> Union[HikeUser, Error]:
     return repo.sign_up(HikeUser)
 
 
-@router.delete("/userhikes/{user_id}/{hike_id}",
-               response_model=Union[bool, dict])
+@router.delete(
+    "/userhikes/{user_id}/{hike_id}", response_model=Union[bool, dict]
+)
 def unjoin_hike(
     hike_id: int,
     user_id: int,
@@ -103,11 +109,12 @@ def unjoin_hike(
         return {"message": "Unauthorized: ID doesn't match current user"}
 
 
-@router.get("/users/{user_id}/hikes",
-            response_model=Union[List[HikeOut], Error])
+@router.get(
+    "/users/{user_id}/hikes", response_model=Union[List[HikeOut], Error]
+)
 def get_user_hikes(
     account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: HikeRepository = Depends()
+    repo: HikeRepository = Depends(),
 ):
     try:
         user_id = account_data["user_id"]

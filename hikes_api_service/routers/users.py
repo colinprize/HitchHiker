@@ -1,5 +1,11 @@
-from fastapi import (APIRouter, Depends, Response,
-                     Request, status, HTTPException)
+from fastapi import (
+    APIRouter,
+    Depends,
+    Response,
+    Request,
+    status,
+    HTTPException,
+)
 from typing import List, Union
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
@@ -26,7 +32,7 @@ router = APIRouter()
 @router.get("/token", response_model=UserToken | None)
 async def get_token(
     request: Request,
-    account: UserOut = Depends(authenticator.try_get_current_account_data)
+    account: UserOut = Depends(authenticator.try_get_current_account_data),
 ) -> UserToken | None:
     if authenticator.cookie_name in request.cookies:
         return {
@@ -62,7 +68,7 @@ async def create_user(
 @router.get("/users", response_model=Union[Error, List[UserOut]])
 def get_all(
     account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: UserRepository = Depends()
+    repo: UserRepository = Depends(),
 ):
     return repo.get_all()
 

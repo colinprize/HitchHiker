@@ -14,7 +14,7 @@ def fake_account():
         "picture_url": "string",
         "email": "string@string.com",
         "university_name": "string",
-        "university_year": 2020
+        "university_year": 2020,
     }
 
 
@@ -26,7 +26,7 @@ class CreateContactRepository:
             relation=contact.relation,
             phone_number=contact.phone_number,
             email=contact.email,
-            users_id=user_id
+            users_id=user_id,
         )
 
 
@@ -41,7 +41,7 @@ def test_create_contact():
         "full_name": "Wayne Diesel",
         "relation": "Father",
         "phone_number": 8675309,
-        "email": "wayne@fakeemail.com"
+        "email": "wayne@fakeemail.com",
     }
     expected = {
         "contact_id": 1,
@@ -49,7 +49,7 @@ def test_create_contact():
         "relation": "Father",
         "phone_number": 8675309,
         "email": "wayne@fakeemail.com",
-        "users_id": 2
+        "users_id": 2,
     }
     response = client.post("/users/contact", json=json)
     app.dependency_overrides = {}

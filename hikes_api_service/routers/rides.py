@@ -45,8 +45,9 @@ def get_one_ride(
     return repo.get_one(ride_id)
 
 
-@router.put("/hikes/{hike_id}/rides/{ride_id}",
-            response_model=Union[RideOut, Error])
+@router.put(
+    "/hikes/{hike_id}/rides/{ride_id}", response_model=Union[RideOut, Error]
+)
 def update_ride(
     hike_id: int,
     ride_id: int,

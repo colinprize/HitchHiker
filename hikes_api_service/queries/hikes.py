@@ -27,7 +27,6 @@ class HikeOut(BaseModel):
 
 
 class HikeRepository:
-
     def get_all(self) -> Union[Error, List[HikeOut]]:
         try:
             with pool.connection() as connection:
@@ -67,25 +66,25 @@ class HikeRepository:
                         JOIN hike on hikes_users.hike_id = hike.hike_id
                         WHERE hikes_users.user_id = %s;
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     result = db.fetchall()
                     if not result:
                         return Error(
                             message="User is not signed up for any hikes"
-                            )
+                        )
                     return [
-                            HikeOut(
-                                hike_id=record[0],
-                                trail_name=record[1],
-                                image_url=record[2],
-                                date_time=record[3],
-                                organizer_id=record[4],
-                                hike_description=record[5],
-                                max_hikers=record[6],
-                            )
-                            for record in result
-                        ]
+                        HikeOut(
+                            hike_id=record[0],
+                            trail_name=record[1],
+                            image_url=record[2],
+                            date_time=record[3],
+                            organizer_id=record[4],
+                            hike_description=record[5],
+                            max_hikers=record[6],
+                        )
+                        for record in result
+                    ]
 
         except Exception as e:
             print(e)
@@ -118,8 +117,8 @@ class HikeRepository:
                             hike.date_time,
                             organizer_id,
                             hike.hike_description,
-                            hike.max_hikers
-                        ]
+                            hike.max_hikers,
+                        ],
                     )
                     id = result.fetchone()[0]
                     result = db.execute(
@@ -133,18 +132,19 @@ class HikeRepository:
                         [
                             organizer_id,
                             id,
-                        ]
+                        ],
                     )
                     old_data = hike.dict()
                     return HikeOut(
                         hike_id=id, organizer_id=organizer_id, **old_data
-                        )
+                    )
         except Exception as e:
             print(e)
             return False
 
-    def update(self, hike_id: int, hike: HikeIn,
-               user: int) -> Union[HikeOut, Error]:
+    def update(
+        self, hike_id: int, hike: HikeIn, user: int
+    ) -> Union[HikeOut, Error]:
         try:
             with pool.connection() as connection:
                 with connection.cursor() as db:
@@ -166,8 +166,8 @@ class HikeRepository:
                             user,
                             hike.hike_description,
                             hike.max_hikers,
-                            hike_id
-                        ]
+                            hike_id,
+                        ],
                     )
                     return self.hike_in_to_out(hike_id, hike, user)
 
@@ -191,7 +191,7 @@ class HikeRepository:
                         FROM hike
                         WHERE hike_id =%s
                         """,
-                        [hike_id]
+                        [hike_id],
                     )
                     record = result.fetchone()
                     return self.record_to_hike_out(record)
@@ -226,7 +226,7 @@ class HikeRepository:
             date_time=record[3],
             organizer_id=record[4],
             hike_description=record[5],
-            max_hikers=record[6]
+            max_hikers=record[6],
         )
 
 
@@ -247,10 +247,7 @@ class UserHikesRepository:
                         VALUES
                             (%s,%s)
                         """,
-                        [
-                            HikeUser.user_id,
-                            HikeUser.hike_id
-                        ]
+                        [HikeUser.user_id, HikeUser.hike_id],
                     )
                     return HikeUser
         except Exception as e:
@@ -266,11 +263,7 @@ class UserHikesRepository:
                         DELETE FROM hikes_users
                         WHERE  user_id = %s AND hike_id = %s
                         """,
-
-                        [
-                            user_id,
-                            hike_id
-                        ]
+                        [user_id, hike_id],
                     )
                     return True
         except Exception as e:

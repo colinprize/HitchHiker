@@ -1,3 +1,11 @@
+## June 5, 2023
+
+Today I worked on:
+
+* Completed functionality of RideDialogModal so that popup prompting user with option to drive renders after hike submission and successfully passes relevant hike info to CreateRideForm with useNavigate
+* Updated tailwind.config.js to include all Tailwind CSS colors
+
+
 ## June 2, 2023
 
 Today I worked on:
@@ -106,3 +114,13 @@ Today, I worked on:
 Our group focused more heavily on organizing our tasks today.  Creating labels for each feature and applying them to each issue made it easier to visualize how our work is broken down.
 
 I continue to learn about SQL queries.  I am working to maintain relational integrity with proper use of foreign keys.
+## May 18, 2023
+
+Today, I worked on:
+
+* Organizing our current GitLab issues by creating labels for each feature number and applying them to each feature and story.
+* Made PostgreSQL CREATE TABLE statements for the ride and ride_users tables.
+
+Our group focused more heavily on organizing our tasks today.  Creating labels for each feature and applying them to each issue made it easier to visualize how our work is broken down.
+
+I continue to learn about SQL queries.  I

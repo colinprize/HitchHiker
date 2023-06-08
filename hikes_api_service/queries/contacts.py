@@ -25,8 +25,9 @@ class EmergencyContactOut(BaseModel):
 
 
 class ContactRepository:
-    def update(self, contact: EmergencyContactIn,
-               users_id: int) -> Union[EmergencyContactOut, Error]:
+    def update(
+        self, contact: EmergencyContactIn, users_id: int
+    ) -> Union[EmergencyContactOut, Error]:
         try:
             with pool.connection() as connection:
                 with connection.cursor() as db:
@@ -36,7 +37,7 @@ class ContactRepository:
                         FROM emergency_contact
                         WHERE users_id = %s
                         """,
-                        [users_id]
+                        [users_id],
                     )
                     record = result.fetchone()
                     contact_id = record[0]
@@ -55,17 +56,19 @@ class ContactRepository:
                             contact.phone_number,
                             contact.email,
                             users_id,
-                        ]
+                        ],
                     )
                     old_data = contact.dict()
-                    return EmergencyContactOut(contact_id=contact_id,
-                                               users_id=users_id, **old_data)
+                    return EmergencyContactOut(
+                        contact_id=contact_id, users_id=users_id, **old_data
+                    )
         except Exception as e:
             print(e)
             return {"message": "Couldn't update emergency contact"}
 
-    def create(self, contact: EmergencyContactIn,
-               users_id: int) -> EmergencyContactOut:
+    def create(
+        self, contact: EmergencyContactIn, users_id: int
+    ) -> EmergencyContactOut:
         try:
             with pool.connection() as connection:
                 with connection.cursor() as db:
@@ -86,14 +89,15 @@ class ContactRepository:
                             contact.relation,
                             contact.phone_number,
                             contact.email,
-                            users_id
-                        ]
+                            users_id,
+                        ],
                     )
                     print(result)
                     contact_id = result.fetchone()[0]
                     old_data = contact.dict()
-                    return EmergencyContactOut(contact_id=contact_id,
-                                               users_id=users_id, **old_data)
+                    return EmergencyContactOut(
+                        contact_id=contact_id, users_id=users_id, **old_data
+                    )
         except Exception as e:
             print(e)
             return {"message": "Couldn't create emergency contact"}
@@ -113,7 +117,7 @@ class ContactRepository:
                         FROM emergency_contact
                         WHERE users_id = %s
                         """,
-                        [users_id]
+                        [users_id],
                     )
                     record = result.fetchone()
                     return self.record_to_contact_out(record)

@@ -14,7 +14,7 @@ def fake_account():
         "picture_url": "some_picture.jpeg",
         "email": "BJangles@email.com",
         "university_name": "BJ University",
-        "university_year": 2020
+        "university_year": 2020,
     }
 
 
@@ -28,7 +28,7 @@ class EmptyUserRepository:
                 "picture_url": "some_picture.jpeg",
                 "email": "BJangles@email.com",
                 "university_name": "BJ University",
-                "university_year": 2020
+                "university_year": 2020,
             }
         ]
 
@@ -47,7 +47,7 @@ def test_create_a_user():
             "picture_url": "some_picture.jpeg",
             "email": "BJangles@email.com",
             "university_name": "BJ University",
-            "university_year": 2020
+            "university_year": 2020,
         }
     ]
     response = client.get("/users")
