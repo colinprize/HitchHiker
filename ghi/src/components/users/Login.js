@@ -13,6 +13,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (token) {
       navigate("/main_page")
+      window.location.reload(false);
     }
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -23,7 +24,7 @@ const LoginForm = () => {
   return (
     <>
       <div className="flex items-center justify-center mb-0">
-        <form  className="bg-wheat shadow-md rounded px-20 pt-6 pb-8 mb-4">
+        <form className="bg-wheat shadow-md rounded px-20 pt-6 pb-8 mb-4">
           <h1 className=" text-olivine text-center text-4xl mb-2">Hitch Hiker</h1>
           <div className="items-center mb-4">
             <label className="block text-olivine text-md font-bold mb-2" htmlFor="username">
