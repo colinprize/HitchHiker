@@ -151,3 +151,19 @@ add the final unit test section to the ci.yml. I think
 tomorrows goals will be to finish header, get unit test
 deployed, and finalize everything I was responsible for in the
 back and frontend. 
+
+## June 7
+Worked on unit test and was able to get that working and merged
+properly. At first I wanted to create a unit test for creating 
+a user but that was troublesome because it involved hashed
+password and also a token so I was having trouble mimicing that 
+process in the unit test and settled with a get_all users unit
+test. After that I moved on to a seperate issue with our logout 
+button. We were using the logout feature that came with the 
+galvanize jwt-down-for-react and it simply just wouldnt work at 
+all and after several hours we realized what the issue was. 
+My header that contained the logout button was set outside of 
+the AuthProvider tag which contained the necessary baseUrl that 
+the logout feature needed in order to remove the token. once I
+put the header in its proper place I was all set to go and felt
+accomplished going into thursday.

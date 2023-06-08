@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // // import Nav from './components/Nav';
-import MainPage from "./screen_view/MainPage.js";
+// import MainPage from "./screen_view/MainPage.js";
 // // import ErrorNotification from "./ErrorNotification";
 import LandingPage from "./screen_view/LandingPage"
 import CreateUser from "./components/users/CreateUser";
@@ -24,19 +24,18 @@ export default function App() {
   return (
     <>
       <BrowserRouter basename={basename}>
-        <Header />
         <AuthProvider baseUrl={process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}>
+          <Header />
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/main_page" element={<MainPage />} />
+            {/* <Route path="/main_page" element={<MainPage />} /> */}
             <Route path="/create_user" element={<CreateUser />} />
-            <Route path="/main_page/update_user" element={<UpdateUser />} />
+            <Route path="/update_user" element={<UpdateUser />} />
             <Route path="/createhike" element={<CreateHikeForm />} />
             <Route path="/listhikes" element={<ListHikes />} />
             <Route path="/userhikes" element={<ListUserHikes />} />
             <Route path="/create_ride" element={<CreateRideForm />} />
-
-            <Route path="rides" element={<RidesList />} />
+            <Route path="/rides" element={<RidesList />} />
           </Routes>
         </AuthProvider>
         <Footer />
