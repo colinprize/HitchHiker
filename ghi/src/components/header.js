@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 
 const Header = () => {
     const navigate = useNavigate();
-    const { logout, fetchWithCookie } = useToken();
+    const { logout, fetchWithCookie, token } = useToken();
     const [loggedIn, setLoggedIn] = useState(false)
     const logoutButton = () => {
         logout();
@@ -26,7 +26,7 @@ const Header = () => {
 
     useEffect(() => {
         isLoggedIn();
-    }, [setLoggedIn]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <>

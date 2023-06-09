@@ -17,7 +17,6 @@ function CreateUser() {
     useEffect(() => {
         if (token) {
             navigate("/listhikes");
-            window.location.reload(false);
         }
     }, [token]) // eslint-disable-line react-hooks/exhaustive-deps
 
