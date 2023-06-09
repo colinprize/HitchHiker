@@ -9,7 +9,7 @@ function HikeDetails(props) {
     // removed fetchwithCookie ^^^
 
     const fetchHikeDetails = async () => {
-        const url = `http://localhost:8000/hikes/${hike_id}`;
+        const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/${hike_id}`;
         const config = {
             credentials: "include",
             method: "get",

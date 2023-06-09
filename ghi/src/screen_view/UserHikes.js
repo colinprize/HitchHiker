@@ -55,7 +55,7 @@ const ListUserHikes = () => {
         const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
         const response1 = await fetchWithCookie(tokenUrl);
         const user_id = parseInt(response1.account.user_id)
-        const url = `http://localhost:8000/users/${user_id}/hikes/`;
+        const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/${user_id}/hikes/`;
         const config = {
             credentials: "include",
             method: "get",
@@ -73,7 +73,7 @@ const ListUserHikes = () => {
                 } else {
                     const requests = [];
                     for (let hike of data) {
-                        const detailUrl = `http://localhost:8000/hikes/${hike.hike_id}`;
+                        const detailUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hike.hike_id}`;
                         requests.push(fetch(detailUrl, config));
                     }
                     const responses = await Promise.all(requests);

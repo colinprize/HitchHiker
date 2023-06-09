@@ -19,7 +19,7 @@ function AddEmergencyContact(props) {
         const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
         const response1 = await fetchWithCookie(tokenUrl);
         const user_id = parseInt(response1.account.user_id)
-        const url = `http://localhost:8000/users/${user_id}/contact/`;
+        const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/users/${user_id}/contact/`;
         const config = {
             credentials: "include",
             method: "get",
@@ -51,7 +51,7 @@ function AddEmergencyContact(props) {
             email: email,
         };
 
-        const url = contactId ? `http://localhost:8000/users/contact/${contactId}` : 'http://localhost:8000/users/contact';
+        const url = contactId ? `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/users/contact/${contactId}` : `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/users/contact`;
         const fetchConfig = {
             method: contactId ? 'put' : 'post',
             credentials: "include",
