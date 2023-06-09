@@ -125,19 +125,8 @@ class UserRepository:
                             info.university_year,
                         ],
                     )
-                    print(result)
                     id = result.fetchone()[0]
                     return self.user_in_to_out(id, info, hashed_password)
-                    # return UserOutWithPassword(
-                    #         id=id,
-                    #         full_name=info.full_name,
-                    #         username=info.username,
-                    #         hashed_password=hashed_password,
-                    #         picture_url=info.picture_url,
-                    #         email=info.email,
-                    #         university_name=info.university_name,
-                    #         university_year=info.university_year
-                    # )
         except Exception as e:
             print(e)
             return {"message": "Couldn't create User"}
@@ -165,7 +154,6 @@ class UserRepository:
                         [username],
                     )
                     record = result.fetchone()
-                    print(record)
                     if record is None:
                         return None
                     return self.record_to_user_out(record)

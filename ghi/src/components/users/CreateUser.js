@@ -35,51 +35,51 @@ function CreateUser() {
 
     return (
         <>
-            <div className="flex items-center justify-center mb-0">
-                <form className="bg-wheat shadow-md rounded px-20 pt-6 pb-8 mb-4">
-                    <div className="items-center mb-4">
-                        <label className="block text-olivine text-md font-bold mb-2" htmlFor="fullName">
-                            Full Name
-                        </label>
-                        <input value={fullName} onChange={(e) => setFullName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="fullName" type="text" placeholder="Tina Belcher" />
-                    </div>
-                    <div className="items-center mb-4">
-                        <label className="block text-olivine text-md font-bold mb-2" htmlFor="username">
-                            Username
-                        </label>
-                        <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="TinaBelcher01" />
-                    </div>
-                    <div className="mb-6">
-                        <label className="block text-olivine text-md font-bold mb-2" htmlFor="password">
-                            Password
-                        </label>
-                        <input value={password} onChange={(e) => setPassword(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="*************" />
+            <div className="flex items-center justify-center mb-0 mt-10">
+                    <form className="bg-wheat shadow-md rounded-lg px-20 pt-6 pb-8 mb-4">
+                        <div className="items-center mb-4">
+                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="fullName">
+                                Full Name
+                            </label>
+                            <input value={fullName} onChange={(e) => setFullName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="fullName" type="text" placeholder="Tina Belcher" />
+                        </div>
+                        <div className="items-center mb-4">
+                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="username">
+                                Username
+                            </label>
+                            <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="TinaBelcher01" />
+                        </div>
+                        <div className="mb-6">
+                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="password">
+                                Password
+                            </label>
+                            <input value={password} onChange={(e) => setPassword(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="*************" />
 
-                    </div>
-                    <div className="items-center mb-4">
-                        <label className="block text-olivine text-md font-bold mb-2" htmlFor="email">
-                            Email
-                        </label>
-                        <input value={email} onChange={(e) => setEmail(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="TinaB@bobsburgers.com" />
-                    </div>
-                    <div className="items-center mb-4">
-                        <label className="block text-olivine text-md font-bold mb-2" htmlFor="uniName">
-                            University Name
-                        </label>
-                        <input value={uniName} onChange={(e) => setUniName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="uniName" type="text" placeholder="Ocean City University" />
-                    </div>
-                    <div className="items-center mb-4">
-                        <label className="block text-olivine text-md font-bold mb-2" htmlFor="uniYear">
-                            University Year
-                        </label>
-                        <input value={uniYear} onChange={(e) => setUniYear(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="uniYear" type="integer" placeholder="2023" />
-                    </div>
-                    <div className="flex justify-center items-center">
-                        <button onClick={handleSubmit} style={{ "position": "relative", "zIndex": "1" }} className="bg-olivine hover:bg-beryl-green font-bold py-2 px-20 rounded" type="button">
-                            Sign up
-                        </button>
-                    </div>
-                </form>
+                        </div>
+                        <div className="items-center mb-4">
+                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="email">
+                                Email
+                            </label>
+                            <input value={email} onChange={(e) => setEmail(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="TinaB@bobsburgers.com" />
+                        </div>
+                        <div className="items-center mb-4">
+                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="uniName">
+                                University Name
+                            </label>
+                            <input value={uniName} onChange={(e) => setUniName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="uniName" type="text" placeholder="Ocean City University" />
+                        </div>
+                        <div className="items-center mb-4">
+                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="uniYear">
+                                University Year
+                            </label>
+                            <input value={uniYear} onChange={(e) => setUniYear(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="uniYear" type="integer" placeholder="2023" />
+                        </div>
+                        <div className="flex justify-center items-center">
+                            <button onClick={handleSubmit} style={{ "position": "relative", "zIndex": "1" }} className="bg-olivine text-white hover:scale-105 font-bold py-2 px-20 rounded-full" type="button">
+                                Sign up
+                            </button>
+                        </div>
+                    </form>
             </div>
         </>
     )

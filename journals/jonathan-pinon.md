@@ -167,3 +167,16 @@ the AuthProvider tag which contained the necessary baseUrl that
 the logout feature needed in order to remove the token. once I
 put the header in its proper place I was all set to go and felt
 accomplished going into thursday.
+
+## June 8 
+As a group we worked on styling the pages so they could be 
+consistent. I got the unit test pipeline to work and all 
+funtionality has been finalized. Our objectives for today was
+to get all of our checklist squared away and make sure we can 
+either present today or tomorrow. Overall I'm proud of what we 
+have to present although the best is yet to come. We decided 
+to continue working this weekend for our class wide 
+presentation and beyond that to put our best foot forward when
+we present our sites to employees down the line. All we have 
+left is to make the pages look neat and figure out if there 
+are any bugs left that are sneaking their way past us. 

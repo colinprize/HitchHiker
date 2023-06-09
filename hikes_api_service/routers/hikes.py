@@ -20,10 +20,7 @@ def create_hike(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: HikeRepository = Depends(),
 ):
-    print(account_data)
     organizer_id = account_data["user_id"]
-    print(organizer_id)
-    print("hike", hike)
     return repo.create(hike, organizer_id)
 
 
@@ -66,8 +63,6 @@ def delete_hike(
     repo: HikeRepository = Depends(),
 ) -> bool:
     hike = repo.get_one(hike_id)
-    print(hike)
-    print(hike_id)
     if account_data["user_id"] == hike.organizer_id:
         return repo.delete(hike_id)
     else:

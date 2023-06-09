@@ -6,7 +6,14 @@ A reflection on any design conversations that you had
 At least one ah-ha! moment that you had during your coding, however small
 
 Keep your journal in reverse chronological order. Always put new entries at the top.
+## 6/7
+I wrote a unit test to test the create and emergency contact feature.
 
+## 6/6
+I finished the header and also created a second header for logged out users, and implemented the logic so that if a user isn't logged in they see a different header than users that are logged in
+
+## 6/5
+I implemented the ability for a user to leave a hike they're signed up for.  I also started working on a header for our page
 ## 6/2 + weekend
 I created list views for all hikes and also just the hikes a user is signed up for.  I also created a detail view where hikers can see the details of all the hikes
 

@@ -92,7 +92,6 @@ class ContactRepository:
                             users_id,
                         ],
                     )
-                    print(result)
                     contact_id = result.fetchone()[0]
                     old_data = contact.dict()
                     return EmergencyContactOut(

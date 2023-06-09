@@ -50,10 +50,8 @@ async def create_user(
     repo: UserRepository = Depends(),
 ):
     hashed_password = authenticator.hash_password(info.password)
-    print(hashed_password)
     try:
         user = repo.create(info, hashed_password)
-        print(user)
     except Error:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -61,7 +59,6 @@ async def create_user(
         )
     form = UserForm(username=info.username, password=info.password)
     token = await authenticator.login(response, request, form, repo)
-    print(user)
     return UserToken(account=user, **token.dict())
 
 
@@ -81,11 +78,8 @@ def update_user(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: UserRepository = Depends(),
 ) -> Union[Error, UserOut]:
-    print(user)
-    print(account_data)
     if account_data["user_id"] == user_id:
         hashed_password = authenticator.hash_password(user.password)
-        print(hashed_password)
         updated_user = repo.update(user_id, user, hashed_password)
         if updated_user:
             response.status = 200
@@ -117,7 +111,6 @@ async def delete_user(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: UserRepository = Depends(),
 ) -> bool:
-    print(account_data)
     if account_data["user_id"] == user_id:
         return repo.delete(user_id)
     else:

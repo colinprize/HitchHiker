@@ -77,12 +77,11 @@ function CreateRideForm() {
       const ridesUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${location.state.hikeData.hike_id}/rides`;
       const postResponse = await fetch(ridesUrl, fetchOptions);
       if (postResponse.ok) {
-        // newRide not called added console.log to avoid pipeline failure
         resetStateVals();
         navigate("/");
       };
     } catch (error) {
-      console.error(error);
+      return error;
     }
   };
 
@@ -201,7 +200,7 @@ function CreateRideForm() {
             </button>
             <button
               type="submit"
-              className="col-start-4 col-span-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="col-start-4 col-span-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Save
             </button>

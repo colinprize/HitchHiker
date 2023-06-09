@@ -30,7 +30,7 @@ const LoginForm = () => {
             <label className="block text-olivine text-md font-bold mb-2" htmlFor="username">
               Username
             </label>
-            <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="TinaBelcher01" />
+            <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="XxNoScopeGodxX" />
           </div>
           <div className="mb-6">
             <label className="block text-olivine text-md font-bold mb-2" htmlFor="password">
@@ -40,16 +40,19 @@ const LoginForm = () => {
 
           </div>
           <div className="flex justify-center items-center">
-            <button onClick={handleSubmit} style={{ "position": "relative", "zIndex": "10" }} className="bg-olivine hover:scale-105 text-white font-bold py-2 px-20 rounded-lg" type="button">
+            <button onClick={handleSubmit} style={{ "position": "relative", "zIndex": "10" }} className="bg-olivine hover:scale-105 text-white font-bold py-2 px-20 rounded-full" type="button">
               Log in
             </button>
             {/* <a style={{ "position": "relative", "zIndex": "1" }} className="inline-block align-baseline font-bold hover:text-olivine px-5" href="#">
             Reset Password
             </a> */}
           </div>
+          <br/>
+          <CreateUserButton />
         </form>
-      </div>
-      <CreateUserButton />
+        
+        </div>
+      
     </>
   );
 };

@@ -21,24 +21,24 @@ function HikesColumn(props) {
         props.trigger();
     }
     return (
-        <div className="flex flex-wrap justify-between">
+        <div className="justify-between">
             {props.list.map(hike => {
                 return (
                     <div key={hike.hike_id} >
-                        <div className="max-w-sm rounded-lg shadow bg-gray-800 border-gray-700">
+                        <div className="max-w-sm rounded-lg shadow mt-3 bg-gray-800 border-gray-700">
                             <div className="relative">
                                 <img src={hike.image_url} className='w-full h-48 object-cover rounded-t-lg' alt="Hike" />
-                                <div className="absolute inset-0 bg-black opacity-40 rounded-t-lg"></div>
+                                <div className="absolute inset-0 rounded-t-lg"></div>
                             </div>
                             <div className='p-5'>
                                 <h5 className='mb-2 text-2xl font-bold tracking-tight text-white'>{hike.trail_name}</h5>
-                                <p className='mb-3 font-normal text-gray-400'>{new Date(hike.date_time).toLocaleDateString()} at {new Date(hike.date_time).toLocaleTimeString()}</p>
+                                <p className='mb-3 font-normal text-gray-400'>{new Date(hike.date_time).toLocaleDateString()} at {new Date(hike.date_time).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
                                 <HikeDetails hike_id={hike.hike_id} ></HikeDetails>
+                                <button className="inline-flex items-center px-3 py-2 text-md font-medium text-center text-white bg-olivine rounded-lg hover:scale-95 focus:ring-4 focus:outline-none ml-2"
+                                    onClick={() => { leaveHike(hike.hike_id) }}>
+                                    Leave Hike
+                                </button>
                             </div>
-                            <button className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:scale-95 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                                onClick={() => { leaveHike(hike.hike_id); }}>
-                                Leave Hike
-                            </button>
                         </div>
                     </div>
                 )
@@ -115,12 +115,6 @@ const ListUserHikes = () => {
                 <h2 className='text-3xl font-bold text-center'>Your Upcoming Hikes</h2>
                 <br />
                 <div className="text-center">
-                    <div>
-                        <p>
-                            These are the hikes you have signed up for!
-                        </p>
-                    </div>
-                    <br />
                     <br />
                 </div>
                 <div className='grid grid-cols-4 gap-4'>

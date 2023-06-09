@@ -1,4 +1,17 @@
 ##
+journal jun 8
+worked on readme
+put some finishing touches on UI
+##
+journal jun 7
+tested merge requests
+wrote unit test
+##
+journal jun 6
+tested many merge requests
+tried to implement unit test
+
+##
 journal jun 5
 tested a merge request
 merged some css tailwind styling.
