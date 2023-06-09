@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import carImage from "../images/Car-benz.png"
+import carImage from "../images/Car-benz.png";
+
 
 function RideColumn(props) {
   const navigate = useNavigate();
   const { token } = useToken();
+
   const handleJoin = async (ride) => {
     try {
       const rideUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${props.hikeId}/rides/${ride.ride_id}/riders`;
@@ -27,7 +29,7 @@ function RideColumn(props) {
 
   return (
     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-      {props.rides.map(ride => {
+      {props.rides.filter((ride) => ride.driver_id !== props.userId).map(ride => {
         return (
           < div key={ride.ride_id} >
             <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -54,9 +56,9 @@ function RideColumn(props) {
 function RidesList() {
 
   const location = useLocation();
-  const { token } = useToken();
-
+  const { token, fetchWithCookie } = useToken();
   const [ridesData, setRidesData] = useState([]);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     if (location.state !== null) {
@@ -71,6 +73,7 @@ function RidesList() {
   const loadRides = async () => {
     const hikeId = location.state.hikeData.hike_id;
     const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hikeId}/rides`;
+    const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
     const fetchOptions = {
       credentials: "include",
       method: "get",
@@ -79,11 +82,13 @@ function RidesList() {
       },
     };
     try {
+      const userResponse = await fetchWithCookie(tokenUrl);
+      setUserId(userResponse.account.user_id);
       const response = await fetch(url, fetchOptions);
       if (response.ok) {
         const data = await response.json();
         setRidesData(data)
-      }
+      };
     } catch (e) {
       console.error(e);
     }
@@ -96,7 +101,7 @@ function RidesList() {
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-2xl text-center font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Rides for this hike</h2>
             <p className="my-4 text-m leading-8 text-gray-600">.</p>
-            <RideColumn rides={ridesData} hikeId={location.state.hikeData.hike_id} />
+            <RideColumn rides={ridesData} hikeId={location.state.hikeData.hike_id} userId={userId} />
           </div>
         </div>
       </div>

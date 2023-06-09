@@ -1,3 +1,10 @@
+## June 7, 2023
+
+* Unit testing for Create Ride function
+
+I created a new file in the hikes_api_service/tests directory called test_rides.py.  It uses the FastAPI TestClient module.  It declares a dependency override `CreateRideQueries` which has a `create` function that returns an object with the same properties as the `RideOut` class.  It has functions that return a fake account and fake hike so that all dependency variables are overridden which is needed because the TestClient module does not interact with the database.  The test passes with the response being equal to the expected object output.
+
+
 ## June 5, 2023
 
 Today I worked on:

@@ -11,24 +11,22 @@ const Header = () => {
     const [loggedIn, setLoggedIn] = useState(false)
     const logoutButton = async () => {
         await logout();
-        window.location.reload(false)
-
+        navigate("/");
     };
     const isLoggedIn = async () => {
         const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
         const response = await fetchWithCookie(tokenUrl);
-        console.log(response)
         if (response !== null) {
             setLoggedIn(true);
         } else {
             setLoggedIn(false)
-            navigate("/")
+            navigate("/");
         }
     }
 
     useEffect(() => {
         isLoggedIn();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [setLoggedIn]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <>

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import HikeDetails from '../components/hikes/HikeDetails';
-import { useNavigate } from 'react-router-dom';
-
 
 
 function HikesColumn(props) {
     const { token, fetchWithCookie } = useToken();
-    const navigate = useNavigate();
     const leaveHike = async (hike_id) => {
         const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
         const response1 = await fetchWithCookie(tokenUrl);
@@ -20,8 +17,8 @@ function HikesColumn(props) {
                 Authorization: `Bearer ${token}`
             },
         }
-        const response = await fetch(url, config)
-        console.log(response)
+        await fetch(url, config)
+        props.trigger();
     }
     return (
         <div className="flex flex-wrap justify-between">
@@ -39,7 +36,7 @@ function HikesColumn(props) {
                                 <HikeDetails hike_id={hike.hike_id} ></HikeDetails>
                             </div>
                             <button className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:scale-95 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                                onClick={() => { leaveHike(hike.hike_id); navigate('/main_page') }}>
+                                onClick={() => { leaveHike(hike.hike_id); }}>
                                 Leave Hike
                             </button>
                         </div>
@@ -129,7 +126,7 @@ const ListUserHikes = () => {
                 <div className='grid grid-cols-4 gap-4'>
                     {hikeColumns.map((hikeList, index) => {
                         return (
-                            <HikesColumn key={index} list={hikeList} />
+                            <HikesColumn trigger={fetchData} key={index} list={hikeList} />
                         );
                     })}
                 </div>

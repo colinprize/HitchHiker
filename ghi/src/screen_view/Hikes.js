@@ -24,7 +24,6 @@ function HikesColumn(props) {
       },
     };
     const response = await fetch(url, fetchConfig);
-    // prop boolean state value and hike data setter called here so parent component can pass to RideDialogModal
     if (response.ok) {
       props.setHikeData(hike);
       props.setTrigger(true);
@@ -46,7 +45,6 @@ function HikesColumn(props) {
                 <p className='mb-3 font-normal text-gray-400'>{new Date(hike.date_time).toLocaleDateString()} at {new Date(hike.date_time).toLocaleTimeString()}</p>
                 <HikeDetails hike_id={hike.hike_id} ></HikeDetails>
                 <button className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:scale-95 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                  // HAD TO CHANGE ARG PASSED TO ONCLICK LISTENER TO HIKE SO ENTIRE OBJECT CAN BE PASSED TO SETHIKEDATA
                   onClick={() => { joinhike(hike); }}>
                   Join Hike
                 </button>
@@ -62,10 +60,8 @@ function HikesColumn(props) {
 const ListHikes = () => {
   const [hikeColumns, setHikeColumns] = useState([[], [], [], []]);
   const [loading, setLoading] = useState(true);
-  const { token } = useToken();
-  // Boolean state variable that calls CreateRide dialog when true
+  const { token, fetchWithCookie } = useToken();
   const [hikeSelected, setHikeSelected] = useState(false);
-  // Object state variable that is passed as prop to RideDialogModal
   const [hikeDataForRide, setHikeDataForRide] = useState("");
   const fetchData = async () => {
     const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes`;
@@ -78,10 +74,12 @@ const ListHikes = () => {
     };
 
     try {
+      const userResponse = await fetchWithCookie(`${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`);
       const response = await fetch(url, config);
       if (response.ok) {
         const data = await response.json();
-        const hikes = Object.values(data)
+        const allHikes = Object.values(data)
+        const hikes = allHikes.filter((hike) => hike.organizer_id !== userResponse.account.user_id);
         const requests = [];
         for (let hike of hikes) {
           const detailUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hike.hike_id}`;
@@ -127,7 +125,6 @@ const ListHikes = () => {
             Take your education to new heights!
           </p>
         </div>
-
         <br />
       </div>
       <div className={`${hikeSelected ? "hidden" : "mx-auto max-w-screen-lg"}`}>
@@ -137,7 +134,6 @@ const ListHikes = () => {
         <div className='grid grid-cols-4 gap-4'>
           {hikeColumns.map((hikeList, index) => {
             return (
-              // Adds two new props for onClick listener so ListHikes has state info needed for RideDialogModal
               <HikesColumn key={index} list={hikeList} setTrigger={setHikeSelected} setHikeData={setHikeDataForRide} />
             );
           })}
