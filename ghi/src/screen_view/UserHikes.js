@@ -34,7 +34,7 @@ function HikesColumn(props) {
                                 <h5 className='mb-2 text-2xl font-bold tracking-tight text-white'>{hike.trail_name}</h5>
                                 <p className='mb-3 font-normal text-gray-400'>{new Date(hike.date_time).toLocaleDateString()} at {new Date(hike.date_time).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
                                 <HikeDetails hike_id={hike.hike_id} ></HikeDetails>
-                                <button className="inline-flex items-center px-3 py-2 text-md font-medium text-center text-white bg-olivine rounded-lg hover:scale-95 focus:ring-4 focus:outline-none ml-2"
+                                <button className="inline-flex items-center px-3 py-2 text-md font-medium text-center text-white bg-olivine rounded-lg hover:scale-95 focus:ring-4 focus:outline-none ml-1"
                                     onClick={() => { leaveHike(hike.hike_id) }}>
                                     Leave Hike
                                 </button>
