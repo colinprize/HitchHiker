@@ -11,10 +11,6 @@ function AddEmergencyContact(props) {
     const { token, fetchWithCookie } = useToken();
     // const [existingContact, setExistingContact] = useState(null)
 
-    useEffect(() => {
-        fetchEmergencyContact();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
     const fetchEmergencyContact = async () => {
         const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
         const response1 = await fetchWithCookie(tokenUrl);
@@ -40,6 +36,14 @@ function AddEmergencyContact(props) {
             }
         }
     }
+
+    useEffect(() => {
+        if (token) {
+            fetchEmergencyContact();
+        }
+    }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
+
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -82,7 +86,7 @@ function AddEmergencyContact(props) {
                             <h1
                                 className="text-2xl font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"
                             >{contactId ? 'Update your emergency contact' : 'Please fill out the following emergency contact information!'}</h1>
-                            <br/>
+                            <br />
                             <div className="mt-2">
                                 <label htmlFor="fullName" className="block text-sm font-medium leading-6 text-gray-900">Full Name</label>
                                 <input onChange={(e) => setFullName(e.target.value)} value={fullName} placeholder="First Last" required type="text" name="fullName" id="fullName"
