@@ -9,8 +9,8 @@ const Header = () => {
     const navigate = useNavigate();
     const { logout, fetchWithCookie } = useToken();
     const [loggedIn, setLoggedIn] = useState(false)
-    const logoutButton = async () => {
-        await logout();
+    const logoutButton = () => {
+        logout();
         navigate("/");
     };
     const isLoggedIn = async () => {

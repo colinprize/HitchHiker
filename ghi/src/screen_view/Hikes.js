@@ -56,7 +56,7 @@ function HikesColumn(props) {
                   </button>
                   :
                   <button className="inline-flex items-center text-wheat px-3 py-2 ml-6 fill-current rounded-lg">
-                   Going!
+                    Going!
                   </button>
                 }
               </div>
@@ -128,8 +128,10 @@ const ListHikes = () => {
     }
   }
   useEffect(() => {
-    fetchData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    if (token) {
+      fetchData();
+    }
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
     return <div>Loading...</div>;
