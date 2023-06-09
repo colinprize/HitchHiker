@@ -25,7 +25,6 @@ function UpdateUser() {
     const fetchUserData = async () => {
         const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
         const userToken = await fetchWithCookie(tokenUrl);
-        console.log(userToken)
         const userName = userToken.account.username;
         const getUserUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/users/${userName}`
         const config = {
