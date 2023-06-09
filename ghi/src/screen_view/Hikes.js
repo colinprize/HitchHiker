@@ -84,7 +84,7 @@ const ListHikes = () => {
       credentials: "include",
       method: "get",
       headers: {
-        headers: { Authorization: `Bearer ${token}` },
+         Authorization: `Bearer ${token}`
       },
     };
 

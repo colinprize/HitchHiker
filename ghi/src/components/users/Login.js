@@ -13,7 +13,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (token) {
       navigate("/listhikes")
-      window.location.reload(false);
+      // window.location.reload(false);
     }
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -47,12 +47,12 @@ const LoginForm = () => {
             Reset Password
             </a> */}
           </div>
-          <br/>
+          <br />
           <CreateUserButton />
         </form>
-        
-        </div>
-      
+
+      </div>
+
     </>
   );
 };

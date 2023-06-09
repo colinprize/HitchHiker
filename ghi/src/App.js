@@ -6,7 +6,6 @@ import LandingPage from "./screen_view/LandingPage"
 import CreateUser from "./components/users/CreateUser";
 import Footer from './components/footer';
 import Header from './components/header.js';
-import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import UpdateUser from './components/users/UpdateUser';
 import CreateHikeForm from "./components/hikes/CreateHikeForm";
 import ListHikes from "./screen_view/Hikes";
@@ -24,20 +23,17 @@ export default function App() {
   return (
     <>
       <BrowserRouter basename={basename}>
-        <AuthProvider baseUrl={process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}>
-          <Header />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            {/* <Route path="/main_page" element={<MainPage />} /> */}
-            <Route path="/create_user" element={<CreateUser />} />
-            <Route path="/update_user" element={<UpdateUser />} />
-            <Route path="/createhike" element={<CreateHikeForm />} />
-            <Route path="/listhikes" element={<ListHikes />} />
-            <Route path="/userhikes" element={<ListUserHikes />} />
-            <Route path="/create_ride" element={<CreateRideForm />} />
-            <Route path="/rides" element={<RidesList />} />
-          </Routes>
-        </AuthProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/create_user" element={<CreateUser />} />
+          <Route path="/update_user" element={<UpdateUser />} />
+          <Route path="/createhike" element={<CreateHikeForm />} />
+          <Route path="/listhikes" element={<ListHikes />} />
+          <Route path="/userhikes" element={<ListUserHikes />} />
+          <Route path="/create_ride" element={<CreateRideForm />} />
+          <Route path="/rides" element={<RidesList />} />
+        </Routes>
         <Footer />
       </BrowserRouter>
     </>
