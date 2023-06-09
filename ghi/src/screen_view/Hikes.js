@@ -14,7 +14,7 @@ function HikesColumn(props) {
     const data = {}
     data.hike_id = hike_id
     data.user_id = user_id
-    const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/userhikes`;
+    const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/userhikes/`;
     const fetchConfig = {
       method: 'post',
       body: JSON.stringify(data),

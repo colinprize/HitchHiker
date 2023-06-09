@@ -19,7 +19,7 @@ function AddEmergencyContact(props) {
         const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
         const response1 = await fetchWithCookie(tokenUrl);
         const user_id = parseInt(response1.account.user_id)
-        const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/users/${user_id}/contact/`;
+        const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/users/${user_id}/contact`;
         const config = {
             credentials: "include",
             method: "get",
