@@ -55,9 +55,9 @@ function HikesColumn(props) {
                     Join Hike
                   </button>
                   :
-                  <button className="inline-flex items-center text-wheat px-3 py-2 ml-6 fill-current rounded-lg">
+                  <div className="inline-flex items-center text-wheat px-3 py-2 ml-6 fill-current rounded-lg">
                     Going!
-                  </button>
+                  </div>
                 }
               </div>
             </div>

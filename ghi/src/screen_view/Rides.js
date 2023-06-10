@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import carImage from "../images/Car-benz.png";
+import car from "../images/mystery-machine.jpg";
 
 
 function RideColumn(props) {
@@ -34,7 +34,7 @@ function RideColumn(props) {
           < div key={ride.ride_id} >
             <div className="max-w-sm bg-grey bg-gray-800 rounded-lg shadow border-gray-700">
               <div className="relative">
-                <img src={carImage} className='w-full h-48 object-cover rounded-t-lg' alt="Mercedes Benz cartoon" />
+                <img src={car} className='w-full h-48 object-cover rounded-t-lg' alt="Mercedes Benz cartoon" />
                 <div className="absolute inset-0 rounded-t-lg"></div>
               </div>
               <div className='p-5'>
@@ -99,8 +99,7 @@ function RidesList() {
       <div className="bg-stone-100 shadow-md rounded px-20 pt-6 pb-8 m-4">
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-2xl text-center font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Rides for this hike</h2>
-            <p className="my-4 text-m leading-8 text-gray-600">.</p>
+            <h2 className="text-2xl text-center font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight my-4">Rides for this hike</h2>
             <RideColumn rides={ridesData} hikeId={location.state.hikeData.hike_id} userId={userId} />
           </div>
         </div>

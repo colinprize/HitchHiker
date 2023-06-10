@@ -191,7 +191,7 @@ function CreateRideForm() {
             </div>
           </div>
 
-          <div className="mt-6 flex gap-x-6 grid grid-cols-1 py-4 sm:grid-cols-4">
+          <div className="mt-6 flex gap-x-6 grid-cols-1 py-4 sm:grid-cols-4">
             <button onClick={onCancelClick} type="reset" className="col-end-1 col-span-1 text-sm font-semibold leading-6 text-gray-900">
               Cancel
             </button>
@@ -200,8 +200,7 @@ function CreateRideForm() {
             </button>
             <button
               type="submit"
-              className="col-start-4 col-span-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
+              className="col-start-4 col-span-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               Save
             </button>
           </div>
