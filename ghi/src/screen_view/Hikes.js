@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import HikeDetails from '../components/hikes/HikeDetails';
 import RideDialogModal from '../components/rides/rideDialogModal';
+import ReactPaginate from 'react-paginate';
 
 
 function HikesColumn(props) {
   const { token, fetchWithCookie } = useToken();
-  const joinhike = async (hike) => {
+  const joinHike = async (hike) => {
     const hike_id = hike.hike_id;
     const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
     const response1 = await fetchWithCookie(tokenUrl);
-    let user_id = parseInt(response1.account.user_id)
-    const data = {}
-    data.hike_id = hike_id
-    data.user_id = user_id
+    let user_id = parseInt(response1.account.user_id);
+    const data = {
+      hike_id: hike_id,
+      user_id: user_id
+    };
     const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/userhikes/`;
     const fetchConfig = {
       method: 'post',
@@ -28,8 +30,8 @@ function HikesColumn(props) {
       props.setHikeData(hike);
       props.setTrigger(true);
     }
-
   };
+
   let userHikeIds = [];
   if (props.userHikes.length > 0) {
     userHikeIds = props.userHikes.map((userHike) => userHike.hike_id);
@@ -51,7 +53,7 @@ function HikesColumn(props) {
                 <HikeDetails hike_id={hike.hike_id} ></HikeDetails>
                 {!userHikeIds.includes(hike.hike_id) ?
                   <button className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-olivine rounded-lg ml-2 hover:scale-95"
-                    onClick={() => { joinhike(hike); }}>
+                    onClick={() => { joinHike(hike); }}>
                     Join Hike
                   </button>
                   :
@@ -64,18 +66,22 @@ function HikesColumn(props) {
           </div>
         )
       })}
-    </div >
+    </div>
   )
 }
 
 const ListHikes = () => {
-  const [hikeColumns, setHikeColumns] = useState([[], [], [], []]);
+  const [hikeColumns, setHikeColumns] = useState([]);
   const [loading, setLoading] = useState(true);
   const { token, fetchWithCookie } = useToken();
   const [hikeSelected, setHikeSelected] = useState(false);
   const [hikeDataForRide, setHikeDataForRide] = useState("");
-
   const [userHikes, setUserHikes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const perPage = 2; // Number of cards to display per page
+  const offset = currentPage * perPage;
+  const currentHikes = hikeColumns.slice(offset, offset + perPage);
 
   const fetchData = async () => {
     const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes`;
@@ -84,7 +90,7 @@ const ListHikes = () => {
       credentials: "include",
       method: "get",
       headers: {
-         Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       },
     };
 
@@ -94,48 +100,41 @@ const ListHikes = () => {
       const userHikesResponse = await fetch(userHikesUrl, config);
       if (response.ok && userHikesResponse.ok) {
         const data = await response.json();
-        // const allHikes = Object.values(data);
-        // const hikes = allHikes.filter((hike) => hike.organizer_id !== userResponse.account.user_id);
         const hikes = Object.values(data);
-        const requests = [];
-        for (let hike of hikes) {
-          const detailUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hike.hike_id}`;
-          requests.push(fetch(detailUrl, config));
-        }
-        const responses = await Promise.all(requests);
         const columns = [[], [], [], []];
-        let i = 0
-        for (const hikeResponse of responses) {
-          if (hikeResponse.ok) {
-            const details = await hikeResponse.json();
-            columns[i].push(details);
-            i = i + 1;
-            if (i > 3) {
-              i = 0;
-            }
-          } else {
-            console.error(hikeResponse)
-          }
-        }
-        setHikeColumns(columns)
+        const hikeCount = hikes.length
+        let columnIndex = 0;
+        // Divide hikes evenly across columns
+        hikes.forEach((hike, index) => {
+          const column = Math.floor(index / (hikeCount / 4));
+          columns[column].push(hike);
+        });
+        setHikeColumns(columns);
         const userHikeData = await userHikesResponse.json();
         setUserHikes(userHikeData);
       }
-      setLoading(false)
+      setLoading(false);
     } catch (e) {
-      console.error(e)
+      console.error(e);
       setLoading(false);
     }
-  }
+  };
+
   useEffect(() => {
     if (token) {
       fetchData();
     }
-  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [token]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const pageCount = Math.ceil(hikeColumns.length / perPage);
 
   return (
     <>
@@ -143,13 +142,26 @@ const ListHikes = () => {
       <div className={`${hikeSelected ? "hidden" : "mx-auto max-w-screen-lg"}`}>
         <h2 className='text-3xl font-bold text-center'>Upcoming Hikes</h2>
         <br />
-        <br />
         <div className='grid grid-cols-4 gap-4'>
-          {hikeColumns.map((hikeList, index) => {
+          {currentHikes.map((hikeColumn, index) => {
             return (
-              <HikesColumn key={index} list={hikeList} setTrigger={setHikeSelected} setHikeData={setHikeDataForRide} userHikes={userHikes} />
+              <HikesColumn key={index} list={hikeColumn} setTrigger={setHikeSelected} setHikeData={setHikeDataForRide} userHikes={userHikes} />
             );
           })}
+        </div>
+        <div className="flex justify-center mt-8">
+          <ReactPaginate
+            previousLabel={'Previous'}
+            nextLabel={'Next'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={'pagination'}
+            activeClassName={'active'}
+          />
         </div>
       </div>
       <RideDialogModal trigger={hikeSelected} setTrigger={setHikeSelected} hikeData={hikeDataForRide} resetHikeData={setHikeDataForRide} directFromJoin={true} />
@@ -157,4 +169,4 @@ const ListHikes = () => {
   );
 }
 
-export default ListHikes
+export default ListHikes;
