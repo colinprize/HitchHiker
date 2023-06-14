@@ -4,7 +4,6 @@ import HikeDetails from '../components/hikes/HikeDetails';
 import RideDialogModal from '../components/rides/rideDialogModal';
 import ReactPaginate from 'react-paginate';
 
-
 function HikesColumn(props) {
   const { token, fetchWithCookie } = useToken();
   const joinHike = async (hike) => {
@@ -41,33 +40,31 @@ function HikesColumn(props) {
     <div className="justify-between">
       {props.list.map(hike => {
         return (
-          <div key={hike.hike_id}>
-            <div className="max-w-sm rounded-lg shadow bg-gray-800 border-gray-700 mt-5">
-              <div className="relative">
-                <img src={hike.image_url} className='w-full h-48 object-cover rounded-t-lg' alt="Hike" />
-                <div className="absolute inset-0 rounded-t-lg"></div>
-              </div>
-              <div className='p-5'>
-                <h5 className='mb-2 text-2xl font-bold tracking-tight text-white'>{hike.trail_name}</h5>
-                <p className='mb-3 font-normal text-gray-400'>{new Date(hike.date_time).toLocaleDateString()} at {new Date(hike.date_time).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
-                <HikeDetails hike_id={hike.hike_id} ></HikeDetails>
-                {!userHikeIds.includes(hike.hike_id) ?
-                  <button className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-olivine rounded-lg ml-2 hover:scale-95"
-                    onClick={() => { joinHike(hike); }}>
-                    Join Hike
-                  </button>
-                  :
-                  <div className="inline-flex items-center text-wheat px-3 py-2 ml-6 fill-current rounded-lg">
-                    Going!
-                  </div>
-                }
-              </div>
+          <div key={hike.hike_id} className="max-w-sm rounded-lg shadow bg-gray-800 border-gray-700 mt-5">
+            <div className="relative">
+              <img src={hike.image_url} className='w-full h-48 object-cover rounded-t-lg' alt="Hike" />
+              <div className="absolute inset-0 rounded-t-lg"></div>
+            </div>
+            <div className='p-5'>
+              <h5 className='mb-2 text-2xl font-bold tracking-tight text-white'>{hike.trail_name}</h5>
+              <p className='mb-3 font-normal text-gray-400'>{new Date(hike.date_time).toLocaleDateString()} at {new Date(hike.date_time).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</p>
+              <HikeDetails hike_id={hike.hike_id} ></HikeDetails>
+              {!userHikeIds.includes(hike.hike_id) ?
+                <button className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-olivine rounded-lg ml-2 hover:scale-95"
+                  onClick={() => { joinHike(hike); }}>
+                  Join Hike
+                </button>
+                :
+                <div className="inline-flex items-center text-wheat px-3 py-2 ml-6 fill-current rounded-lg">
+                  Going!
+                </div>
+              }
             </div>
           </div>
         )
       })}
     </div>
-  )
+  );
 }
 
 const ListHikes = () => {
@@ -79,9 +76,8 @@ const ListHikes = () => {
   const [userHikes, setUserHikes] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const perPage = 2; // Number of cards to display per page
+  const perPage = 3; // Number of cards to display per page
   const offset = currentPage * perPage;
-  const currentHikes = hikeColumns.slice(offset, offset + perPage);
 
   const fetchData = async () => {
     const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes`;
@@ -102,13 +98,13 @@ const ListHikes = () => {
         const data = await response.json();
         const hikes = Object.values(data);
         const columns = [[], [], [], []];
-        const hikeCount = hikes.length
-        let columnIndex = 0;
-        // Divide hikes evenly across columns
+
+        let hikeCount = hikes.length;
         hikes.forEach((hike, index) => {
           const column = Math.floor(index / (hikeCount / 4));
           columns[column].push(hike);
         });
+
         setHikeColumns(columns);
         const userHikeData = await userHikesResponse.json();
         setUserHikes(userHikeData);
@@ -136,6 +132,10 @@ const ListHikes = () => {
 
   const pageCount = Math.ceil(hikeColumns.length / perPage);
 
+  const currentHikes = hikeColumns.slice(offset, offset + perPage);
+  const remainingSlots = perPage - currentHikes.length;
+  const filledHikes = currentHikes.concat(Array(remainingSlots).fill(null));
+
   return (
     <>
       <br />
@@ -143,9 +143,11 @@ const ListHikes = () => {
         <h2 className='text-3xl font-bold text-center'>Upcoming Hikes</h2>
         <br />
         <div className='grid grid-cols-4 gap-4'>
-          {currentHikes.map((hikeColumn, index) => {
-            return (
+          {filledHikes.map((hikeColumn, index) => {
+            return hikeColumn ? (
               <HikesColumn key={index} list={hikeColumn} setTrigger={setHikeSelected} setHikeData={setHikeDataForRide} userHikes={userHikes} />
+            ) : (
+              <div key={index}></div>
             );
           })}
         </div>
@@ -167,6 +169,6 @@ const ListHikes = () => {
       <RideDialogModal trigger={hikeSelected} setTrigger={setHikeSelected} hikeData={hikeDataForRide} resetHikeData={setHikeDataForRide} directFromJoin={true} />
     </>
   );
-}
+};
 
 export default ListHikes;
