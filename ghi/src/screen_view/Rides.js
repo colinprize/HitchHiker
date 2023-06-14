@@ -34,7 +34,7 @@ function RideColumn(props) {
           < div key={ride.ride_id} >
             <div className="max-w-sm bg-grey bg-gray-800 rounded-lg shadow border-gray-700">
               <div className="relative">
-                <img src={car} className='w-full h-48 object-cover rounded-t-lg' alt="Mercedes Benz cartoon" />
+                <img src={ride.driver_img || car} className='w-full h-48 object-cover rounded-t-lg' alt="Mercedes Benz cartoon" />
                 <div className="absolute inset-0 rounded-t-lg"></div>
               </div>
               <div className='p-5'>

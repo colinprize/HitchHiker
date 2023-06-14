@@ -60,6 +60,7 @@ def test_create_ride():
         "meetup_time": "2023-07-04T08:00:00",
         "meetup_location": "Kwik-E-Mart Springfield, OR  97403",
         "hike_event": 1,
+        "driver_img": None,
     }
 
     response = client.post("/hikes/1/rides", json=json)
@@ -67,6 +68,5 @@ def test_create_ride():
     app.dependency_overrides = {}
 
     # Assert
-
     assert response.status_code == 200
     assert response.json() == expected
