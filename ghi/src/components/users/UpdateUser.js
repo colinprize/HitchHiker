@@ -80,71 +80,80 @@ function UpdateUser() {
             logout();
         }
     }
-
-
     return (
         <>
-            <div className="flex items-center justify-center mb-0 mt-10">
-                <div className="flex flex-col items-center">
-                    <form className="bg-wheat shadow-md rounded px-20 pt-6 pb-8 mb-4">
-                        <div className="items-center mb-4">
-                            <label className="block text-black text-md font-bold mb-2" htmlFor="fullName">
+            <div className="flex justify-center">
+                <form className="mt-5 border px-14 py-14 rounded-lg bg-wheat">
+                    <div className="flex flex-wrap -mx-3 mb-6">
+                        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                                 Full Name
                             </label>
-                            <input value={fullName} onChange={(e) => setFullName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="fullName" type="text" placeholder="Tina Belcher" />
+                            <input value={fullName} onChange={(e) => setFullName(e.target.value)} className="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
                         </div>
-                        <div className="items-center mb-4">
-                            <label className="block text-black text-md font-bold mb-2" htmlFor="username">
+                        <div className="w-full md:w-1/2 px-3">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                                 Username
                             </label>
-                            <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="TinaBelcher01" />
+                            <input value={username} onChange={(e) => setUsername(e.target.value)} className="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" />
                         </div>
-                        <div className="mb-6">
-                            <label className="block text-black text-md font-bold mb-2" htmlFor="password">
-                                Password
-                            </label>
-                            <input value={password} onChange={(e) => setPassword(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="*************" />
-                            <p className="text-red-500 text-xs italic">Please enter current password.</p>
-                        </div>
-                        <div className="items-center mb-4">
-                            <label className="block text-black text-md font-bold mb-2" htmlFor="pictureUrl">
-                                Picture Url
-                            </label>
-                            <input value={pictureUrl} onChange={(e) => setPictureUrl(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="pictureUrl" type="text" placeholder="Picture Url" />
-                        </div>
-                        <div className="items-center mb-4">
-                            <label className="block text-black text-md font-bold mb-2" htmlFor="email">
+                    </div>
+                    <div className="flex flex-wrap -mx-3 mb-6">
+                        <div className="w-full px-3">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                 Email
                             </label>
-                            <input value={email} onChange={(e) => setEmail(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="TinaB@bobsburgers.com" />
+                            <input value={email} onChange={(e) => setEmail(e.target.value)} className="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-email" type="email" placeholder="Someone_Cool@email.com" />
                         </div>
-                        <div className="items-center mb-4">
-                            <label className="block text-black text-md font-bold mb-2" htmlFor="uniName">
+                    </div>
+                    <div className="flex flex-wrap -mx-3 mb-6">
+                        <div className="w-full px-3">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                                Password
+                            </label>
+                            <input value={password} onChange={(e) => setPassword(e.target.value)} className="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******************" />
+                            <p className="text-red-600 text-xs italic">Please enter current password.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap -mx-3 mb-2">
+                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+                                Picture Url
+                            </label>
+                            <input value={pictureUrl} onChange={(e) => setPictureUrl(e.target.value)} class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="Albuquerque" />
+                        </div>
+                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
                                 University Name
                             </label>
-                            <input value={uniName} onChange={(e) => setUniName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="uniName" type="text" placeholder="Ocean City University" />
+                            <input value={uniName} onChange={(e) => setUniName(e.target.value)} class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
                         </div>
-                        <div className="items-center mb-4">
-                            <label className="block text-black text-md font-bold mb-2" htmlFor="uniYear">
+                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
                                 University Year
                             </label>
-                            <input value={uniYear} onChange={(e) => setUniYear(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="uniYear" type="integer" placeholder="2023" />
+                            <input value={uniYear} onChange={(e) => setUniYear(e.target.value)} class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
                         </div>
-                        <div className="flex justify-center items-center">
-                            <button onClick={handleSubmit} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className="bg-olivine text-white hover:scale-95 font-bold py-2 px-20 rounded-full" type="button">
+                    </div>
+                    <div className="flex flex-wrap -mx-0 mb-0 mt-8">
+                        <div className="w-full md:w-1/2 mb-0 md:mb-0">
+                            <button onClick={handleSubmit} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className="bg-olivine text-white block uppercase tracking text-xs mb-0 hover:scale-95 font-bold py-2 px-14 mr-3 rounded-full" type="button">
                                 Update Profile
                             </button>
                         </div>
-                    </form>
+                        <div className="w-full md:w-1/2 mb-0 md:mb-0">
+                            <button onClick={() => setContactPopup(true)} className="bg-olivine block uppercase tracking text-white text-xs mb-0 hover:scale-95 font-bold py-2 px-14 rounded-full" type="button" >Add/Update Emergency Contact</button>
+                            <AddEmergencyContact trigger={contactPopup} setTrigger={setContactPopup}>
+                            </AddEmergencyContact>
+                        </div>
+                        {/* {hover && (
+                        <AlertMessage />
+                    )} */}
+                    </div>
                     {hover && (
                         <AlertMessage />
                     )}
-                    <div>
-                        <button onClick={() => setContactPopup(true)} className="bg-olivine text-white hover:scale-95 font-bold py-2 px-20 rounded-lg" type="button" >Add/Update an emergency contact</button>
-                        <AddEmergencyContact trigger={contactPopup} setTrigger={setContactPopup}>
-                        </AddEmergencyContact>
-                    </div>
-                </div>
+                </form>
             </div>
         </>
     )

@@ -33,52 +33,59 @@ function CreateUser() {
     }
 
     return (
-            <div className="flex items-center justify-center mb-0">
-                    <form className="bg-wheat shadow-md rounded-lg px-20 pt-6 pb-8 mb-4 mt-5">
-                        <div className="items-center mb-4">
-                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="fullName">
-                                Full Name
-                            </label>
-                            <input value={fullName} onChange={(e) => setFullName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="fullName" type="text" placeholder="Tina Belcher" />
-                        </div>
-                        <div className="items-center mb-4">
-                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="username">
-                                Username
-                            </label>
-                            <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="TinaBelcher01" />
-                        </div>
-                        <div className="mb-6">
-                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="password">
-                                Password
-                            </label>
-                            <input value={password} onChange={(e) => setPassword(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="*************" />
-
-                        </div>
-                        <div className="items-center mb-4">
-                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="email">
-                                Email
-                            </label>
-                            <input value={email} onChange={(e) => setEmail(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="TinaB@bobsburgers.com" />
-                        </div>
-                        <div className="items-center mb-4">
-                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="uniName">
-                                University Name
-                            </label>
-                            <input value={uniName} onChange={(e) => setUniName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="uniName" type="text" placeholder="Ocean City University" />
-                        </div>
-                        <div className="items-center mb-4">
-                            <label className="block text-olivine text-md font-bold mb-2" htmlFor="uniYear">
-                                University Year
-                            </label>
-                            <input value={uniYear} onChange={(e) => setUniYear(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="uniYear" type="integer" placeholder="2023" />
-                        </div>
-                        <div className="flex justify-center items-center">
-                            <button onClick={handleSubmit} style={{ "position": "relative", "zIndex": "1" }} className="bg-olivine text-white hover:scale-105 font-bold py-2 px-20 rounded-full" type="button">
-                                Sign up
-                            </button>
-                        </div>
-                    </form>
-            </div>
+        <div className="flex justify-center">
+            <form className="mt-5 border px-14 py-14 rounded-lg bg-wheat">
+                <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                            Full Name
+                        </label>
+                        <input value={fullName} onChange={(e) => setFullName(e.target.value)} className="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
+                    </div>
+                    <div className="w-full md:w-1/2 px-3">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                            Username
+                        </label>
+                        <input value={username} onChange={(e) => setUsername(e.target.value)} className="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" />
+                    </div>
+                </div>
+                <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full px-3">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                            Email
+                        </label>
+                        <input value={email} onChange={(e) => setEmail(e.target.value)} className="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-email" type="email" placeholder="Someone_Cool@email.com" />
+                    </div>
+                </div>
+                <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full px-3">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                            Password
+                        </label>
+                        <input value={password} onChange={(e) => setPassword(e.target.value)} className="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******************" />
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-3 mb-2">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
+                            University Name
+                        </label>
+                        <input value={uniName} onChange={(e) => setUniName(e.target.value)} class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
+                    </div>
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
+                            University Year
+                        </label>
+                        <input value={uniYear} onChange={(e) => setUniYear(e.target.value)} class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
+                    </div>
+                </div>
+                <div className="flex justify-center items-center mt-10">
+                    <button onClick={handleSubmit} style={{ "position": "relative", "zIndex": "1" }} className="bg-olivine text-white hover:scale-95 font-bold py-2 px-24 rounded-full" type="button">
+                        Sign up
+                    </button>
+                </div>
+            </form>
+        </div>
     )
 }
 

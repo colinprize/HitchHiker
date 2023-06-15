@@ -50,7 +50,6 @@ const LoginForm = () => {
           <br />
           <CreateUserButton />
         </form>
-
       </div>
 
     </>

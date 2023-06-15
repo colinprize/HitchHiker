@@ -1,12 +1,20 @@
 .mountain-footer {
-    background-image: url(./images/Footer-HitchHiker.png);
+    background-image: url(./images/Footer-HitchHiker2.png);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
-    height: 10rem;
+    background-size:cover;
+    height: 6rem;
     right: 0px;
     left: 0px;
     bottom: 0px;
     position: fixed;
     z-index: -1;
+}
+
+.indentation {
+    text-indent: 40px;
+}
+
+.aboutus {
+    border-radius: 10px;
 }

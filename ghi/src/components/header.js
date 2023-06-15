@@ -38,7 +38,7 @@ const Header = () => {
                     {loggedIn ? (
                         <div className="justify-items-center">
                             <div className="lg:order-2">
-                                <ul className="list-none mt-2">
+                                <ul className="list-none mt-0">
                                     <li>
                                         <NavLink to="/listhikes">
                                             <img src={require('../images/navlogohitchhiker.png')} className="ml-3 rounded-lg sm:h-20" alt="Hitch Hiker Logo" />
@@ -47,38 +47,38 @@ const Header = () => {
                                     </li>
                                     <li>
 
-                                        <NavLink to="/listhikes" className="block pt-10 pb-5 pr-4 pl-3 text-white text-center rounded hover:text-wheat">
+                                        <NavLink to="/listhikes" className="block pt-5 pb-3 pr-4 pl-3 text-white text-center rounded hover:text-wheat">
                                             <HomeIcon className="h-6 w-20" />
                                             Home
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/userhikes" className="block py-5 pr-4 pl-3 text-white rounded bg-primary-700 text-center hover:text-wheat">
-                                            <BsArchiveFill className="h-6 w-20"/>
+                                        <NavLink to="/userhikes" className="block py-3 pr-4 pl-3 text-white rounded bg-primary-700 text-center hover:text-wheat">
+                                            <BsArchiveFill className="h-5 w-20"/>
                                             My Hikes
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/createhike" className="block py-5 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat">
-                                            <DocumentPlusIcon className="h-6 w-20" />
+                                        <NavLink to="/createhike" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat">
+                                            <DocumentPlusIcon className="h-5 w-20" />
                                             Add Hike
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/update_user" className="block py-5 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat">
-                                            <Cog6ToothIcon className="h-6 w-20" />
+                                        <NavLink to="/update_user" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat">
+                                            <Cog6ToothIcon className="h-5 w-20" />
                                             Settings
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <button onClick={logoutButton} className="block py-5 pr-4 pl-3 underline text-white hover:text-wheat" type="button">
-                                            <BsFillArrowRightSquareFill className="h-6 w-20" />
+                                        <button onClick={logoutButton} className="block py-3 pr-4 pl-3 underline text-white hover:text-wheat" type="button">
+                                            <BsFillArrowRightSquareFill className="h-5 w-20" />
                                             Sign Out
                                         </button>
                                     </li>
                                     <li>
                                         <p className="fixed bottom-0 block py-5 pr-4 pl-3 text-white" type="button">
-                                            <LockOpenIcon className="h-8 w-20" />
+                                            <LockOpenIcon className="h-4 w-20" />
                                         </p>
                                     </li>
                                 </ul>
@@ -98,7 +98,7 @@ const Header = () => {
                                         </li>
                                         <li>
                                             <p className="fixed bottom-0 block py-5 pr-4 pl-3 text-white" type="button">
-                                                <LockClosedIcon className="h-8 w-20" />
+                                                <LockClosedIcon className="h-4 w-20" />
                                             </p>
                                         </li>
                                     </ul>
