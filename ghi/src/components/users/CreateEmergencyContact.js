@@ -76,13 +76,13 @@ function AddEmergencyContact(props) {
 
     return (props.trigger) ? (
         <>
-            <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+            <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-lg flex justify-center items-center p-24">
                 <div className="bg-white bg-opacity-80 shadow-md rounded-lg px-4 pt-2 pb-2 m-0">
                     <div className="mt-0 flex items-center justify-end gap-x-6">
                         <button className="rounded-md bg-red-700 px-3 text-sm font-semibold text-white shadow-md hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2" onClick={() => props.setTrigger(false)}>X</button>
                     </div>
                     <div className="flex items-center justify-center">
-                        <form className="bg-wheat shadow-md rounded px-24 pt-6 pb-8 m-10" onSubmit={handleSubmit} id="emergency-contact-form">
+                        <form className="bg-wheat shadow-md rounded px-20 pt-6 pb-8 m-10" onSubmit={handleSubmit} id="emergency-contact-form">
                             <h1
                                 className="text-2xl font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"
                             >{contactId ? 'Update your emergency contact' : 'Please fill out the following emergency contact information!'}</h1>

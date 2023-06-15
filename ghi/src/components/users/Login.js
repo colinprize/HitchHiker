@@ -30,7 +30,7 @@ const LoginForm = () => {
             <label className="block text-olivine text-md font-bold mb-2" htmlFor="username">
               Username
             </label>
-            <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="XxNoScopeGodxX" />
+            <input value={username} onChange={(e) => setUsername(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="JonathanWick1" />
           </div>
           <div className="mb-6">
             <label className="block text-olivine text-md font-bold mb-2" htmlFor="password">

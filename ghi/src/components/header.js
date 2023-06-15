@@ -1,8 +1,11 @@
 import { useNavigate, NavLink } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState, useEffect } from 'react';
-import { BsArchiveFill, BsFillArrowRightSquareFill } from 'react-icons/bs';
-import { HomeIcon, Cog6ToothIcon, LockClosedIcon, LockOpenIcon, DocumentPlusIcon } from "@heroicons/react/20/solid";
+import { BsFillArrowRightSquareFill, BsCarFrontFill } from 'react-icons/bs';
+import { FaMountain } from 'react-icons/fa';
+import { RiArrowGoBackLine } from 'react-icons/ri';
+import { MdAddBox, MdOutlineFormatListBulleted } from 'react-icons/md';
+import { HomeIcon, Cog6ToothIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/react/20/solid";
 
 
 const Header = () => {
@@ -47,38 +50,50 @@ const Header = () => {
                                     </li>
                                     <li>
 
-                                        <NavLink to="/listhikes" className="block pt-5 pb-3 pr-4 pl-3 text-white text-center rounded hover:text-wheat">
+                                        <NavLink to="/listhikes" className="block pt-5 pb-3 pr-4 pl-3 text-white text-center rounded hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
                                             <HomeIcon className="h-6 w-20" />
                                             Home
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/userhikes" className="block py-3 pr-4 pl-3 text-white rounded bg-primary-700 text-center hover:text-wheat">
-                                            <BsArchiveFill className="h-5 w-20"/>
+                                        <NavLink to="/userhikes" className="block py-3 pr-4 pl-3 text-white rounded bg-primary-700 text-center hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
+                                            <FaMountain className="h-5 w-20" />
                                             My Hikes
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/createhike" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat">
-                                            <DocumentPlusIcon className="h-5 w-20" />
+                                        <NavLink to="/createhike" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
+                                            <MdAddBox className="h-7 w-20" />
                                             Add Hike
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/update_user" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat">
+                                        <NavLink to="/rides" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
+                                            <MdOutlineFormatListBulleted className="h-7 w-20" />
+                                            Ride List
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/rides" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
+                                            <BsCarFrontFill className="h-7 w-20" />
+                                            My Rides
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/update_user" className="fixed bottom-24 block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
                                             <Cog6ToothIcon className="h-5 w-20" />
                                             Settings
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <button onClick={logoutButton} className="block py-3 pr-4 pl-3 underline text-white hover:text-wheat" type="button">
+                                        <button onClick={logoutButton} className="fixed bottom-8 block py-3 pr-4 pl-3 mb-2 text-white hover:text-wheat hover:transform hover:scale-105 transition-all duration-100" type="button">
                                             <BsFillArrowRightSquareFill className="h-5 w-20" />
                                             Sign Out
                                         </button>
                                     </li>
                                     <li>
-                                        <p className="fixed bottom-0 block py-5 pr-4 pl-3 text-white" type="button">
-                                            <LockOpenIcon className="h-4 w-20" />
+                                        <p className="fixed bottom-0 block py-5 pr-4 pl-3 text-blue-600" type="button">
+                                            <LockOpenIcon className="h-5 w-20" />
                                         </p>
                                     </li>
                                 </ul>
@@ -87,21 +102,28 @@ const Header = () => {
                     ) :
                         (
                             <div className="justify-between items-center">
-                                <NavLink to="/" className="items-center">
-                                    <img src={require('../images/navlogohitchhiker.png')} className="h-16 sm:h-20 rounded" alt="Hitch Hiker Logo" />
-                                    {/* <span className="px-4 self-center text-xl font-semibold whitespace-nowrap text-white">Hitch Hiker</span> */}
-                                </NavLink>
-                                <div className="flex items-center lg:order-2">
-                                    <ul className="list-none mt-5">
+                                <div className="lg:order-2">
+                                    {/* <div className="flex items-center lg:order-2"> */}
+                                    <ul className="list-none mt-0">
                                         <li>
-                                            <NavLink to="/" className="block py-4 pr-4  text-white rounded bg-primary-700 hover:text-wheat">Back to Login</NavLink>
+                                            <NavLink to="/">
+                                                <img src={require('../images/navlogohitchhiker.png')} className="ml-3 rounded-lg sm:h-20" alt="Hitch Hiker Logo" />
+                                                {/* <span className="px-4 self-center text-xl font-semibold whitespace-nowrap text-white">Hitch Hiker</span> */}
+                                            </NavLink>
                                         </li>
                                         <li>
-                                            <p className="fixed bottom-0 block py-5 pr-4 pl-3 text-white" type="button">
-                                                <LockClosedIcon className="h-4 w-20" />
+                                            <NavLink to="/" className="block pt-5 pb-3 pr-4 pl-3 text-white text-center rounded hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
+                                                <RiArrowGoBackLine className="h-6 w-20" />
+                                                Login
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <p className="fixed bottom-0 block py-5 pr-4 pl-3 text-red-600" type="button">
+                                                <LockClosedIcon className="h-5 w-20" />
                                             </p>
                                         </li>
                                     </ul>
+                                    {/* </div> */}
                                 </div>
                             </div>
                         )

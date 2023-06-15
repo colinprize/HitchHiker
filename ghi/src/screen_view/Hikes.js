@@ -67,6 +67,7 @@ function HikesColumn(props) {
         )
       })}
     </div >
+
   )
 }
 
@@ -149,29 +150,35 @@ const ListHikes = () => {
   return (
     <>
       <br />
-      <div className={`${hikeSelected ? "hidden" : "mx-auto max-w-screen-lg"}`}>
+      <div>
         <h2 className='text-3xl font-bold text-center'>Upcoming Hikes</h2>
-        <div className='flex items-center justify-center mb-2'>
-          <DatePicker
-            placeholderText='Search by date'
-            className='mr-2'
-            selected={selectedDate}
-            onChange={date => setSelectedDate(date)}
-            minDate={new Date()}
-          />
-        </div>
-        <button
-          className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-olivine rounded-lg hover:scale-95"
-          onClick={() => {
-            setSelectedDate(null);
-          }}>Clear Search</button>
-        <br />
-        <div className='grid grid-cols-4 gap-4'>
-          {hikeColumns.map((hikeList, index) => {
-            return (
-              <HikesColumn key={index} list={hikeList} setTrigger={setHikeSelected} setHikeData={setHikeDataForRide} userHikes={userHikes} />
-            );
-          })}
+        <div className={`${hikeSelected ? "hidden" : "mx-32 max-w-screen-lg"}`}>
+          <div className='flex items-center justify-center mb-2 w-2/3'>
+            <button
+              className="inline-flex px-3 py-2 text-lg font-medium text-center text-white bg-olivine rounded-lg hover:scale-95 mr-2"
+              onClick={() => {
+                setSelectedDate(null);
+              }}>Clear</button>
+            <DatePicker
+              placeholderText='Search by date'
+              className='mr-2'
+              selected={selectedDate}
+              onChange={date => setSelectedDate(date)}
+              minDate={new Date()}
+            />
+          </div>
+          </div>
+          <br />
+        <div className="flex justify-center mx-60 mb-24">
+          <div className='grid grid-cols-1' style={{ "zIndex": "0" }}>
+            {hikeColumns.map((hikeList, index) => {
+              return (
+                <div className="mx-52 max-w-screen-lg mb-2">
+                <HikesColumn key={index} list={hikeList} setTrigger={setHikeSelected} setHikeData={setHikeDataForRide} userHikes={userHikes} />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
       <RideDialogModal trigger={hikeSelected} setTrigger={setHikeSelected} hikeData={hikeDataForRide} resetHikeData={setHikeDataForRide} directFromJoin={true} />

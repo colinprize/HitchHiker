@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import AboutUs from "../screen_view/AboutUs";
-import { useState } from 'react';
+
 
 export default function Footer() {
     return (
-        <>
-            <div>
+        <> 
+        {/* // static effecting the hikes list, fixed & relative messing up emergency contact */}
+            <div style={{"position": "static", "zIndex": "1" }}>
                 <footer className="mountain-footer flex bottom-0 ml-32 bg-white border-gray-200 shadow md:flex md:items-center md:justify-between md:p-2">
                     <span className="text-sm text-gray-500 sm:text-center ml-0 dark:text-gray-400">© 2023 HitchHiker™</span>
                     <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">

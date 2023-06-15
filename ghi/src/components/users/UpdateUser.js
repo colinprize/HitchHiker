@@ -115,21 +115,21 @@ function UpdateUser() {
                             <p className="text-red-600 text-xs italic">Please enter current password.</p>
                         </div>
                     </div>
-                    <div class="flex flex-wrap -mx-3 mb-2">
-                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+                    <div className="flex flex-wrap -mx-3 mb-2">
+                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
                                 Picture Url
                             </label>
                             <input value={pictureUrl} onChange={(e) => setPictureUrl(e.target.value)} class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="Albuquerque" />
                         </div>
-                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
+                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
                                 University Name
                             </label>
                             <input value={uniName} onChange={(e) => setUniName(e.target.value)} class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
                         </div>
-                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
+                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
                                 University Year
                             </label>
                             <input value={uniYear} onChange={(e) => setUniYear(e.target.value)} class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
@@ -141,6 +141,7 @@ function UpdateUser() {
                                 Update Profile
                             </button>
                         </div>
+                        {/* // Form cannot be a descendant of a form!!!!!!! */}
                         <div className="w-full md:w-1/2 mb-0 md:mb-0">
                             <button onClick={() => setContactPopup(true)} className="bg-olivine block uppercase tracking text-white text-xs mb-0 hover:scale-95 font-bold py-2 px-14 rounded-full" type="button" >Add/Update Emergency Contact</button>
                             <AddEmergencyContact trigger={contactPopup} setTrigger={setContactPopup}>
