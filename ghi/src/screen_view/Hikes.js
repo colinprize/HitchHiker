@@ -3,6 +3,7 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import HikeDetails from '../components/hikes/HikeDetails';
 import RideDialogModal from '../components/rides/rideDialogModal';
 import ReactPaginate from 'react-paginate';
+import './listHikes.css';
 
 function HikesColumn(props) {
   const { token, fetchWithCookie } = useToken();
@@ -76,7 +77,7 @@ const ListHikes = () => {
   const [userHikes, setUserHikes] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const perPage = 3; // Number of cards to display per page
+  const perPage = 2; // Number of cards to display per page
   const offset = currentPage * perPage;
 
   const fetchData = async () => {
@@ -151,7 +152,7 @@ const ListHikes = () => {
             );
           })}
         </div>
-        <div className="flex justify-center mt-8">
+        <div className="pagination-container">
           <ReactPaginate
             previousLabel={'Previous'}
             nextLabel={'Next'}
