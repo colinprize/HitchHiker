@@ -39,7 +39,7 @@ function RideDialogModal(props) {
     <div className="flex items-center justify-center">
       <div className="bg-pine-glade shadow-md rounded px-20 pt-6 pb-8 m-4 space-y-12">
         {firstAsk ?
-          <div className="border-b border-gray-900/10 pb-12">
+          <div className="pb-12">
             <h2 className="text-2xl font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Enjoy Your Trip!</h2>
             <p className="mt-3 text-xl leading-10 text-gray-900">{`${props.directFromJoin ? "You are all signed up for this hike." : "Your new hike is all set!"}`}  While you're here, would you like to volunteer to drive other hikers?</p>
             <div className="mt-6 flex items-center justify-center gap-x-20">
@@ -48,7 +48,7 @@ function RideDialogModal(props) {
             </div>
           </div>
           :
-          <div className="border-b border-gray-900/10 pb-12">
+          <div className="pb-12">
             <h2 className="text-2xl font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">That's okay!</h2>
             <p className="mt-3 text-xl leading-10 text-gray-900">Do you want to see if there are any rides available to get to this hike?</p>
             <div className="mt-6 flex items-center justify-center gap-x-20">

@@ -258,10 +258,30 @@ class UserHikesRepository:
         try:
             with pool.connection() as connection:
                 with connection.cursor() as db:
+                    # DELETE HIKE_USER RECORD
                     db.execute(
                         """
                         DELETE FROM hikes_users
                         WHERE  user_id = %s AND hike_id = %s
+                        """,
+                        [user_id, hike_id],
+                    )
+                    # DELETE ANY RIDES WHERE USER IS DRIVER AND HIKE IS HIKE_ID
+                    db.execute(
+                        """
+                        DELETE FROM ride
+                        WHERE driver_id = %s AND hike_event = %s
+                        """,
+                        [user_id, hike_id],
+                    )
+                    # DELETE RIDE_USER RECORD WHERE RIDER USER IS IN RIDE
+                    # WITH MATCHING HIKE_ID
+                    db.execute(
+                        """
+                        DELETE FROM ride_users ru
+                            USING ride r
+                            WHERE ru.trip_id = r.ride_id AND ru.rider_id = %s
+                                AND r.hike_event = %s;
                         """,
                         [user_id, hike_id],
                     )

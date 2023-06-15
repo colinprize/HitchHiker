@@ -1,8 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, NavLink } from 'react-router-dom';
 import car from "../images/mystery-machine.jpg";
 
+
+function RidesList() {
+
+  const location = useLocation();
+  const { token, fetchWithCookie } = useToken();
+  const [ridesData, setRidesData] = useState([]);
+  const [userId, setUserId] = useState("");
+
+
+  useEffect(() => {
+    const loadRides = async () => {
+      const hikeId = location.state.hikeData.hike_id;
+      const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hikeId}/rides`;
+      const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
+      const fetchOptions = {
+        credentials: "include",
+        method: "get",
+        headers: {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      };
+      try {
+        const userResponse = await fetchWithCookie(tokenUrl);
+        setUserId(userResponse.account.user_id);
+        const response = await fetch(url, fetchOptions);
+        if (response.ok) {
+          const data = await response.json();
+          setRidesData(data)
+        };
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    if (location.state !== null) {
+      loadRides();
+    };
+  }, [fetchWithCookie, location.state, token]);
+
+  if (location.state === null) {
+    return null;
+  }
+
+  return (
+    <div className="items-center justify-center mx-auto max-w-screen-xl">
+      <div className="bg-stone-100 shadow-md rounded px-20 pt-6 pb-8 m-4">
+        {ridesData.length > 0 ?
+          <div className="space-y-12 pb-12">
+            <h2 className="text-2xl text-center font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight my-4">Rides For This Hike</h2>
+            <RideColumn rides={ridesData} hikeId={location.state.hikeData.hike_id} userId={userId} />
+          </div>
+          :
+          <div className="space-y-12 pb-12">
+            <h2 className="text-2xl text-center font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight my-4">Looks Like No One Has Signed Up To Drive!</h2>
+            <h2 className="text-xl text-center font-normal leading-7 text-gray-900 sm:truncate sm:text-2xl sm:tracking-tight my-4">Click
+              <NavLink to="/listhikes" className="font-semibold items-center text-olivine hover:scale-110 py-2 px-2" type="button">
+                here
+              </NavLink>
+              to see what other fun hikes are scheduled!
+            </h2>
+          </div>
+        }
+      </div>
+    </div >
+  );
+}
 
 function RideColumn(props) {
   const navigate = useNavigate();
@@ -34,7 +99,7 @@ function RideColumn(props) {
           < div key={ride.ride_id} >
             <div className="max-w-sm bg-grey bg-gray-800 rounded-lg shadow border-gray-700">
               <div className="relative">
-                <img src={car} className='w-full h-48 object-cover rounded-t-lg' alt="Mercedes Benz cartoon" />
+                <img src={ride.driver_img || car} className='w-full h-48 object-cover rounded-t-lg' alt="Mercedes Benz cartoon" />
                 <div className="absolute inset-0 rounded-t-lg"></div>
               </div>
               <div className='p-5'>
@@ -52,61 +117,5 @@ function RideColumn(props) {
     </div >
   );
 }
-
-function RidesList() {
-
-  const location = useLocation();
-  const { token, fetchWithCookie } = useToken();
-  const [ridesData, setRidesData] = useState([]);
-  const [userId, setUserId] = useState("");
-
-  useEffect(() => {
-    if (location.state !== null) {
-      loadRides();
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  if (location.state === null) {
-    return null;
-  }
-
-  const loadRides = async () => {
-    const hikeId = location.state.hikeData.hike_id;
-    const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hikeId}/rides`;
-    const tokenUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/token`;
-    const fetchOptions = {
-      credentials: "include",
-      method: "get",
-      headers: {
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    };
-    try {
-      const userResponse = await fetchWithCookie(tokenUrl);
-      setUserId(userResponse.account.user_id);
-      const response = await fetch(url, fetchOptions);
-      if (response.ok) {
-        const data = await response.json();
-        setRidesData(data)
-      };
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  return (
-    <div className="items-center justify-center mx-auto max-w-screen-xl">
-      <div className="bg-stone-100 shadow-md rounded px-20 pt-6 pb-8 m-4">
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-2xl text-center font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight my-4">Rides for this hike</h2>
-            <RideColumn rides={ridesData} hikeId={location.state.hikeData.hike_id} userId={userId} />
-          </div>
-        </div>
-      </div>
-    </div >
-  );
-}
-
 
 export default RidesList;

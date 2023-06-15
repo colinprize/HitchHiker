@@ -7,7 +7,6 @@ from queries.rides import (
     RideIn,
     RideRepository,
     RideOut,
-    # RiderIn,
     RiderOut,
 )
 
@@ -34,6 +33,15 @@ def get_all(
     repo: RideRepository = Depends(),
 ):
     return repo.get_all(hike_id)
+
+
+@router.get("/userrides", response_model=Union[List[RideOut], Error])
+def get_all_user_rides(
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    repo: RideRepository = Depends(),
+):
+    rider_id = account_data["user_id"]
+    return repo.get_all_user_rides(rider_id)
 
 
 @router.get("/rides/{ride_id}")
@@ -87,7 +95,6 @@ def delete_ride(
 def create_rider(
     hike_id: int,
     ride_id: int,
-    # rider: RiderIn, # DELETE THIS LINE!!!
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: RideRepository = Depends(),
 ):
@@ -99,7 +106,6 @@ def create_rider(
 def delete_rider(
     hike_id: int,
     ride_id: int,
-    # rider_id: int, # DELETE THIS LINE!!!
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: RideRepository = Depends(),
 ) -> bool:

@@ -21,6 +21,7 @@ class RideOut(BaseModel):
     meetup_time: datetime
     meetup_location: Optional[str]
     hike_event: int
+    driver_img: Optional[str]
 
 
 class RiderOut(BaseModel):
@@ -35,18 +36,19 @@ class RideRepository:
                 with connection.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT ride_id
-                            , driver_id
-                            , max_riders
-                            , meetup_time
-                            , meetup_location
-                            , hike_event
-                        FROM ride
-                        WHERE ride_id = %s
+                        SELECT r.ride_id
+                            , r.driver_id
+                            , r.max_riders
+                            , r.meetup_time
+                            , r.meetup_location
+                            , r.hike_event
+                            , u.picture_url
+                        FROM ride r
+                        JOIN users u ON (u.user_id = r.driver_id)
+                        WHERE r.ride_id = %s
                         """,
                         [ride_id],
                     )
-                    print(result)
                     record = result.fetchone()
                     return self.record_to_ride_out(record)
         except Exception:
@@ -60,6 +62,7 @@ class RideRepository:
             meetup_time=record[3],
             meetup_location=record[4],
             hike_event=record[5],
+            driver_img=record[6],
         )
 
     def update(
@@ -124,11 +127,13 @@ class RideRepository:
                     # Run our SELECT statement
                     db.execute(
                         """
-                        SELECT ride_id, driver_id, max_riders, meetup_time,
-                        meetup_location, hike_event
-                        FROM ride
-                        WHERE hike_event = %s
-                        ORDER BY ride_id;
+                        SELECT r.ride_id, r.driver_id, r.max_riders,
+                        r.meetup_time, r.meetup_location, r.hike_event,
+                        u.picture_url
+                        FROM ride r
+                        JOIN users u ON (u.user_id = r.driver_id)
+                        WHERE r.hike_event = %s
+                        ORDER BY r.ride_id;
                         """,
                         [
                             hike_id,
@@ -142,12 +147,51 @@ class RideRepository:
                             meetup_time=record[3],
                             meetup_location=record[4],
                             hike_event=record[5],
+                            driver_img=record[6],
                         )
                         for record in db
                     ]
         except Exception as e:
             print(e)
             return {"message": "Could not get all rides"}
+
+    def get_all_user_rides(self, rider_id: int) -> Union[Error, List[RideOut]]:
+        try:
+            # Connect the database
+            with pool.connection() as conn:
+                # Get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    # Run our SELECT statement
+                    db.execute(
+                        """
+                        SELECT r.ride_id, r.driver_id, r.max_riders,
+                        r.meetup_time, r.meetup_location, r.hike_event,
+                        u.picture_url
+                        FROM ride r
+                        JOIN users u ON (u.user_id = r.driver_id)
+                        JOIN ride_users ru ON (ru.trip_id = r.ride_id)
+                        WHERE ru.rider_id = %s
+                        ORDER BY r.ride_id;
+                        """,
+                        [
+                            rider_id,
+                        ],
+                    )
+                    return [
+                        RideOut(
+                            ride_id=record[0],
+                            driver_id=record[1],
+                            max_riders=record[2],
+                            meetup_time=record[3],
+                            meetup_location=record[4],
+                            hike_event=record[5],
+                            driver_img=record[6],
+                        )
+                        for record in db
+                    ]
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get all user rides"}
 
     def create(self, hike_id: int, ride: RideIn, driver_id: int) -> RideOut:
         try:
@@ -187,6 +231,19 @@ class RideRepository:
                         ],
                     )
                     ride_id = result.fetchone()[0]
+                    result = db.execute(
+                        """
+                        INSERT INTO ride_users
+                            (rider_id, trip_id)
+                        VALUES
+                            (%s, %s);
+
+                        """,
+                        [
+                            driver_id,
+                            ride_id,
+                        ],
+                    )
                     # Return new data
                     old_data = ride.dict()
                     return RideOut(
