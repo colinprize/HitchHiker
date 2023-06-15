@@ -18,9 +18,9 @@ export default function Footer() {
                         <li>
                             <p className="mr-4 hover:underline md:mr-6">Licensing</p>
                         </li>
-                        <NavLink className="mr-4 hover:underline md:mr-6" to='/contact'>
-                            Contact
-                        </NavLink>
+                        <li>
+                            <p className="hover:underline">Contact</p>
+                        </li>
                     </ul>
                 </footer>
             </div>

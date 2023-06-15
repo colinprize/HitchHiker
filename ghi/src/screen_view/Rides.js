@@ -39,7 +39,7 @@ function RidesList() {
     if (location.state !== null) {
       loadRides();
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [fetchWithCookie, location.state, token]);
 
   if (location.state === null) {
     return null;
