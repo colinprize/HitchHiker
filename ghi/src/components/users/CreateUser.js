@@ -33,9 +33,8 @@ function CreateUser() {
     }
 
     return (
-        <>
-            <div className="flex items-center justify-center mb-0 mt-10">
-                    <form className="bg-wheat shadow-md rounded-lg px-20 pt-6 pb-8 mb-4">
+            <div className="flex items-center justify-center mb-0">
+                    <form className="bg-wheat shadow-md rounded-lg px-20 pt-6 pb-8 mb-4 mt-5">
                         <div className="items-center mb-4">
                             <label className="block text-olivine text-md font-bold mb-2" htmlFor="fullName">
                                 Full Name
@@ -80,7 +79,6 @@ function CreateUser() {
                         </div>
                     </form>
             </div>
-        </>
     )
 }
 

@@ -24,7 +24,7 @@ const LoginForm = () => {
   return (
     <>
       <div className="flex items-center justify-center mb-0">
-        <form className="bg-wheat shadow-md rounded-lg px-20 pt-6 pb-8 mb-4">
+        <form className="bg-wheat shadow-md rounded-lg px-20 pt-6 pb-8 mb-4 mt-10">
           <h1 className=" text-olivine text-center font-semibold text-4xl mb-2">Hitch Hiker</h1>
           <div className="items-center mb-4">
             <label className="block text-olivine text-md font-bold mb-2" htmlFor="username">
