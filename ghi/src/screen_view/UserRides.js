@@ -36,19 +36,20 @@ function UserRidesList() {
 
   useEffect(() => {
     loadRides();
-  }, [loadRides]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
 
 
   return (
     <div className="items-center justify-center mx-auto max-w-screen-xl">
-      <div className="bg-stone-100 shadow-md rounded px-20 pt-6 pb-8 m-4">
+      <div className="bg-stone-100 shadow-md rounded px-20 pt-6 pb-8">
         {ridesData.length > 0 ?
-          <div className="space-y-12 pb-12">
+          <div className="pb-8 w-full m-10">
             <h2 className="text-2xl text-center font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight my-4">Rides You're Signed Up For</h2>
             <RideColumn rides={ridesData} userId={userId} trigger={loadRides} />
           </div>
+
           :
           <div className="space-y-12 pb-12">
             <h2 className="text-2xl text-center font-semibold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight my-4">You're Not Signed Up For Any Rides</h2>
@@ -61,7 +62,7 @@ function UserRidesList() {
           </div>
         }
       </div>
-    </div >
+    </div>
   );
 }
 
