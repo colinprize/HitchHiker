@@ -12,7 +12,7 @@ const Header = () => {
     const navigate = useNavigate();
     const { logout, fetchWithCookie, token } = useToken();
     const [loggedIn, setLoggedIn] = useState(false)
-    const [tokenInfo, setTokenInfo] = useState("");
+    const [setTokenInfo] = useState("");
     const logoutButton = () => {
         logout();
         navigate("/");
