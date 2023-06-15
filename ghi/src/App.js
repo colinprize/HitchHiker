@@ -14,6 +14,7 @@ import ListUserHikes from './screen_view/UserHikes.js';
 import RidesList from './screen_view/Rides.js';
 import UserRidesList from './screen_view/UserRides';
 import "./footer.css";
+import ContactUs from './screen_view/ContactUs';
 
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/create_ride" element={<CreateRideForm />} />
           <Route path="/rides" element={<RidesList />} />
           <Route path="/userrides" element={<UserRidesList />} />
+          <Route path="/contact" element={<ContactUs />}></Route>
         </Routes>
         <Footer />
       </BrowserRouter>
