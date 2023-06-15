@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { BsFillArrowRightSquareFill, BsCarFrontFill } from 'react-icons/bs';
 import { FaMountain } from 'react-icons/fa';
 import { RiArrowGoBackLine } from 'react-icons/ri';
-import { MdAddBox, MdOutlineFormatListBulleted } from 'react-icons/md';
+import { MdAddBox } from 'react-icons/md';
 import { HomeIcon, Cog6ToothIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/react/20/solid";
 
 
@@ -68,13 +68,7 @@ const Header = () => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/rides" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
-                                            <MdOutlineFormatListBulleted className="h-7 w-20" />
-                                            Ride List
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="/rides" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
+                                        <NavLink to="/userrides" className="block py-3 pr-4 pl-3 text-white text-center rounded bg-primary-700 hover:text-wheat hover:transform hover:scale-105 transition-all duration-100">
                                             <BsCarFrontFill className="h-7 w-20" />
                                             My Rides
                                         </NavLink>
