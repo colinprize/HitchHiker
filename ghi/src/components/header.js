@@ -41,6 +41,7 @@ const Header = () => {
                             <div className="flex items-center mr-0 lg:order-2">
                                 <NavLink to="/listhikes" className="block py-4 pr-4 pl-3 text-white rounded hover:text-wheat" >All Hikes</NavLink>
                                 <NavLink to="/userhikes" className="block py-4 pr-4 pl-3 text-white rounded bg-primary-700 hover:text-wheat" >My Hikes</NavLink>
+                                <NavLink to="/userrides" className="block py-4 pr-4 pl-3 text-white rounded bg-primary-700 hover:text-wheat" >My Rides</NavLink>
                                 <NavLink to="/createhike" className="block py-4 pr-4 pl-3 text-white rounded bg-primary-700 hover:text-wheat" >+ Add Hike</NavLink>
                                 <NavLink to="/update_user" className="block py-4 pr-4 pl-3 text-white rounded bg-primary-700 hover:text-wheat">Profile</NavLink>
                                 <button onClick={logoutButton} className="block py-4 pr-4 pl-3 underline text-white hover:text-wheat" type="button">
