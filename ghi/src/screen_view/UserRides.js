@@ -36,7 +36,7 @@ function UserRidesList() {
 
   useEffect(() => {
     loadRides();
-  }, [loadRides]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
 
