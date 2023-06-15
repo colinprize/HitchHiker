@@ -28,7 +28,7 @@ const Header = () => {
             navigate("/");
         }
     }
-    console.log(tokenInfo)
+
 
     useEffect(() => {
         isLoggedIn();

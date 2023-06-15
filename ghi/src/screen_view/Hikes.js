@@ -100,7 +100,6 @@ const ListHikes = () => {
       if (response.ok && userHikesResponse.ok) {
         const data = await response.json();
         const hikes = Object.values(data);
-        console.log(hikes)
         const requests = [];
         for (let hike of hikes) {
           const detailUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hike.hike_id}`;
@@ -167,14 +166,15 @@ const ListHikes = () => {
               minDate={new Date()}
             />
           </div>
-          </div>
-          <br />
+        </div>
+        <br />
         <div className="flex justify-center mx-60 mb-24">
           <div className='grid grid-cols-1' style={{ "zIndex": "0" }}>
             {hikeColumns.map((hikeList, index) => {
               return (
-                <div className="mx-52 max-w-screen-lg mb-2">
-                <HikesColumn key={index} list={hikeList} setTrigger={setHikeSelected} setHikeData={setHikeDataForRide} userHikes={userHikes} />
+
+                <div key={index} className="mx-52 max-w-screen-lg mb-2">
+                  <HikesColumn key={index} list={hikeList} setTrigger={setHikeSelected} setHikeData={setHikeDataForRide} userHikes={userHikes} />
                 </div>
               );
             })}
