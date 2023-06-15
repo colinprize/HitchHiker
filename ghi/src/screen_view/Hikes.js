@@ -149,9 +149,9 @@ const ListHikes = () => {
   return (
     <>
       <br />
-      <div>
+      <div className={`${hikeSelected ? "hidden" : ""}`}>
         <h2 className='text-3xl font-bold text-center'>Upcoming Hikes</h2>
-        <div className={`${hikeSelected ? "hidden" : "mx-32 max-w-screen-lg"}`}>
+        <div className="mx-32 max-w-screen-lg">
           <div className='flex items-center justify-center mb-2 w-2/3 fixed'>
             <button
               className="inline-flex px-3 py-2 text-lg font-medium text-center text-white bg-olivine rounded-lg hover:scale-95 mr-2"
