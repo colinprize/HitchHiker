@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import HikeDetails from '../components/hikes/HikeDetails';
 import RideDialogModal from '../components/rides/rideDialogModal';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css'
 
 
 function HikesColumn(props) {
@@ -77,6 +79,8 @@ const ListHikes = () => {
 
   const [userHikes, setUserHikes] = useState([]);
 
+  const [selectedDate, setSelectedDate] = useState(null)
+
   const fetchData = async () => {
     const url = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes`;
     const userHikesUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/users/{user_id}/hikes`;
@@ -94,13 +98,18 @@ const ListHikes = () => {
       const userHikesResponse = await fetch(userHikesUrl, config);
       if (response.ok && userHikesResponse.ok) {
         const data = await response.json();
-        // const allHikes = Object.values(data);
-        // const hikes = allHikes.filter((hike) => hike.organizer_id !== userResponse.account.user_id);
         const hikes = Object.values(data);
+        console.log(hikes)
         const requests = [];
         for (let hike of hikes) {
           const detailUrl = `${process.env.REACT_APP_HIKES_API_SERVICE_API_HOST}/hikes/${hike.hike_id}`;
-          requests.push(fetch(detailUrl, config));
+          if (selectedDate) {
+            if ((new Date(hike.date_time).toLocaleDateString()) === selectedDate.toLocaleDateString()) {
+              requests.push(fetch(detailUrl, config))
+            }
+          } else {
+            requests.push(fetch(detailUrl, config))
+          };
         }
         const responses = await Promise.all(requests);
         const columns = [[], [], [], []];
@@ -131,7 +140,7 @@ const ListHikes = () => {
     if (token) {
       fetchData();
     }
-  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [token, selectedDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
     return <div>Loading...</div>;
@@ -142,7 +151,20 @@ const ListHikes = () => {
       <br />
       <div className={`${hikeSelected ? "hidden" : "mx-auto max-w-screen-lg"}`}>
         <h2 className='text-3xl font-bold text-center'>Upcoming Hikes</h2>
-        <br />
+        <div className='flex items-center justify-center mb-2'>
+          <DatePicker
+            placeholderText='Search by date'
+            className='mr-2'
+            selected={selectedDate}
+            onChange={date => setSelectedDate(date)}
+            minDate={new Date()}
+          />
+        </div>
+        <button
+          className="inline-flex items-center px-3 py-2 text-lg font-medium text-center text-white bg-olivine rounded-lg hover:scale-95"
+          onClick={() => {
+            setSelectedDate(null);
+          }}>Clear Search</button>
         <br />
         <div className='grid grid-cols-4 gap-4'>
           {hikeColumns.map((hikeList, index) => {
