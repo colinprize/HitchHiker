@@ -1,4 +1,4 @@
-# Module3 Project Gamma
+# HitchHiker
 Initial Design and wireframes
 ![wireframes](img/Wireframes.png "wireframes")
 
